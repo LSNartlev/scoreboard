@@ -1,0 +1,54 @@
+body {
+	background-color:#101010;
+	color:#dadada;
+	font-family:roboto;
+	font-size:max(1vw,12px);
+	margin:0;
+	padding:0;
+}
+
+h3 {
+	display:inline;
+	font-size:max(1.2vw,14px);
+}
+
+.row {
+	width:100vw;
+	display:flex;
+	clear:both;
+	margin:0;
+	padding:0;
+}
+
+.column {
+	display:table;
+	float:left;
+	height:95.5vh;
+	margin:0;
+	padding:10px;
+}
+
+.teamctrl {
+	background-color:#404040;
+	width:20%;
+}
+
+.textfield {
+	background-color:rgb(0, 0, 0, 0.5);
+	border:0;
+	color:#ffffff;
+	font-family:roboto;
+	font-size:max(1vw,12px);
+	width:97%;
+}
+
+.boardctrl {
+	background-color:#252525;
+	width:55%;
+}
+
+/* Scoreboard Containers [Z-Index 0] */
+.sbparentcontainer {
+	background-color:#000000;
+	padding-top:56.25%;
+}
