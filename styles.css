@@ -8,12 +8,14 @@ body {
 }
 
 h3 {
+  position:relative;
 	display:inline;
 	font-size:max(1.2vw,14px);
 }
 
 .row {
-	width:100vw;
+  position:relative;
+	width:100%;
 	display:flex;
 	clear:both;
 	margin:0;
@@ -21,34 +23,62 @@ h3 {
 }
 
 .column {
+  position:relative;
 	display:table;
 	float:left;
-	height:95.5vh;
 	margin:0;
-	padding:10px;
 }
 
 .teamctrl {
+  padding:1.5vh;
+  position:relative;
 	background-color:#404040;
 	width:20%;
+  height:97vh;
 }
 
 .textfield {
+  position:relative;
 	background-color:rgb(0, 0, 0, 0.5);
 	border:0;
 	color:#ffffff;
 	font-family:roboto;
 	font-size:max(1vw,12px);
-	width:97%;
+	width:80%;
+}
+
+input[type="color"] {
+  padding:0;
+  border:none;
+  width:20%;
+  height:max(1vw,12px);
 }
 
 .boardctrl {
+  position:relative;
 	background-color:#252525;
-	width:55%;
+	width:60%;
+  height:100vh;
 }
 
-/* Scoreboard Containers [Z-Index 0] */
-.sbparentcontainer {
-	background-color:#000000;
+/* Scoreboard Containers [Z-Index 1] */
+.sbrow {
+  position:relative;
+  width:100%;
+	display:flex;
+	clear:both;
+	margin:0;
 	padding-top:56.25%;
+  background-color:#000000;
+  z-index:1;
+}
+
+.sbcolumn {
+  position:relative;
+  width:100%;
+	display:flex;
+  float:left;
+	clear:both;
+	margin:0;
+  z-index:1;
 }
