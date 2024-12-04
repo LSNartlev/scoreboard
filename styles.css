@@ -26,7 +26,7 @@ body {
 .teamcol {
 	padding:1.5vh;
 	position:relative;
-	background-color:#404040;
+	background-color:#202020;
 	width:20%;
 	height:97vh;
 }
@@ -58,7 +58,14 @@ input[type="color"] {
 }
 
 /* Team Controls */
-
+.teambutton {
+	position:relative;
+	border:none;
+	font-family:roboto;
+	font-size:max(2.5vw,12px);
+	width:4.5vw;
+	height:4.5vw;
+}
 
 /* Scoreboard Containers [Z-Index 1] */
 .scoreboard {
