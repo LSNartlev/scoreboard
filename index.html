@@ -8,35 +8,46 @@
 	</head>
 	<body>
 		<div class="row">
-			<div class="column teamctrl">
-				<h3>Team A</h3>
-				<p>
-					<form>
-						<label for="teamAname">Name & Jersey Color<label><br>
-						<input type="text" id="teamAname" name="teamAname" class="textfield">
-						<input type="color" value="#10cc69" id="teamAcolor" name="teamAcolor" oninput="changeTeamAColor()"><br><br>
-					</form>
-				</p>
+			<div class="column teamcol">
+				<form>
+					<label for="teamAname">Team Name & Jersey Color</label><br>
+					<input type="text" id="teamAname" name="teamAname" class="textfield">
+					<input type="color" value="#10cc69" id="teamAcolor" name="teamAcolor" oninput="changeTeamAColor()"><br><br>
+          <label for="teamAscorectrl">Score Controls</label><br>
+          <input type="button" id="scoreAminus1" name="scoreAminus1" value="-1">
+          <input type="button" id="scoreAplus1" name="scoreAplus1" value="+1">
+          <input type="button" id="scoreAplus2" name="scoreAplus2" value="+2">
+          <input type="button" id="scoreAplus3" name="scoreAplus3" value="+3"><br><br>
+          <label for="teamAfoulctrl">Team Foul Controls</label><br>
+          <input type="button" id="foulAminus1" name="foulAminus1" value="-1">
+          <input type="button" id="foulAplus1" name="foulAplus1" value="+1"><br><br>
+          <label for="teamAtimeoutctrl">Timeout Left Controls</label><br>
+          <input type="button" id="timeoutAminus1" name="timeoutAminus1" value="-1">
+          <input type="button" id="timeoutAplus1" name="timeoutAplus1" value="+1"><br><br>
+				</form>
 			</div>
-			<div class="column boardctrl">
-				<div class="sbrow">
-					<div class="sbcolumn sbTeamA" id="sbTeamAside">
-					Team A
-					</div>
-					<div class="sbcolumn sbTeamB" id="sbTeamBside">
-					Team B
-					</div>
-				</div>
+			<div class="column boardcol">
+        <div class="scoreboard">
+          
+        </div>
 			</div>
-			<div class="column teamctrl">
-				<h3>Team B</h3>
-				<p>
-					<form>
-						<label for="teamBname">Name & Jersey Color<label><br>
-						<input type="text" id="teamBname" name="teamBname" class="textfield">
-						<input type="color" value="#cc1042" id="teamBcolor" name="teamBcolor" oninput="changeTeamBColor()"><br><br>
-					</form>
-				</p>
+			<div class="column teamcol">
+				<form>
+					<label for="teamBname">Team Name & Jersey Color</label><br>
+					<input type="text" id="teamBname" name="teamBname" class="textfield">
+					<input type="color" value="#cc1042" id="teamBcolor" name="teamBcolor" oninput="changeTeamBColor()"><br><br>
+          <label for="teamBscorectrl">Score Controls</label><br>
+          <input type="button" id="scoreBminus1" name="scoreBminus1" value="-1">
+          <input type="button" id="scoreBplus1" name="scoreBplus1" value="+1">
+          <input type="button" id="scoreBplus2" name="scoreBplus2" value="+2">
+          <input type="button" id="scoreBplus3" name="scoreBplus3" value="+3"><br><br>
+          <label for="teamBfoulctrl">Team Foul Controls</label><br>
+          <input type="button" id="foulBminus1" name="foulBminus1" value="-1">
+          <input type="button" id="foulBplus1" name="foulBplus1" value="+1"><br><br>
+          <label for="teamBtimeoutctrl">Timeout Left Controls</label><br>
+          <input type="button" id="timeoutBminus1" name="timeoutBminus1" value="-1">
+          <input type="button" id="timeoutBplus1" name="timeoutBplus1" value="+1"><br><br>
+				</form>
 			</div>
 		</div>
 	</body>

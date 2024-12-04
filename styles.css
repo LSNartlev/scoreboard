@@ -7,12 +7,6 @@ body {
 	padding:0;
 }
 
-h3 {
-	position:relative;
-	display:inline;
-	font-size:max(1.2vw,14px);
-}
-
 .row {
 	position:relative;
 	width:100%;
@@ -29,7 +23,7 @@ h3 {
 	margin:0;
 }
 
-.teamctrl {
+.teamcol {
 	padding:1.5vh;
 	position:relative;
 	background-color:#404040;
@@ -46,24 +40,28 @@ h3 {
 	font-family:roboto;
 	font-size:max(1vw,12px);
 	width:78%;
+  height:1.5vw;
 }
 
 input[type="color"] {
-	padding:0;
+  padding:0;
 	border:none;
 	width:18%;
 	height:max(1.3vw,12px);
 }
 
-.boardctrl {
+.boardcol {
 	position:relative;
 	background-color:#252525;
 	width:60%;
 	height:100vh;
 }
 
+/* Team Controls */
+
+
 /* Scoreboard Containers [Z-Index 1] */
-.sbrow {
+.scoreboard {
 	position:relative;
 	width:100%;
 	display:flex;
@@ -72,21 +70,4 @@ input[type="color"] {
 	padding:0;
 	padding-top:56.25%;
 	background-color:#004560;
-}
-
-.sbcolumn {
-	z-index:1;
-	flex:1;
-	clear:both;
-	margin:0;
-}
-
-.sbTeamA {
-	background-color:#10cc69;
-	float:left;
-}
-
-.sbTeamB {
-	background-color:#cc1042;
-	float:right;
 }

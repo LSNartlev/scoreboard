@@ -8,6 +8,10 @@ var teamAtimeouts = 0;
 var teamBtimeouts = 0;
 var ballPossession = 0;
 
+function setTeamColors() {
+  
+}
+
 function changeTeamAColor() {
 	teamAcolor = document.getElementById("teamAcolor").value;
 	let scoreboardSide = document.getElementById("sbTeamAside");
