@@ -61,10 +61,13 @@ input[type="color"] {
 .teambutton {
 	position:relative;
 	border:none;
+	border-radius:6px;
 	font-family:roboto;
 	font-size:max(2.5vw,12px);
+	text-align:center;
 	width:4.5vw;
 	height:4.5vw;
+	cursor:pointer;
 }
 
 /* Scoreboard Containers [Z-Index 1] */
@@ -76,5 +79,4 @@ input[type="color"] {
 	margin:0;
 	padding:0;
 	padding-top:56.25%;
-	background-color:#004560;
 }

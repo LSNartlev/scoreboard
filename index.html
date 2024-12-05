@@ -6,28 +6,28 @@
 		<link rel="stylesheet" href="styles.css">
 		<script src="script.js"></script>
 	</head>
-	<body>
+	<body onload="setDefaults()">
 		<div class="row">
 			<div class="column teamcol">
 				<form>
 					<label for="teamAname">Team Name & Jersey Color</label><br>
 					<input type="text" id="teamAname" name="teamAname" class="textfield">
-					<input type="color" value="#10cc69" id="teamAcolor" name="teamAcolor" oninput="changeTeamAColor()"><br><br>
+					<input type="color" id="teamAcolor" name="teamAcolor" oninput="changeTeamAColor()"><br><br>
 					<label for="teamAscorectrl">Score</label><br>
-					<input type="button" id="scoreAminus1" name="scoreAminus1" value="-1" class="teambutton">
+					<input type="button" id="scoreAminus1" name="scoreAminus1" value="&#8722;1" class="teambutton">
 					<input type="button" id="scoreAplus1" name="scoreAplus1" value="+1" class="teambutton">
 					<input type="button" id="scoreAplus2" name="scoreAplus2" value="+2" class="teambutton">
 					<input type="button" id="scoreAplus3" name="scoreAplus3" value="+3" class="teambutton"><br><br>
-					<label for="teamAfoulctrl">Team Foul(s)</label><br>
-					<input type="button" id="foulAminus1" name="foulAminus1" value="-1" class="teambutton foul">
-					<input type="button" id="foulAplus1" name="foulAplus1" value="+1" class="teambutton foul"><br><br>
 					<label for="teamAtimeoutctrl">Timeout(s) Left</label><br>
-					<input type="button" id="timeoutAminus1" name="timeoutAminus1" value="-1" class="teambutton tol">
-					<input type="button" id="timeoutAplus1" name="timeoutAplus1" value="+1" class="teambutton tol"><br><br>
+					<input type="button" id="timeoutAminus1" name="timeoutAminus1" value="&#8722;1" class="teambutton">
+					<input type="button" id="timeoutAplus1" name="timeoutAplus1" value="+1" class="teambutton"><br><br>
+					<label for="teamAfoulctrl">Team Foul(s)</label><br>
+					<input type="button" id="foulAminus1" name="foulAminus1" value="&#8722;1" class="teambutton">
+					<input type="button" id="foulAplus1" name="foulAplus1" value="+1" class="teambutton"><br><br>
 				</form>
 			</div>
 			<div class="column boardcol">
-				<div class="scoreboard">
+				<div class="scoreboard" id="scoreboard">
 				
 				</div>
 			</div>
@@ -35,18 +35,18 @@
 				<form>
 					<label for="teamBname">Team Name & Jersey Color</label><br>
 					<input type="text" id="teamBname" name="teamBname" class="textfield">
-					<input type="color" value="#cc1042" id="teamBcolor" name="teamBcolor" oninput="changeTeamBColor()"><br><br>
+					<input type="color" id="teamBcolor" name="teamBcolor" oninput="changeTeamBColor()"><br><br>
 					<label for="teamBscorectrl">Score</label><br>
-					<input type="button" id="scoreBminus1" name="scoreBminus1" value="-1" class="teambutton">
+					<input type="button" id="scoreBminus1" name="scoreBminus1" value="&#8722;1" class="teambutton">
 					<input type="button" id="scoreBplus1" name="scoreBplus1" value="+1" class="teambutton">
 					<input type="button" id="scoreBplus2" name="scoreBplus2" value="+2" class="teambutton">
 					<input type="button" id="scoreBplus3" name="scoreBplus3" value="+3" class="teambutton"><br><br>
-					<label for="teamBfoulctrl">Team Foul(s)</label><br>
-					<input type="button" id="foulBminus1" name="foulBminus1" value="-1" class="teambutton foul">
-					<input type="button" id="foulBplus1" name="foulBplus1" value="+1" class="teambutton foul"><br><br>
 					<label for="teamBtimeoutctrl">Timeout(s) Left</label><br>
-					<input type="button" id="timeoutBminus1" name="timeoutBminus1" value="-1" class="teambutton tol">
+					<input type="button" id="timeoutBminus1" name="timeoutBminus1" value="&#8722;1" class="teambutton tol">
 					<input type="button" id="timeoutBplus1" name="timeoutBplus1" value="+1" class="teambutton tol"><br><br>
+					<label for="teamBfoulctrl">Team Foul(s)</label><br>
+					<input type="button" id="foulBminus1" name="foulBminus1" value="&#8722;1" class="teambutton foul">
+					<input type="button" id="foulBplus1" name="foulBplus1" value="+1" class="teambutton foul"><br><br>
 				</form>
 			</div>
 		</div>
