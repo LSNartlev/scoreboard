@@ -14,6 +14,7 @@ body {
 	clear:both;
 	margin:0;
 	padding:0;
+	height:56.25%;
 }
 
 .column {
@@ -28,7 +29,6 @@ body {
 	position:relative;
 	background-color:#202020;
 	width:20%;
-	height:97vh;
 }
 
 .textfield {
@@ -40,11 +40,11 @@ body {
 	font-family:roboto;
 	font-size:max(1vw,12px);
 	width:78%;
-  height:1.5vw;
+	height:1.5vw;
 }
 
 input[type="color"] {
-  padding:0;
+	padding:0;
 	border:none;
 	width:18%;
 	height:max(1.3vw,12px);
@@ -54,7 +54,6 @@ input[type="color"] {
 	position:relative;
 	background-color:#252525;
 	width:60%;
-	height:100vh;
 }
 
 /* Team Controls */
