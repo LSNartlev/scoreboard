@@ -1,7 +1,8 @@
-var teamAname = "HOME";
-var teamBname = "AWAY";
-var teamAcolor = "#e31b93";
-var teamBcolor = "#1b82e3";
+var matchTitle = "Exhibition Match";
+var teamAname = "BLUE TEAM";
+var teamBname = "RED TEAM";
+var teamAcolor = "#6dbcf5";
+var teamBcolor = "#f56d66";
 var teamAscore = 0;
 var teamBscore = 0;
 var teamAfouls = 0;
@@ -11,9 +12,16 @@ var teamBtimeouts = 0;
 var ballPossession = 0;
 
 function setDefaults() {
+	setMatchTitle(matchTitle);
 	setTeamColors("A", teamAcolor);
+	setTeamInfo("A");
 	setTeamColors("B", teamBcolor);
+	setTeamInfo("B");
 	setScoreboardElements();
+}
+
+function setMatchTitle(matchTitle) {
+	document.getElementById("sbMatchTitle").innerHTML = matchTitle;
 }
 
 function setTeamColors(team, color) {
@@ -43,10 +51,20 @@ function setTeamColors(team, color) {
 	document.getElementById("foul"+team+"plus1").style.color = getTextColor(getDarkerColor(color, 0.45));
 }
 
+function setTeamInfo(team) {
+	document.getElementById("team"+team+"name").value = 
+	document.getElementById("sbTeam"+team+"name").innerHTML = team == "A"? teamAname:teamBname;
+}
+
 function setScoreboardElements() {
-	let colorA = document.getElementById("teamAcolor").value;
-	let colorB = document.getElementById("teamBcolor").value;
-	document.getElementById("scoreboard").style.background = "linear-gradient(to right, " + colorA + " 0 50%, " + colorB + " 50% 100%)";
+	// Scoreboard Background
+	teamAcolor = document.getElementById("teamAcolor").value;
+	teamBcolor = document.getElementById("teamBcolor").value;
+	document.getElementById("scoreboard").style.background = "linear-gradient(to right, " + teamAcolor + " 0 50%, " + teamBcolor + " 50% 100%)";
+	
+	// Match Title
+	matchTitle = document.getElementById("matchTitle").value;
+	document.getElementById("sbMatchTitle").innerHTML = matchTitle;
 }
 
 function getTextColor(bgColor) {
@@ -99,12 +117,13 @@ function getColorLightness(bgColor) {
 	return (Math.max(r, g, b) + Math.min(r, g, b)) / 2;
 }
 
-function changeTeamAColor() {
-	setTeamColors("A", document.getElementById("teamAcolor").value);
-	setScoreboardElements();
+function changeTeamName(team) {
+	if(team === "A") teamAname = document.getElementById("team"+team+"name").value;
+	if(team === "B") teamBname = document.getElementById("team"+team+"name").value;
+	setTeamInfo(team);
 }
 
-function changeTeamBColor() {
-	setTeamColors("B", document.getElementById("teamBcolor").value);
+function changeTeamColor(team) {
+	setTeamColors(team, document.getElementById("team"+team+"color").value);
 	setScoreboardElements();
 }
