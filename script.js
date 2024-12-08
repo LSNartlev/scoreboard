@@ -32,11 +32,12 @@ function setTeamColors(team, color) {
 	document.getElementById("score"+team+"plus2").style.backgroundColor = 
 	document.getElementById("score"+team+"plus3").style.backgroundColor = color;
 	
-	// Text Colors of Score Control Buttons
+	// Text Colors of Score Control Buttons and Ball Possession indicator
 	document.getElementById("score"+team+"minus1").style.color = 
 	document.getElementById("score"+team+"plus1").style.color = 
 	document.getElementById("score"+team+"plus2").style.color = 
-	document.getElementById("score"+team+"plus3").style.color = getTextColor(color);
+	document.getElementById("score"+team+"plus3").style.color =
+	document.getElementById("sbTeam"+team+"poss").style.color =	getTextColor(color);
 	
 	// Colors of Timeout/Sets Won Control Buttons
 	document.getElementById("timeout"+team+"minus1").style.backgroundColor =
@@ -73,7 +74,7 @@ function getTextColor(bgColor) {
 
 /**
 	Based on my understanding on color conversion formulas on Wikipedia:
-	https://https://en.wikipedia.org/wiki/HSL_and_HSV
+	https://en.wikipedia.org/wiki/HSL_and_HSV
 */
 function getDarkerColor(color, multiplier) {
 	let r = parseInt(color.substr(1, 2), 16) / 255; // red %
@@ -108,7 +109,7 @@ function getDarkerColor(color, multiplier) {
 
 /**
 	Based on my understanding on RGB to HSL formulas on Wikipedia:
-	https://https://en.wikipedia.org/wiki/HSL_and_HSV
+	https://en.wikipedia.org/wiki/HSL_and_HSV
 */
 function getColorLightness(bgColor) {
 	let r = parseInt(bgColor.substr(1, 2), 16) / 255; // red %
