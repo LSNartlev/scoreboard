@@ -42,16 +42,20 @@ function setTeamColors(team, color) {
 	document.getElementById("score"+team+"funcD").style.color = getTextColor(color);
 	
 	// Colors of Timeout/Sets Won Control Buttons
+	document.getElementById("timeout"+team+"zero").style.backgroundColor = getShadedColor(color, 0.7, true);
+	document.getElementById("timeout"+team+"zero").style.color = getTextColor(getShadedColor(color, 0.7, true));
 	document.getElementById("timeout"+team+"minus1").style.backgroundColor =
-	document.getElementById("timeout"+team+"plus1").style.backgroundColor = getShadedColor(color, 0.7);
+	document.getElementById("timeout"+team+"plus1").style.backgroundColor = getShadedColor(color, 0.7, false);
 	document.getElementById("timeout"+team+"minus1").style.color =
-	document.getElementById("timeout"+team+"plus1").style.color = getTextColor(getShadedColor(color, 0.7));
+	document.getElementById("timeout"+team+"plus1").style.color = getTextColor(getShadedColor(color, 0.7, false));
 	
 	// Colors of Team Foul Control Buttons
+	document.getElementById("foul"+team+"zero").style.backgroundColor = getShadedColor(color, 0.45, true);
+	document.getElementById("foul"+team+"zero").style.color = getTextColor(getShadedColor(color, 0.45, true));
 	document.getElementById("foul"+team+"minus1").style.backgroundColor =
-	document.getElementById("foul"+team+"plus1").style.backgroundColor = getShadedColor(color, 0.45);
+	document.getElementById("foul"+team+"plus1").style.backgroundColor = getShadedColor(color, 0.45, false);
 	document.getElementById("foul"+team+"minus1").style.color =
-	document.getElementById("foul"+team+"plus1").style.color = getTextColor(getShadedColor(color, 0.45));
+	document.getElementById("foul"+team+"plus1").style.color = getTextColor(getShadedColor(color, 0.45, false));
 }
 
 function setTeamInfo(team) {
@@ -78,7 +82,7 @@ function getTextColor(color) {
 	Based on my understanding on color conversion formulas on Wikipedia:
 	https://en.wikipedia.org/wiki/HSL_and_HSV
 */
-function getShadedColor(color, multiplier) {
+function getShadedColor(color, multiplier, isGrayscaled) {
 	let r = parseInt(color.substr(1, 2), 16) / 255; // red %
 	let g = parseInt(color.substr(3, 2), 16) / 255; // green %
 	let b = parseInt(color.substr(5, 2), 16) / 255; // blue %
@@ -89,7 +93,7 @@ function getShadedColor(color, multiplier) {
 	lightness = (maxRGB + minRGB) / 2;
 	
 	// getting Hue and Saturation
-	if(maxRGB == minRGB) {
+	if(maxRGB == minRGB || isGrayscaled) {
 		hue = saturation = 0;
 	}
 	else {
@@ -162,10 +166,35 @@ function updateScore(team, scoreButton) {
 	refreshCounters();
 }
 
+function updateCounter(team, ctrType, ctrButton) {
+	if(ctrButton === 0) {
+		if(ctrType === "T") team === "A"? teamAtimeouts = 0:teamBtimeouts = 0;
+		if(ctrType === "F") team === "A"? teamAfouls = 0:teamBfouls = 0;
+	}
+	else {
+		if(ctrType === "T") team === "A"? teamAtimeouts += ctrButton:teamBtimeouts += ctrButton;
+		if(ctrType === "F") team === "A"? teamAfouls += ctrButton:teamBfouls += ctrButton;
+	}
+	// prevent negative values
+	if(teamAtimeouts < 0) teamAtimeouts = 0;
+	if(teamBtimeouts < 0) teamBtimeouts = 0;
+	if(teamAfouls < 0) teamAfouls = 0;
+	if(teamBfouls < 0) teamBfouls = 0;
+	// prevent values above 9
+	if(teamAtimeouts > 9) teamAtimeouts = 9;
+	if(teamBtimeouts > 9) teamBtimeouts = 9;
+	if(teamAfouls > 9) teamAfouls = 9;
+	if(teamBfouls > 9) teamBfouls = 9;
+	refreshCounters();
+}
+
 function refreshCounters() {
 	document.getElementById("sbTeamAscore").innerHTML = teamAscore;
 	document.getElementById("sbTeamBscore").innerHTML = teamBscore;
-	// TODO(kete): Refresh Timeout and Fouls
+	document.getElementById("upperCounterA").innerHTML = teamAtimeouts;
+	document.getElementById("upperCounterB").innerHTML = teamBtimeouts;
+	document.getElementById("lowerCounterA").innerHTML = teamAfouls;
+	document.getElementById("lowerCounterB").innerHTML = teamBfouls;
 }
 
 function resetCounters(team) {

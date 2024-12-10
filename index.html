@@ -20,13 +20,13 @@
 						<input type="button" id="scoreAfuncC" name="scoreAfuncC" value="+2" class="teambutton" onclick='updateScore("A", "C")'>
 						<input type="button" id="scoreAfuncD" name="scoreAfuncD" value="+3" class="teambutton" onclick='updateScore("A", "D")'><br><br>
 						<label for="teamAtimeoutctrl">Timeouts Remaining</label><br>
-						<input type="button" id="timeoutAzero" name="timeoutAzero" value="0" class="teambutton">
-						<input type="button" id="timeoutAminus1" name="timeoutAminus1" value="&#8722;1" class="teambutton">
-						<input type="button" id="timeoutAplus1" name="timeoutAplus1" value="+1" class="teambutton"><br><br>
+						<input type="button" id="timeoutAzero" name="timeoutAzero" value="0" class="teambutton" onclick='updateCounter("A", "T", 0)'>
+						<input type="button" id="timeoutAminus1" name="timeoutAminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("A", "T", -1)'>
+						<input type="button" id="timeoutAplus1" name="timeoutAplus1" value="+1" class="teambutton" onclick='updateCounter("A", "T", 1)'><br><br>
 						<label for="teamAfoulctrl" id="bbFoulvbSet">Team Fouls</label><br>
-						<input type="button" id="foulAzero" name="foulAzero" value="0" class="teambutton">
-						<input type="button" id="foulAminus1" name="foulAminus1" value="&#8722;1" class="teambutton">
-						<input type="button" id="foulAplus1" name="foulAplus1" value="+1" class="teambutton"><br><br><br>
+						<input type="button" id="foulAzero" name="foulAzero" value="0" class="teambutton" onclick='updateCounter("A", "F", 0)'>
+						<input type="button" id="foulAminus1" name="foulAminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("A", "F", -1)'>
+						<input type="button" id="foulAplus1" name="foulAplus1" value="+1" class="teambutton" onclick='updateCounter("A", "F", 1)'><br><br><br>
 						<input type="button" id="resetApoints" name="resetAcounters" value="Reset Counters" class="resetcounter" onclick='resetCounters("A")'>
 					</form>
 				</div>
@@ -47,28 +47,35 @@
 							<div class="column sbteamcontent scoreBox" id="sbTeamBscore"></div>
 							<div class="column sbothercontent" id="sbTeamBposs">&#127952;</div>
 						</div>
-						<div class="sbrow">
+						<div class="ctrrow">
 							<div class="column" id="countersA">
 								<div class="counterscontent">
 									<span class="counterlabel" id="upperLabelA">Timeouts Remaining</span><br>
-									<span class="counternum" id="upperCounterA">0</span>
+									<span class="counternum" id="upperCounterA"></span>
 								</div>
 								<div class="counterscontent">
 									<span class="counterlabel" id="lowerLabelA">Team<br>Fouls</span><br>
-									<span class="counternum" id="lowerCounterA">0</span>
+									<span class="counternum" id="lowerCounterA"></span>
 								</div>
 							</div>
 							<div class="column" id="timers">
-								aa
+								<div class="timerscontent" id="periodTimer">
+									<div class="counterlabel" id="periodText">1st Quarter</div>
+									<div class="counternum" id="periodNum">10:00</div>
+								</div>
+								<div class="timerscontent" id="shotClock">
+									<div class="counternum" id="shotNum">24</div>
+									<div class="counterlabel" id="shotText">Shot Clock</div>
+								</div>
 							</div>
 							<div class="column" id="countersB">
 								<div class="counterscontent">
 									<span class="counterlabel" id="upperLabelB">Timeouts Remaining</span><br>
-									<span class="counternum" id="upperCounterB">0</span>
+									<span class="counternum" id="upperCounterB"></span>
 								</div>
 								<div class="counterscontent">
 									<span class="counterlabel" id="lowerLabelB">Team<br>Fouls</span><br>
-									<span class="counternum" id="lowerCounterB">0</span>
+									<span class="counternum" id="lowerCounterB"></span>
 								</div>
 							</div>
 						</div>
@@ -85,13 +92,13 @@
 						<input type="button" id="scoreBfuncC" name="scoreBfuncC" value="+2" class="teambutton" onclick='updateScore("B", "C")'>
 						<input type="button" id="scoreBfuncD" name="scoreBfuncD" value="+3" class="teambutton" onclick='updateScore("B", "D")'><br><br>
 						<label for="teamBtimeoutctrl">Timeouts Remaining</label><br>
-						<input type="button" id="timeoutBzero" name="timeoutBzero" value="0" class="teambutton">
-						<input type="button" id="timeoutBminus1" name="timeoutBminus1" value="&#8722;1" class="teambutton">
-						<input type="button" id="timeoutBplus1" name="timeoutBplus1" value="+1" class="teambutton"><br><br>
+						<input type="button" id="timeoutBzero" name="timeoutBzero" value="0" class="teambutton" onclick='updateCounter("B", "T", 0)'>
+						<input type="button" id="timeoutBminus1" name="timeoutBminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("B", "T", -1)'>
+						<input type="button" id="timeoutBplus1" name="timeoutBplus1" value="+1" class="teambutton" onclick='updateCounter("B", "T", 1)'><br><br>
 						<label for="teamBfoulctrl" id="bbFoulvbSet">Team Fouls</label><br>
-						<input type="button" id="foulBzero" name="foulBzero" value="0" class="teambutton">
-						<input type="button" id="foulBminus1" name="foulBminus1" value="&#8722;1" class="teambutton">
-						<input type="button" id="foulBplus1" name="foulBplus1" value="+1" class="teambutton"><br><br><br>
+						<input type="button" id="foulBzero" name="foulBzero" value="0" class="teambutton" onclick='updateCounter("B", "F", 0)'>
+						<input type="button" id="foulBminus1" name="foulBminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("B", "F", -1)'>
+						<input type="button" id="foulBplus1" name="foulBplus1" value="+1" class="teambutton" onclick='updateCounter("B", "F", 1)'><br><br><br>
 						<input type="button" id="resetBcounters" name="resetBcounters" value="Reset Counters" class="resetcounter" onclick='resetCounters("B")'>
 					</form>
 				</div>
