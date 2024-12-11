@@ -1,16 +1,14 @@
 var matchTitle = "Basketball";
-var teamAname = "BLUE TEAM";
-var teamBname = "RED TEAM";
-var teamAcolor = "#6dbcf5";
-var teamBcolor = "#f56d66";
-var teamAscore = 0;
-var teamBscore = 0;
-var teamAfouls = 0;
-var teamBfouls = 0;
-var teamAtimeouts = 0;
-var teamBtimeouts = 0;
-var isBasketball = true;
-var ballPossession = 0;
+var teamAname = "BLUE TEAM", teamBname = "RED TEAM";
+var teamAcolor = "#6dbcf5", teamBcolor = "#f56d66";
+var teamAscore = 0, teamBscore = 0;
+var teamAfouls = 0, teamBfouls = 0;
+var teamAtimeouts = 0, teamBtimeouts = 0;
+var isBasketball = true, ballPossession = 0;
+var enableTimer = true, enableShotClock = true;
+var isTimerRunning = false, isShotClockRunning = false;
+var timer = [10, 0, 0], shotClock = 24, isTimeout = false;
+var defaultTimer = [10, 0, 0], defaultShotClocks = [24, 14, 60];
 
 function setDefaults() {
 	setMatchTitle(matchTitle);
@@ -19,8 +17,8 @@ function setDefaults() {
 	setTeamColors("B", teamBcolor);
 	setTeamInfo("B");
 	setScoreboardElements();
-	updateScore("A", 0);
-	updateScore("B", 0);
+	resetCounters("A");
+	resetCounters("B");
 }
 
 function setMatchTitle(matchTitle) {

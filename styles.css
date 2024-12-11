@@ -14,7 +14,7 @@ form {
 .pagecontain {
 	display:flex;
 	flex-direction:column;
-	height:200vh;
+	height:100vh;
 }
 
 .row {
@@ -53,7 +53,7 @@ form {
 
 .optionpanels {
 	background-color:#303030;
-	height:3.75vh;
+	height:calc(100vw-33.75vw);
 }
 
 .column {
@@ -69,8 +69,28 @@ form {
 	justify-content:center;
 	position:relative;
 	background-color:#202020;
-	width:20vw;
+	min-width:;
+	width:22vw;
+	min-height:360px;
 	height:33.75vw;
+}
+
+.boardcol {
+	padding:1.5vh;
+	position:relative;
+	background-color:#101010;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	min-width:640px;
+	width:56vw;
+	min-height:360px;
+	height:33.75vw;
+}
+
+.setupcol {
+	padding:1.5vh;
+	width:22vw;
 }
 
 .textfield {
@@ -94,17 +114,6 @@ input[type="color"] {
 	border:none;
 	width:18%;
 	height:max(1.3vw,12px);
-}
-
-.boardcol {
-	padding:1.5vh;
-	position:relative;
-	background-color:#101010;
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	width:60vw;
-	height:33.75vw;
 }
 
 /* Team Controls */
@@ -224,6 +233,13 @@ input[type="color"] {
 	height:min(7em,9vw);
 }
 
+.timerscontent {
+	margin:0.5vh;
+	padding:0.5vh;
+	width:42.5%;
+	height:min(7em,9vw);
+}
+
 .counterlabel {
 	font-family:roboto, sans-serif;
 	font-size:max(1.25vw,12px);
@@ -246,7 +262,31 @@ input[type="color"] {
 #timers {
 	display:flex;
 	flex-direction:column;
+	align-items:center;
+	justify-content:center;
 	width:68.75%;
 	margin:0.5vh;
 	padding:0.5vh;
+}
+
+#periodText,#shotText {
+	background-color:#ffffff;
+	color:#000000;
+	font-size:max(1.5vw,12px);
+	line-height:max(1.5vw,12px);
+	text-align:center;
+	padding:0.75vh;
+}
+
+#periodNum, #shotNum {
+	background-color:#000000;
+	color:#ffffff;
+	font-size:max(7.25vh,5.5vw,12px);
+	line-height:max(6.75vh,4.125vw,12px);
+	text-align:center;
+	padding:1vh;
+}
+
+#shotClock {
+	width:22.5%;
 }
