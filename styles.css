@@ -7,8 +7,13 @@ body {
 	padding:0;
 }
 
+table {
+	border:0;
+}
+
 form {
 	text-align:center;
+	width:100%;
 }
 
 .pagecontain {
@@ -69,7 +74,6 @@ form {
 	justify-content:center;
 	position:relative;
 	background-color:#202020;
-	min-width:;
 	width:22vw;
 	min-height:360px;
 	height:33.75vw;
@@ -89,17 +93,17 @@ form {
 }
 
 .setupcol {
+	display:block;
 	padding:1.5vh;
 	width:22vw;
 }
 
 .textfield {
 	position:relative;
-	background-color:#303030;
-	padding:0;
+	background-color:#151515;
+	padding:0.5vh;
 	border:none;
 	color:#ffffff;
-	text-align:center;
 	font-family:roboto, sans-serif;
 	font-size:max(1vw,12px);
 	height:max(1.5vw,14px);
@@ -107,6 +111,10 @@ form {
 
 .teamtf {
 	width:78%;
+}
+
+#matchTitle {
+	width:100%;
 }
 
 input[type="color"] {
@@ -219,7 +227,7 @@ input[type="color"] {
 #countersA, #countersB {
 	display:flex;
 	flex-direction:column;
-	width:12%;
+	width:18%;
 	text-align:center;
 	align-items:center;
 	justify-content:center;
@@ -229,6 +237,10 @@ input[type="color"] {
 	background-color:rgb(0, 0, 0, 0.55);
 	margin:0.5vh;
 	padding:0.5vh;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
 	width:100%;
 	height:min(7em,9vw);
 }
@@ -236,7 +248,7 @@ input[type="color"] {
 .timerscontent {
 	margin:0.5vh;
 	padding:0.5vh;
-	width:42.5%;
+	width:50%;
 	height:min(7em,9vw);
 }
 
@@ -264,12 +276,12 @@ input[type="color"] {
 	flex-direction:column;
 	align-items:center;
 	justify-content:center;
-	width:68.75%;
+	width:58%;
 	margin:0.5vh;
 	padding:0.5vh;
 }
 
-#periodText,#shotText {
+#sbPeriodText,#sbShotText {
 	background-color:#ffffff;
 	color:#000000;
 	font-size:max(1.5vw,12px);
@@ -278,7 +290,7 @@ input[type="color"] {
 	padding:0.75vh;
 }
 
-#periodNum, #shotNum {
+#sbPeriodNum, #sbShotNum {
 	background-color:#000000;
 	color:#ffffff;
 	font-size:max(7.25vh,5.5vw,12px);
@@ -287,6 +299,6 @@ input[type="color"] {
 	padding:1vh;
 }
 
-#shotClock {
-	width:22.5%;
+#sbShotClock {
+	width:28%;
 }

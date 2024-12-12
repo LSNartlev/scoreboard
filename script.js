@@ -1,9 +1,9 @@
-var matchTitle = "Basketball";
+var matchTitle = "Web Scoreboard by LSNartlev";
 var teamAname = "BLUE TEAM", teamBname = "RED TEAM";
 var teamAcolor = "#6dbcf5", teamBcolor = "#f56d66";
 var teamAscore = 0, teamBscore = 0;
-var teamAfouls = 0, teamBfouls = 0;
-var teamAtimeouts = 0, teamBtimeouts = 0;
+var teamAupperCounter = 0, teamBupperCounter = 0;
+var teamAlowerCounter = 0, teamBlowerCounter = 0;
 var isBasketball = true, ballPossession = 0;
 var enableTimer = true, enableShotClock = true;
 var isTimerRunning = false, isShotClockRunning = false;
@@ -11,49 +11,49 @@ var timer = [10, 0, 0], shotClock = 24, isTimeout = false;
 var defaultTimer = [10, 0, 0], defaultShotClocks = [24, 14, 60];
 
 function setDefaults() {
-	setMatchTitle(matchTitle);
 	setTeamColors("A", teamAcolor);
 	setTeamInfo("A");
 	setTeamColors("B", teamBcolor);
 	setTeamInfo("B");
+	setMatchTitle(matchTitle);
 	setScoreboardElements();
 	resetCounters("A");
 	resetCounters("B");
 }
 
 function setMatchTitle(matchTitle) {
-	document.getElementById("sbMatchTitle").innerHTML = matchTitle;
+	document.getElementById("matchTitle").value = matchTitle;
 }
 
 function setTeamColors(team, color) {
 	// Background Colors of Input Color, Score Control Buttons
 	document.getElementById("team"+team+"color").value = 
-	document.getElementById("score"+team+"funcA").style.backgroundColor = 
+	document.getElementById("score"+team+"funcA").style.backgroundColor = isBasketball? color:getShadedColor(color, 0.7, true);
 	document.getElementById("score"+team+"funcB").style.backgroundColor = 
 	document.getElementById("score"+team+"funcC").style.backgroundColor = 
 	document.getElementById("score"+team+"funcD").style.backgroundColor = color;
 	
 	// Text Colors of Score Control Buttons and Ball Possession indicator
-	document.getElementById("score"+team+"funcA").style.color = 
+	document.getElementById("score"+team+"funcA").style.color = isBasketball? getTextColor(color):getTextColor(getShadedColor(color, 0.7, true));
 	document.getElementById("score"+team+"funcB").style.color = 
 	document.getElementById("score"+team+"funcC").style.color = 
 	document.getElementById("score"+team+"funcD").style.color = getTextColor(color);
 	
 	// Colors of Timeout/Sets Won Control Buttons
-	document.getElementById("timeout"+team+"zero").style.backgroundColor = getShadedColor(color, 0.7, true);
-	document.getElementById("timeout"+team+"zero").style.color = getTextColor(getShadedColor(color, 0.7, true));
-	document.getElementById("timeout"+team+"minus1").style.backgroundColor =
-	document.getElementById("timeout"+team+"plus1").style.backgroundColor = getShadedColor(color, 0.7, false);
-	document.getElementById("timeout"+team+"minus1").style.color =
-	document.getElementById("timeout"+team+"plus1").style.color = getTextColor(getShadedColor(color, 0.7, false));
+	document.getElementById("upper"+team+"zero").style.backgroundColor = getShadedColor(color, 0.7, true);
+	document.getElementById("upper"+team+"zero").style.color = getTextColor(getShadedColor(color, 0.7, true));
+	document.getElementById("upper"+team+"minus1").style.backgroundColor =
+	document.getElementById("upper"+team+"plus1").style.backgroundColor = getShadedColor(color, 0.7, false);
+	document.getElementById("upper"+team+"minus1").style.color =
+	document.getElementById("upper"+team+"plus1").style.color = getTextColor(getShadedColor(color, 0.7, false));
 	
 	// Colors of Team Foul Control Buttons
-	document.getElementById("foul"+team+"zero").style.backgroundColor = getShadedColor(color, 0.45, true);
-	document.getElementById("foul"+team+"zero").style.color = getTextColor(getShadedColor(color, 0.45, true));
-	document.getElementById("foul"+team+"minus1").style.backgroundColor =
-	document.getElementById("foul"+team+"plus1").style.backgroundColor = getShadedColor(color, 0.45, false);
-	document.getElementById("foul"+team+"minus1").style.color =
-	document.getElementById("foul"+team+"plus1").style.color = getTextColor(getShadedColor(color, 0.45, false));
+	document.getElementById("lower"+team+"zero").style.backgroundColor = getShadedColor(color, 0.45, true);
+	document.getElementById("lower"+team+"zero").style.color = getTextColor(getShadedColor(color, 0.45, true));
+	document.getElementById("lower"+team+"minus1").style.backgroundColor =
+	document.getElementById("lower"+team+"plus1").style.backgroundColor = getShadedColor(color, 0.45, false);
+	document.getElementById("lower"+team+"minus1").style.color =
+	document.getElementById("lower"+team+"plus1").style.color = getTextColor(getShadedColor(color, 0.45, false));
 }
 
 function setTeamInfo(team) {
@@ -63,13 +63,25 @@ function setTeamInfo(team) {
 
 function setScoreboardElements() {
 	// Scoreboard Background
+	console.log("Before setScoreboardElements()----- TEAM A:" + teamAcolor + " / TEAM B:" + teamBcolor);
 	teamAcolor = document.getElementById("teamAcolor").value;
 	teamBcolor = document.getElementById("teamBcolor").value;
+	console.log("After setScoreboardElements()----- TEAM A:" + teamAcolor + " / TEAM B:" + teamBcolor);
 	document.getElementById("scoreboard").style.background = "linear-gradient(to right, " + teamAcolor + " 0 50%, " + teamBcolor + " 50% 100%)";
 	
 	// Match Title
-	//matchTitle = document.getElementById("matchTitle").value;
+	matchTitle = document.getElementById("matchTitle").value;
 	document.getElementById("sbMatchTitle").innerHTML = matchTitle;
+	
+	// Scoreboard Labels
+	document.getElementById("teamAupperctrl").innerHTML = 
+	document.getElementById("teamBupperctrl").innerHTML = 
+	document.getElementById("upperLabelA").innerHTML = 
+	document.getElementById("upperLabelB").innerHTML = isBasketball? "Team Fouls":"Set Wins";
+	document.getElementById("teamAlowerctrl").innerHTML = 
+	document.getElementById("teamBlowerctrl").innerHTML = 
+	document.getElementById("lowerLabelA").innerHTML = 
+	document.getElementById("lowerLabelB").innerHTML = "Timeouts Left";
 }
 
 function getTextColor(color) {
@@ -130,6 +142,11 @@ function changeTeamName(team) {
 	setTeamInfo(team);
 }
 
+function changeMatchTitle() {
+	matchTitle = document.getElementById("matchTitle").value;
+	setScoreboardElements();
+}
+
 function changeTeamColor(team) {
 	setTeamColors(team, document.getElementById("team"+team+"color").value);
 	setScoreboardElements();
@@ -166,45 +183,62 @@ function updateScore(team, scoreButton) {
 
 function updateCounter(team, ctrType, ctrButton) {
 	if(ctrButton === 0) {
-		if(ctrType === "T") team === "A"? teamAtimeouts = 0:teamBtimeouts = 0;
-		if(ctrType === "F") team === "A"? teamAfouls = 0:teamBfouls = 0;
+		if(ctrType === "T") team === "A"? teamAupperCounter = 0:teamBupperCounter = 0;
+		if(ctrType === "F") team === "A"? teamAlowerCounter = 0:teamBlowerCounter = 0;
 	}
 	else {
-		if(ctrType === "T") team === "A"? teamAtimeouts += ctrButton:teamBtimeouts += ctrButton;
-		if(ctrType === "F") team === "A"? teamAfouls += ctrButton:teamBfouls += ctrButton;
+		if(ctrType === "T") team === "A"? teamAupperCounter += ctrButton:teamBupperCounter += ctrButton;
+		if(ctrType === "F") team === "A"? teamAlowerCounter += ctrButton:teamBlowerCounter += ctrButton;
 	}
 	// prevent negative values
-	if(teamAtimeouts < 0) teamAtimeouts = 0;
-	if(teamBtimeouts < 0) teamBtimeouts = 0;
-	if(teamAfouls < 0) teamAfouls = 0;
-	if(teamBfouls < 0) teamBfouls = 0;
+	if(teamAupperCounter < 0) teamAupperCounter = 0;
+	if(teamBupperCounter < 0) teamBupperCounter = 0;
+	if(teamAlowerCounter < 0) teamAlowerCounter = 0;
+	if(teamBlowerCounter < 0) teamBlowerCounter = 0;
 	// prevent values above 9
-	if(teamAtimeouts > 9) teamAtimeouts = 9;
-	if(teamBtimeouts > 9) teamBtimeouts = 9;
-	if(teamAfouls > 9) teamAfouls = 9;
-	if(teamBfouls > 9) teamBfouls = 9;
+	if(teamAupperCounter > 9) teamAupperCounter = 9;
+	if(teamBupperCounter > 9) teamBupperCounter = 9;
+	if(teamAlowerCounter > 9) teamAlowerCounter = 9;
+	if(teamBlowerCounter > 9) teamBlowerCounter = 9;
 	refreshCounters();
 }
 
 function refreshCounters() {
 	document.getElementById("sbTeamAscore").innerHTML = teamAscore;
 	document.getElementById("sbTeamBscore").innerHTML = teamBscore;
-	document.getElementById("upperCounterA").innerHTML = teamAtimeouts;
-	document.getElementById("upperCounterB").innerHTML = teamBtimeouts;
-	document.getElementById("lowerCounterA").innerHTML = teamAfouls;
-	document.getElementById("lowerCounterB").innerHTML = teamBfouls;
+	document.getElementById("upperCounterA").innerHTML = teamAupperCounter;
+	document.getElementById("upperCounterB").innerHTML = teamBupperCounter;
+	document.getElementById("lowerCounterA").innerHTML = teamAlowerCounter;
+	document.getElementById("lowerCounterB").innerHTML = teamBlowerCounter;
 }
 
 function resetCounters(team) {
 	if(team === "A") {
 		teamAscore = 0;
-		teamAtimeouts = 0;
-		teamAfouls = 0;
+		teamAupperCounter = 0;
+		teamAlowerCounter = 0;
 	}
 	else {
 		teamBscore = 0;
-		teamBtimeouts = 0;
-		teamBfouls = 0;
+		teamBupperCounter = 0;
+		teamBlowerCounter = 0;
 	}
 	refreshCounters();
+}
+
+function changeGameMode() {
+	let newMode = document.querySelector("input[name='gameMode']:checked").value;
+	isBasketball = newMode === "Basketball"? true:false;
+	document.getElementById("scoreAfuncA").value = isBasketball? "\u22121":"0";
+	document.getElementById("scoreBfuncA").value = isBasketball? "\u22121":"0";
+	document.getElementById("scoreAfuncB").value = isBasketball? "+1":"\u22121";
+	document.getElementById("scoreBfuncB").value = isBasketball? "+1":"\u22121";
+	document.getElementById("scoreAfuncC").value = isBasketball? "+2":"+1";
+	document.getElementById("scoreBfuncC").value = isBasketball? "+2":"+1";
+	document.getElementById("scoreAfuncD").style.display = isBasketball? "inline-block":"none";
+	document.getElementById("scoreBfuncD").style.display = isBasketball? "inline-block":"none";
+	console.log("RED:" + document.getElementById("teamAcolor").value + " / BLUE:" + document.getElementById("teamBcolor").value);
+	setTeamColors("A", teamAcolor);
+	setTeamColors("B", teamBcolor);
+	setScoreboardElements();
 }
