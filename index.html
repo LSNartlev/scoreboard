@@ -60,7 +60,7 @@
 							</div>
 							<div class="column" id="timers">
 								<div class="timerscontent" id="sbPeriodTimer">
-									<div class="counterlabel" id="sbPeriodText">1st Quarter</div>
+									<div class="counterlabel" id="sbPeriodText"></div>
 									<div class="counternum" id="sbPeriodNum">10:00</div>
 								</div>
 								<div class="timerscontent" id="sbShotClock">
@@ -107,10 +107,10 @@
 				<div class="column setupcol">
 					<table>
 						<tr>
-							<td><label for="gameMode">Game Mode</label></td>
+							<td>Game Mode</td>
 							<td>
-								<input type="radio" id="bbMode" name="gameMode" value="Basketball" checked="true" oninput="changeGameMode()">&#127936;Basketball</input>
-								<input type="radio" id="vbMode" name="gameMode" value="Volleyball" oninput="changeGameMode()">&#127952;Volleyball</input>
+								<label><input type="radio" id="bbMode" name="gameMode" value="Basketball" checked="true" oninput="changeGameMode()">&#127936;Basketball</input></label>
+								<label><input type="radio" id="vbMode" name="gameMode" value="Volleyball" oninput="changeGameMode()">&#127952;Volleyball</input></label>
 							</td>
 						</tr>
 						<tr>
@@ -120,11 +120,11 @@
 						<tr>
 							<td><label for="gamePeriod">Period</label></td>
 							<td>
-								<input type="number" id="periodNum" name="periodNum" value="1" min="0" max="5">
-								<select id="gamePeriod" name="gamePeriod">
-									<option value="off">(No period)</option>
-									<option value="on1" selected="selected">Quarter</option>
-									<option value="on2">Half</option>
+								<input type="number" id="periodNum" name="periodNum" value="1" min="0" max="5" oninput="changePeriod()">
+								<select id="gamePeriod" name="gamePeriod" oninput="changePeriod()">
+									<option value="Quarter" selected="selected">Quarter</option>
+									<option value="Half">Half</option>
+									<option value="Set">Set</option>
 								</select>
 							</td>
 						</tr>

@@ -17,6 +17,7 @@ function setDefaults() {
 	setTeamInfo("B");
 	setMatchTitle(matchTitle);
 	setScoreboardElements();
+	changePeriod();
 	resetCounters("A");
 	resetCounters("B");
 }
@@ -240,4 +241,19 @@ function changeGameMode() {
 	document.getElementById("scoreAfuncD").style.display = isBasketball? "inline-block":"none";
 	document.getElementById("scoreBfuncD").style.display = isBasketball? "inline-block":"none";
 	setScoreboardElements();
+}
+
+function changePeriod() {
+	let periodNum = document.getElementById("periodNum").value;
+	let gamePeriod = document.querySelector("#gamePeriod").value;
+	let periodLabel = "";
+	switch(periodNum) {
+		case "0": periodLabel += "Time Remaining"; break;
+		case "1": periodLabel += "1st " + gamePeriod; break;
+		case "2": periodLabel += "2nd " + gamePeriod; break;
+		case "3": periodLabel += gamePeriod === "Half"? "Overtime":"3rd " + gamePeriod; break;
+		case "4": periodLabel += gamePeriod === "Half"? "Overtime":"4th " + gamePeriod; break;
+		case "5": periodLabel += gamePeriod != "Set"? "Overtime":"5th " + gamePeriod; break;
+	}
+	document.getElementById("sbPeriodText").innerHTML = periodLabel;
 }

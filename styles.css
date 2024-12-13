@@ -180,7 +180,7 @@ input[type="color"] {
 	justify-content:center;
 	text-align:center;
 	text-overflow:ellipsis;
-	width:43%;
+	width:41.75%;
 }
 
 #sbTeamAposs, #sbTeamBposs {
@@ -206,17 +206,14 @@ input[type="color"] {
 	color:#ffffff;
 	margin-top:1.5vh;
 	margin-bottom:1.5vh;
-	width:2vw;
+	width:3vw;
 }
 
 #sbVersusGap {
-	width:7%;
+	width:9%;
 }
 
 .sbothercontent {
-	padding:0.5vh;
-	padding-left:2vh;
-	padding-right:2vh;
 	font-family:roboto, sans-serif;
 	font-size:max(1.75vw,12px);
 	font-weight:bold;
@@ -246,7 +243,7 @@ input[type="color"] {
 }
 
 .timerscontent {
-	margin:0.5vh;
+	margin:0.25vh;
 	padding:0.5vh;
 	width:50%;
 	height:min(7em,9vw);
@@ -266,7 +263,7 @@ input[type="color"] {
 	display:flex;
 	align-items:center;
 	justify-content:center;
-	padding-top:0.25vw;
+	padding-bottom:1vh;
 	line-height:max(6.5vh,4vw,12px);
 	font-weight:bold;
 }
@@ -277,8 +274,10 @@ input[type="color"] {
 	align-items:center;
 	justify-content:center;
 	width:58%;
-	margin:0.5vh;
-	padding:0.5vh;
+}
+
+#sbPeriodTimer {
+	padding-bottom:1vh;
 }
 
 #sbPeriodText,#sbShotText {
@@ -301,4 +300,9 @@ input[type="color"] {
 
 #sbShotClock {
 	width:28%;
+}
+
+#bbMode, #vbMode {
+	width:max(1vw,12px);
+	height:max(1vw,12px);
 }
