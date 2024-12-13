@@ -26,6 +26,9 @@ function setMatchTitle(matchTitle) {
 }
 
 function setTeamColors(team, color) {
+	if(team === "A") teamAcolor = color;
+	if(team === "B") teamBcolor = color;
+	
 	// Background Colors of Input Color, Score Control Buttons
 	document.getElementById("team"+team+"color").value = 
 	document.getElementById("score"+team+"funcA").style.backgroundColor = isBasketball? color:getShadedColor(color, 0.7, true);
@@ -63,10 +66,6 @@ function setTeamInfo(team) {
 
 function setScoreboardElements() {
 	// Scoreboard Background
-	console.log("Before setScoreboardElements()----- TEAM A:" + teamAcolor + " / TEAM B:" + teamBcolor);
-	teamAcolor = document.getElementById("teamAcolor").value;
-	teamBcolor = document.getElementById("teamBcolor").value;
-	console.log("After setScoreboardElements()----- TEAM A:" + teamAcolor + " / TEAM B:" + teamBcolor);
 	document.getElementById("scoreboard").style.background = "linear-gradient(to right, " + teamAcolor + " 0 50%, " + teamBcolor + " 50% 100%)";
 	
 	// Match Title
@@ -227,18 +226,18 @@ function resetCounters(team) {
 }
 
 function changeGameMode() {
-	let newMode = document.querySelector("input[name='gameMode']:checked").value;
-	isBasketball = newMode === "Basketball"? true:false;
+	isBasketball = document.querySelector("input[name='gameMode']:checked").value === "Basketball"? true:false;
 	document.getElementById("scoreAfuncA").value = isBasketball? "\u22121":"0";
+	document.getElementById("scoreAfuncA").style.backgroundColor = isBasketball? teamAcolor:getShadedColor(teamAcolor, 0.7, true);
+	document.getElementById("scoreAfuncA").style.color = isBasketball? getTextColor(teamAcolor):getTextColor(getShadedColor(teamAcolor, 0.7, true));
 	document.getElementById("scoreBfuncA").value = isBasketball? "\u22121":"0";
+	document.getElementById("scoreBfuncA").style.backgroundColor = isBasketball? teamBcolor:getShadedColor(teamBcolor, 0.7, true);
+	document.getElementById("scoreBfuncA").style.color = isBasketball? getTextColor(teamBcolor):getTextColor(getShadedColor(teamBcolor, 0.7, true));
 	document.getElementById("scoreAfuncB").value = isBasketball? "+1":"\u22121";
 	document.getElementById("scoreBfuncB").value = isBasketball? "+1":"\u22121";
 	document.getElementById("scoreAfuncC").value = isBasketball? "+2":"+1";
 	document.getElementById("scoreBfuncC").value = isBasketball? "+2":"+1";
 	document.getElementById("scoreAfuncD").style.display = isBasketball? "inline-block":"none";
 	document.getElementById("scoreBfuncD").style.display = isBasketball? "inline-block":"none";
-	console.log("RED:" + document.getElementById("teamAcolor").value + " / BLUE:" + document.getElementById("teamBcolor").value);
-	setTeamColors("A", teamAcolor);
-	setTeamColors("B", teamBcolor);
 	setScoreboardElements();
 }
