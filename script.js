@@ -75,13 +75,13 @@ function setScoreboardElements() {
 	
 	// Scoreboard Labels
 	document.getElementById("teamAupperctrl").innerHTML = 
-	document.getElementById("teamBupperctrl").innerHTML = 
+	document.getElementById("teamBupperctrl").innerHTML = isBasketball? "Team Fouls":"Sets Won";
 	document.getElementById("upperLabelA").innerHTML = 
-	document.getElementById("upperLabelB").innerHTML = isBasketball? "Team Fouls":"Set Wins";
+	document.getElementById("upperLabelB").innerHTML = isBasketball? "TEAM FOULS":"SETS WON";
 	document.getElementById("teamAlowerctrl").innerHTML = 
-	document.getElementById("teamBlowerctrl").innerHTML = 
+	document.getElementById("teamBlowerctrl").innerHTML = "Timeouts Left";
 	document.getElementById("lowerLabelA").innerHTML = 
-	document.getElementById("lowerLabelB").innerHTML = "Timeouts Left";
+	document.getElementById("lowerLabelB").innerHTML = "TIMEOUTS LEFT";
 }
 
 function getTextColor(color) {
@@ -226,8 +226,10 @@ function resetCounters(team) {
 	refreshCounters();
 }
 
-function changeGameMode() {
-	isBasketball = document.querySelector("input[name='gameMode']:checked").value === "Basketball"? true:false;
+function changeGameMode(isNewModeBasketball) {
+	isBasketball = isNewModeBasketball;
+	document.getElementById(isBasketball?"bbDefault":"vbDefault").selected = "selected";
+	changePeriod();
 	document.getElementById("scoreAfuncA").value = isBasketball? "\u22121":"0";
 	document.getElementById("scoreAfuncA").style.backgroundColor = isBasketball? teamAcolor:getShadedColor(teamAcolor, 0.7, true);
 	document.getElementById("scoreAfuncA").style.color = isBasketball? getTextColor(teamAcolor):getTextColor(getShadedColor(teamAcolor, 0.7, true));
@@ -249,11 +251,11 @@ function changePeriod() {
 	let periodLabel = "";
 	switch(periodNum) {
 		case "0": periodLabel += "Time Remaining"; break;
-		case "1": periodLabel += "1st " + gamePeriod; break;
-		case "2": periodLabel += "2nd " + gamePeriod; break;
-		case "3": periodLabel += gamePeriod === "Half"? "Overtime":"3rd " + gamePeriod; break;
-		case "4": periodLabel += gamePeriod === "Half"? "Overtime":"4th " + gamePeriod; break;
-		case "5": periodLabel += gamePeriod != "Set"? "Overtime":"5th " + gamePeriod; break;
+		case "1": periodLabel += "1ST " + gamePeriod; break;
+		case "2": periodLabel += "2ND " + gamePeriod; break;
+		case "3": periodLabel += gamePeriod === "HALF"? "OVERTIME":"3RD " + gamePeriod; break;
+		case "4": periodLabel += gamePeriod === "HALF"? "OVERTIME":"4TH " + gamePeriod; break;
+		case "5": periodLabel += gamePeriod != "SET"? "OVERTIME":"5TH " + gamePeriod; break;
 	}
 	document.getElementById("sbPeriodText").innerHTML = periodLabel;
 }

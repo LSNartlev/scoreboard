@@ -74,6 +74,7 @@ form {
 	justify-content:center;
 	position:relative;
 	background-color:#202020;
+	min-width:250px;
 	width:22vw;
 	min-height:360px;
 	height:33.75vw;
@@ -93,9 +94,11 @@ form {
 }
 
 .setupcol {
-	display:block;
+	display:flex;
 	padding:1.5vh;
 	width:22vw;
+	min-height:150px;
+	height:20vh;
 }
 
 .textfield {
@@ -132,7 +135,9 @@ input[type="color"] {
 	font-family:roboto, sans-serif;
 	font-size:2em;
 	text-align:center;
+	min-width:50px;
 	width:4.25vw;
+	min-height:50px;
 	height:4.25vw;
 	cursor:pointer;
 }
@@ -263,6 +268,7 @@ input[type="color"] {
 	display:flex;
 	align-items:center;
 	justify-content:center;
+	-webkit-padding-before:2.5vh; /* needed for Chrome/Edge it seems */
 	padding-bottom:1vh;
 	line-height:max(6.5vh,4vw,12px);
 	font-weight:bold;

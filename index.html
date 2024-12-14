@@ -51,11 +51,11 @@
 							<div class="column" id="countersA">
 								<div class="counterscontent">
 									<span class="counternum" id="upperCounterA"></span>
-									<span class="counterlabel" id="upperLabelA">Timeouts Left</span><br>
+									<span class="counterlabel" id="upperLabelA">TIMEOUTS LEFT</span><br>
 								</div>
 								<div class="counterscontent">
 									<span class="counternum" id="lowerCounterA"></span>
-									<span class="counterlabel" id="lowerLabelA">Team Fouls</span><br>
+									<span class="counterlabel" id="lowerLabelA">TEAM FOULS</span><br>
 								</div>
 							</div>
 							<div class="column" id="timers">
@@ -65,17 +65,17 @@
 								</div>
 								<div class="timerscontent" id="sbShotClock">
 									<div class="counternum" id="sbShotNum">24</div>
-									<div class="counterlabel" id="sbShotText">Shot Clock</div>
+									<div class="counterlabel" id="sbShotText">TO SHOOT</div>
 								</div>
 							</div>
 							<div class="column" id="countersB">
 								<div class="counterscontent">
 									<span class="counternum" id="upperCounterB"></span>
-									<span class="counterlabel" id="upperLabelB">Timeouts Left</span><br>
+									<span class="counterlabel" id="upperLabelB">TIMEOUTS LEFT</span><br>
 								</div>
 								<div class="counterscontent">
 									<span class="counternum" id="lowerCounterB"></span>
-									<span class="counterlabel" id="lowerLabelB">Team Fouls</span><br>
+									<span class="counterlabel" id="lowerLabelB">TEAM FOULS</span><br>
 								</div>
 							</div>
 						</div>
@@ -109,8 +109,8 @@
 						<tr>
 							<td>Game Mode</td>
 							<td>
-								<label><input type="radio" id="bbMode" name="gameMode" value="Basketball" checked="true" oninput="changeGameMode()">&#127936;Basketball</input></label>
-								<label><input type="radio" id="vbMode" name="gameMode" value="Volleyball" oninput="changeGameMode()">&#127952;Volleyball</input></label>
+								<label><input type="radio" id="bbMode" name="gameMode" value="Basketball" checked="true" oninput="changeGameMode(true)">&#127936;Basketball</input></label>
+								<label><input type="radio" id="vbMode" name="gameMode" value="Volleyball" oninput="changeGameMode(false)">&#127952;Volleyball</input></label>
 							</td>
 						</tr>
 						<tr>
@@ -122,9 +122,9 @@
 							<td>
 								<input type="number" id="periodNum" name="periodNum" value="1" min="0" max="5" oninput="changePeriod()">
 								<select id="gamePeriod" name="gamePeriod" oninput="changePeriod()">
-									<option value="Quarter" selected="selected">Quarter</option>
-									<option value="Half">Half</option>
-									<option value="Set">Set</option>
+									<option id="bbDefault" value="QUARTER" selected="selected">Quarter</option>
+									<option value="HALF">Half</option>
+									<option id="vbDefault" value="SET">Set</option>
 								</select>
 							</td>
 						</tr>
