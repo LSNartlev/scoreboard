@@ -128,8 +128,47 @@
 								</select>
 							</td>
 						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<input type="button" id="changeCourt" name="changeCourt" value="CHANGE COURT" onclick="changeCourt()">
+							</td>
+						</tr>
 					</table>
 				</div>
+				<div class="column setupcol">
+					<table>
+						<tr>
+							<td colspan="3">
+							<input type="checkbox" id="timerCheckbox" name="timerCheckbox" oninput="toggleTimerUsage()" checked><label for="timerCheckbox">Use Period Timer</label>
+							</td>
+						</tr>
+						<tr>
+							<td>Timer Setting</td>
+							<td colspan="2" id="timerStatus">NOT STARTED</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="number" id="timerMin" name="timerMin" value="10" min="0" max="99"> minutes
+							</td>
+							<td rowspan="0" class="timerctrl">
+								<input type="button" id="setTimer" name="setTimer" value="SET TIMER" onclick="changeTimer()">
+								<input type="button" id="toggleTimerState" name="toggleTimerState" value="START" onclick="changeTimerState()">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="number" id="timerSec" name="timerSec" value="0" min="0" max="59"> seconds
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="number" id="timerDsec" name="timerDsec" value="0" min="0" max="9"> &#215; 0.1 sec
+							</td>
+						</tr>
+					</table>
+				</div>
+				
 			</div>
 		</div>
 	</body>

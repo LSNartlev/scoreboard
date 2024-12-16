@@ -250,12 +250,12 @@ function changePeriod() {
 	let gamePeriod = document.querySelector("#gamePeriod").value;
 	let periodLabel = "";
 	switch(periodNum) {
-		case "0": periodLabel += "Time Remaining"; break;
 		case "1": periodLabel += "1ST " + gamePeriod; break;
 		case "2": periodLabel += "2ND " + gamePeriod; break;
 		case "3": periodLabel += gamePeriod === "HALF"? "OVERTIME":"3RD " + gamePeriod; break;
 		case "4": periodLabel += gamePeriod === "HALF"? "OVERTIME":"4TH " + gamePeriod; break;
 		case "5": periodLabel += gamePeriod != "SET"? "OVERTIME":"5TH " + gamePeriod; break;
+		default: periodLabel += "Time Remaining"; break;
 	}
 	document.getElementById("sbPeriodText").innerHTML = periodLabel;
 }
