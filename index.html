@@ -65,7 +65,7 @@
 								</div>
 								<div class="timerscontent" id="sbShotClock">
 									<div class="counternum" id="sbShotNum">24</div>
-									<div class="counterlabel" id="sbShotText">TO SHOOT</div>
+									<div class="counterlabel" id="sbShotText">SHOT CLOCK</div>
 								</div>
 							</div>
 							<div class="column" id="countersB">
@@ -140,7 +140,7 @@
 					<table>
 						<tr>
 							<td colspan="3">
-							<input type="checkbox" id="timerCheckbox" name="timerCheckbox" oninput="toggleTimerUsage()" checked><label for="timerCheckbox">Use Period Timer</label>
+							<input type="checkbox" id="timerCheckbox" name="timerCheckbox" oninput="toggleTimerUsage()" checked><label for="timerCheckbox">Enable Timer</label>
 							</td>
 						</tr>
 						<tr>
@@ -168,7 +168,21 @@
 						</tr>
 					</table>
 				</div>
-				
+				<div class="column setupcolmini">
+					<table>
+						<tr>
+							<td colspan="2" id="possType">
+								Possession
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="button" id="teamAposs" name="teamAposs" class="possButton" value="&#9664;">
+								<input type="button" id="teamBposs" name="teamBposs" class="possButton" value="&#9658;">
+							</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
 	</body>

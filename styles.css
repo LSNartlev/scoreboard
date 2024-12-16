@@ -73,7 +73,7 @@ form {
 	display:flex;
 	justify-content:center;
 	position:relative;
-	background-color:#202020;
+	background-color:#303030;
 	min-width:250px;
 	width:22vw;
 	min-height:360px;
@@ -101,6 +101,14 @@ form {
 	height:20vh;
 }
 
+.setupcolmini {
+	display:flex;
+	padding:1.5vh;
+	width:9.5vw;
+	min-height:150px;
+	height:20vh;
+}
+
 #changeCourt {
 	width:100%;
 	height:100%;
@@ -113,13 +121,29 @@ form {
 }
 
 #periodNum, #timerMin, #timerSec, #timerDsec {
-	width:35px;
-	text-align:right;
+	width:2.5vw;
+	padding:0.5vh;
+	border:none;
+	background-color:#202020;
+	color:#ffffff;
+	text-align:center;
+	font-family:roboto, sans-serif;
+	font-size:max(1vw,12px);
+}
+
+ #gamePeriod {
+	width:40%;
+	padding:0.5vh;
+	border:none;
+	background-color:#202020;
+	color:#ffffff;
+	font-family:roboto, sans-serif;
+	font-size:max(1vw,12px);
 }
 
 .textfield {
 	position:relative;
-	background-color:#151515;
+	background-color:#202020;
 	padding:0.5vh;
 	border:none;
 	color:#ffffff;
@@ -266,7 +290,7 @@ input[type="color"] {
 .timerscontent {
 	margin:0.25vh;
 	padding:0.5vh;
-	width:50%;
+	width:55%;
 	height:min(7em,9vw);
 }
 
@@ -321,10 +345,10 @@ input[type="color"] {
 }
 
 #sbShotClock {
-	width:28%;
+	width:32%;
 }
 
-#bbMode, #vbMode {
+#bbMode, #vbMode, #timerCheckbox {
 	width:max(1vw,12px);
 	height:max(1vw,12px);
 }
