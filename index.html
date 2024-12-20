@@ -151,7 +151,7 @@
 							<td>
 								<input type="number" id="timerMin" name="timerMin" value="10" min="0" max="99"> minutes
 							</td>
-							<td rowspan="0" class="timerctrl">
+							<td rowspan="0">
 								<input type="button" id="setTimer" name="setTimer" value="SET TIMER" onclick="changeTimer()">
 								<input type="button" id="toggleTimerState" name="toggleTimerState" value="START" onclick="changeTimerState()">
 							</td>
@@ -169,12 +169,12 @@
 					</table>
 				</div>
 				<div class="column setupcolmini">
-					<div class="colminiitems">
+					<div class="colminiitems" id="possessionServiceLabel">
 						Possession
 					</div>
 					<div class="colminiitems">
-						<input type="button" id="teamAposs" name="teamAposs" class="possButton" value="&#11207;">
-						<input type="button" id="teamBposs" name="teamBposs" class="possButton" value="&#11208;">
+						<input type="button" id="teamAposs" name="teamAposs" class="possButton" value="&#11207;" onclick='changeBallPossession(1)'>
+						<input type="button" id="teamBposs" name="teamBposs" class="possButton" value="&#11208;" onclick='changeBallPossession(2)'>
 					</div>
 					<div class="colminiitems">
 						Timer + Shot Clock
