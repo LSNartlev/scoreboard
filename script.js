@@ -1,13 +1,13 @@
-var matchTitle = "";
-var teamAname = "", teamBname = "";
+var matchTitle = "(insert Match Title here)";
+var teamAname = "Team A", teamBname = "Team B";
 var teamAcolor = "#6dbcf5", teamBcolor = "#f56d66";
 var teamAscore = 0, teamBscore = 0;
 var teamAupperCounter = 0, teamBupperCounter = 0;
 var teamAlowerCounter = 0, teamBlowerCounter = 0;
 var isBasketball = true, ballPossession = 0; // 0 = none, 1 = Team A, 2 = Team B
-var enableTimer = true, enableShotClock = true;
+var isTimerEnabled = true, isShotClockEnabled = true;
 var isTimerRunning = false, isShotClockRunning = false;
-var timer = [10, 0, 0], shotClock = 24, isTimeout = false;
+var timer = [0, 0, 0], shotClock = [0, 0], isTimeout = false;
 var defaultTimer = [10, 0, 0], defaultShotClocks = [24, 14, 60];
 
 function setDefaults() {
@@ -17,7 +17,7 @@ function setDefaults() {
 	setTeamInfo("B");
 	setMatchTitle(matchTitle);
 	setScoreboardElements();
-	changePeriod();
+	changePeriod(true);
 	resetCounters("A");
 	resetCounters("B");
 }
@@ -71,7 +71,7 @@ function setTeamInfo(team) {
 
 function setScoreboardElements() {
 	// Scoreboard Background
-	document.getElementById("scoreboard").style.background = "linear-gradient(to right, " + teamAcolor + " 0 50%, " + teamBcolor + " 50% 100%)";
+	document.getElementById("scoreboard").style.background = "linear-gradient(to right, " + teamAcolor + " 0 45%, " + teamBcolor + " 55% 100%)";
 	
 	// Match Title
 	matchTitle = document.getElementById("matchTitle").value;
@@ -234,12 +234,12 @@ function changeGameMode(isNewModeBasketball) {
 	isBasketball = isNewModeBasketball;
 	document.getElementById(isBasketball?"bbDefault":"vbDefault").selected = "selected";
 	changePeriod();
-	document.getElementById("scoreAfuncA").value = isBasketball? "\u22121":"0";
+	document.getElementById("scoreAfuncA").value = isBasketball? "\u22121":"=0";
 	document.getElementById("scoreAfuncA").style.backgroundColor = 
 	document.getElementById("teamAposs").style.backgroundColor = isBasketball? teamAcolor:getShadedColor(teamAcolor, 0.7, true);
 	document.getElementById("scoreAfuncA").style.color =
 	document.getElementById("teamAposs").style.color = isBasketball? getTextColor(teamAcolor):getTextColor(getShadedColor(teamAcolor, 0.7, true));
-	document.getElementById("scoreBfuncA").value = isBasketball? "\u22121":"0";
+	document.getElementById("scoreBfuncA").value = isBasketball? "\u22121":"=0";
 	document.getElementById("scoreBfuncA").style.backgroundColor =
 	document.getElementById("teamBposs").style.backgroundColor =	isBasketball? teamBcolor:getShadedColor(teamBcolor, 0.7, true);
 	document.getElementById("scoreBfuncA").style.color =
@@ -250,12 +250,14 @@ function changeGameMode(isNewModeBasketball) {
 	document.getElementById("scoreBfuncC").value = isBasketball? "+2":"+1";
 	document.getElementById("scoreAfuncD").style.display = isBasketball? "inline-block":"none";
 	document.getElementById("scoreBfuncD").style.display = isBasketball? "inline-block":"none";
+	document.getElementById("possessionServiceLabel").innerHTML = isBasketball? "Ball Possession":"Ball Service";
+	changeBallPossession(0);
 	setScoreboardElements();
 }
 
-function changePeriod() {
-	let periodNum = document.getElementById("periodNum").value;
-	let gamePeriod = document.querySelector("#gamePeriod").value;
+function changePeriod(isInitialValue) {
+	let periodNum = isInitialValue? "1":document.getElementById("periodNum").value;
+	let gamePeriod = isInitialValue? "QUARTER":document.querySelector("#gamePeriod").value;
 	let periodLabel = "";
 	switch(periodNum) {
 		case "1": periodLabel += "1ST " + gamePeriod; break;
@@ -279,12 +281,13 @@ function changeCourt() {
 	setTeamInfo("A");
 	setTeamColors("B", teamBcolor);
 	setTeamInfo("B");
+	changeBallPossession(ballPossession);
 	setScoreboardElements();
 	refreshCounters();
 }
 
 function changeBallPossession(teamNum) {
-	if(teamNum == ballPossession) {
+	if(teamNum === 0 || teamNum === ballPossession) {
 		ballPossession = 0;
 		document.getElementById("sbTeamAposs").innerHTML =
 		document.getElementById("sbTeamBposs").innerHTML = "";
@@ -304,8 +307,8 @@ function changeBallPossession(teamNum) {
 		document.getElementById("sbTeam"+teamLetter+"poss").innerHTML = isBasketball? "\u{1F3C0}":"\u{1F3D0}";
 		document.getElementById("sbTeam"+oppLetter+"poss").innerHTML = "";
 		document.getElementById("team"+teamLetter+"poss").style.backgroundColor = getShadedColor(teamColor, 0.7, true);
-		document.getElementById("team"+teamLetter+"poss").style.color = getTextColor(getShadedColor(teamcolor, 0.7, true));
-		document.getElementById("team"+teamLetter+"poss").value = "\u{17FAB}";
+		document.getElementById("team"+teamLetter+"poss").style.color = getTextColor(getShadedColor(teamColor, 0.7, true));
+		document.getElementById("team"+teamLetter+"poss").value = "\u{1F5D9}";
 		document.getElementById("team"+oppLetter+"poss").style.backgroundColor = oppColor;
 		document.getElementById("team"+oppLetter+"poss").style.color = getTextColor(oppColor);
 		document.getElementById("team"+oppLetter+"poss").value = teamNum === 1? "\u{2BC8}":"\u{2BC7}";
