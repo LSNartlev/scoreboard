@@ -140,11 +140,11 @@
 					<table>
 						<tr>
 							<td colspan="3">
-							<input type="checkbox" id="timerCheckbox" name="timerCheckbox" oninput="toggleTimerUsage()" checked><label for="timerCheckbox">Enable Timer</label>
+							<input type="checkbox" id="timerCheckbox" name="timerCheckbox" oninput="toggleTimerUsage()" autocomplete="off" checked><label for="timerCheckbox">Enable Timer</label>
 							</td>
 						</tr>
 						<tr>
-							<td>Adjust Timer</td>
+							<td class="centertext">Adjust Timer</td>
 							<td colspan="2"><div class="timerStatus">TIMER STOPPED</div></td>
 						</tr>
 						<tr>
@@ -177,7 +177,7 @@
 						<input type="button" id="teamBposs" name="teamBposs" class="possButton" value="&#11208;" onclick='changeBallPossession(2)'>
 					</div>
 					<div class="colminiitems">
-						Timer + Mini Timer
+						Timer & Mini Timer
 					</div>
 					<div class="colminiitems">
 						<input type="button" id="toggleAllTimerState" name="toggleAllTimerState" class="toggleAllTimerState" value="&#11208;" onclick="changeAllTimerState()">
@@ -187,12 +187,12 @@
 					<table>
 						<tr>
 							<td colspan="3">
-							<input type="checkbox" id="miniTimerCheckbox" name="miniTimerCheckbox" oninput="toggleMiniTimerUsage()" checked><label for="miniTimerCheckbox">Enable Mini Timer</label>
+							<input type="checkbox" id="miniTimerCheckbox" name="miniTimerCheckbox" oninput="toggleMiniTimerUsage()" autocomplete="off" checked><label for="miniTimerCheckbox">Enable Mini Timer</label>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2"><div class="timerStatus">TIMER STOPPED</div></td>
-							<td>Mini Timers</td>
+							<td class="centertext">Mini Timers</td>
 						</tr>
 						<tr>
 							<td rowspan="0">
@@ -220,6 +220,13 @@
 							<td>
 								<input type="number" id="miniTimerCsec" name="miniTimerCsec" value="60" min="1" max="99" autocomplete="off"> seconds
 							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="column setupcol">
+					<table>
+						<tr>
+							<td>Horn Sound</td>
 						</tr>
 					</table>
 				</div>

@@ -51,6 +51,10 @@ input[type="number"] {
 	font-size:max(1vw,12px);
 }
 
+.centertext {
+	text-align:center;
+}
+
 .pagecontain {
 	display:flex;
 	flex-direction:column;
