@@ -30,6 +30,7 @@ input[type="button"] {
 	min-font-size:12px;
 	border:none;
 	border-radius:5px;
+	cursor:pointer;
 }
 
 input[type="button"]:hover {
@@ -124,6 +125,7 @@ input[type="number"] {
 }
 
 .boardcol {
+	user-select:none;
 	padding:1.5vh;
 	position:relative;
 	background-color:#101010;
@@ -426,9 +428,10 @@ input[type="number"] {
 	width:32%;
 }
 
-#bbMode, #vbMode, #timerCheckbox, #miniTimerCheckbox {
+input[type="checkbox"], input[type="radio"] {
 	width:max(1vw,12px);
 	height:max(1vw,12px);
+	cursor:pointer;
 }
 
 #setTimer, #toggleTimerState, #toggleMiniTimerState {
@@ -456,13 +459,14 @@ input[type="number"] {
 }
 
 #soundVolume {
-	text-align:right;
+	width:3.25vw;
+	text-align:left;
 }
 
 #hornButton {
 	background-color:#008000;
 	font-family:roboto, sans-serif;
-	font-size:3.5em;
+	font-size:2.75em;
 	width:21.5vw;
-	height:11vh;
+	height:7.625vh;
 }

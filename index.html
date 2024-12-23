@@ -7,6 +7,7 @@
 		<script src="script.js"></script>
 	</head>
 	<body onload="setDefaults()">
+		
 		<div class="pagecontain">
 			<div class="row mainpanels">
 				<div class="column teamcol">
@@ -229,14 +230,20 @@
 							<td>Horn Sound</td>
 							<td class="righttext">Volume <input type="number" id="soundVolume" name="soundVolume" value="100" min="0" max="100" autocomplete="off">%</td>
 						</tr>
-						<tr rowspan="3">
+						<tr>
 							<td colspan="2">
-								<input type="button" id="hornButton" name="hornButton" value="&#128264;" onclick="toggleHornSound()">
+								<input type="checkbox" id="autoTriggerHorn" name="autoTriggerHorn" oninput="setAutoTriggerHorn()" autocomplete="off" checked><label for="autoTriggerHorn">Automatically sound horn on timeup</label>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<input type="checkbox" id="autoTriggerHorn" name="autoTriggerHorn" oninput="setAutoTriggerHorn()" autocomplete="off" checked><label for="autoTriggerHorn">Automatically sound horn on timeup</label>
+								<input type="checkbox" id="timeupWarning" name="timeupWarning" oninput="setTimeupWarning()" autocomplete="off" title="Enabling this option will play a short warning sound every second until either the timer or shot clock runs out."><label for="timeupWarning" title="Enabling this option will play a short warning sound every second until either the timer or shot clock runs out.">Timeup warning sounds at </label>
+								<input type="number" id="warningSec" name="warningSec" value="5" min="1" max="10" autocomplete="off"> seconds
+							</td>
+						</tr>
+						<tr rowspan="3">
+							<td colspan="2">
+								<input type="button" id="hornButton" name="hornButton" value="&#128264;" onclick="toggleHornSound()">
 							</td>
 						</tr>
 					</table>

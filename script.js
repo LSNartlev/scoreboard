@@ -251,6 +251,13 @@ function updateCounter(team, ctrType, ctrButton) {
 	refreshCounters();
 }
 
+function updateTimerDisplay() {
+	document.getElementById("sbPeriodNum").innerHTML = timer[0] > 0?
+		timer[0]+":"+timer[1].toString().padStart(2,"0") // mm:ss
+		:
+		timer[1]+"."+timer[2]; // s.d
+}
+
 function refreshCounters() {
 	document.getElementById("sbTeamAscore").innerHTML = teamAscore;
 	document.getElementById("sbTeamBscore").innerHTML = teamBscore;
@@ -323,6 +330,26 @@ function changeTimerDefaults() {
 	document.getElementById("miniTimerAsec").value = defaultShotClocks[0];
 	document.getElementById("miniTimerBsec").value = defaultShotClocks[1];
 	document.getElementById("miniTimerCsec").value = defaultShotClocks[2];
+}
+
+function changeTimer() {
+	let minutes = document.getElementById("timerMin").value;
+	let seconds = document.getElementById("timerSec").value;
+	let deciSeconds = document.getElementById("timerDsec").value;
+	// input validity check
+	if(!(parseInt(minutes) >= 0) || !(parseInt(minutes) <= 99)) minutes = defaultTimer[0];
+	if(!(parseInt(seconds) >= 0) || !(parseInt(seconds) <= 59)) seconds = defaultTimer[1];
+	if(!(parseInt(deciSeconds) >= 0) || !(parseInt(deciSeconds) <= 9)) deciSeconds = defaultTimer[2];
+	// disable timer if all set to 0
+	if(minutes == 0 && seconds == 0 && deciSeconds == 0) {
+		document.getElementById("timerCheckbox").checked = false;
+		toggleTimerUsage();
+	}
+	timer[0] = minutes;
+	timer[1] = seconds;
+	timer[2] = deciSeconds;
+	document.getElementById("timerStatus").innerHTML = "TIMER SET";
+	updateTimerDisplay();
 }
 
 function changePeriod(isInitialValue) {
