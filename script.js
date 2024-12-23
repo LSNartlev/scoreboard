@@ -373,12 +373,19 @@ function changeCourt() {
 	[teamAscore, teamBscore] = [teamBscore, teamAscore];
 	[teamAupperCounter, teamBupperCounter] = [teamBupperCounter, teamAupperCounter];
 	[teamAlowerCounter, teamBlowerCounter] = [teamBlowerCounter, teamAlowerCounter];
+	[document.getElementById("sbTeamAposs").innerHTML, document.getElementById("sbTeamBposs").innerHTML] = [document.getElementById("sbTeamBposs").innerHTML, document.getElementById("sbTeamAposs").innerHTML];
+	[document.getElementById("teamAposs").style.backgroundColor, document.getElementById("teamBposs").style.backgroundColor] = [document.getElementById("teamBposs").style.backgroundColor, document.getElementById("teamAposs").style.backgroundColor];
+	[document.getElementById("teamAposs").style.color, document.getElementById("teamBposs").style.color] = [document.getElementById("teamBposs").style.color, document.getElementById("teamAposs").style.color];
+	[document.getElementById("teamAposs").value, document.getElementById("teamBposs").value] = [document.getElementById("teamBposs").value, document.getElementById("teamAposs").value];
 	if(ballPossession != 0) ballPossession === 1? ballPossession = 2:ballPossession = 1;
+	let possLetter = ballPossession === 1? "A":"B";
+	let possColor = ballPossession === 1? teamAcolor:teamBcolor;
+	document.getElementById("team"+possLetter+"poss").style.backgroundColor = getShadedColor(possColor, 0.7, true);
+	document.getElementById("team"+possLetter+"poss").style.color = getTextColor(getShadedColor(possColor, 0.7, true));
 	setTeamColors("A", teamAcolor);
 	setTeamInfo("A");
 	setTeamColors("B", teamBcolor);
 	setTeamInfo("B");
-	changeBallPossession(ballPossession);
 	setScoreboardElements();
 	refreshCounters();
 }
