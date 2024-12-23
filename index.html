@@ -145,7 +145,7 @@
 						</tr>
 						<tr>
 							<td class="centertext">Adjust Timer</td>
-							<td colspan="2"><div class="timerStatus">TIMER STOPPED</div></td>
+							<td colspan="2"><div class="timerStatus" id="timerStatus">TIMER STOPPED</div></td>
 						</tr>
 						<tr>
 							<td>
@@ -187,11 +187,11 @@
 					<table>
 						<tr>
 							<td colspan="3">
-							<input type="checkbox" id="miniTimerCheckbox" name="miniTimerCheckbox" oninput="toggleMiniTimerUsage()" autocomplete="off" checked><label for="miniTimerCheckbox">Enable Mini Timer</label>
+								<input type="checkbox" id="miniTimerCheckbox" name="miniTimerCheckbox" oninput="toggleMiniTimerUsage()" autocomplete="off" checked><label for="miniTimerCheckbox">Enable Mini Timer</label>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2"><div class="timerStatus">TIMER STOPPED</div></td>
+							<td colspan="2"><div class="timerStatus" id="miniTimerStatus">TIMER STOPPED</div></td>
 							<td class="centertext">Mini Timers</td>
 						</tr>
 						<tr>
@@ -199,7 +199,7 @@
 								<input type="button" id="toggleMiniTimerState" name="toggleMiniTimerState" value="&#11208;" onclick="changeMiniTimerState()">
 							</td>
 							<td>
-								<input type="button" id="setMiniTimerA" name="setMiniTimerA" value="Shot Clock" onclick='changeMiniTimer("A")'>
+								<input type="button" id="setMiniTimerA" name="setMiniTimerA" value="Shot Clock" onclick='setMiniTimer("A")'>
 							</td>
 							<td>
 								<input type="number" id="miniTimerAsec" name="miniTimerAsec" value="24" min="1" max="99" autocomplete="off"> seconds
@@ -207,7 +207,7 @@
 						</tr>
 						<tr>
 							<td>
-								<input type="button" id="setMiniTimerB" name="setMiniTimerB" value="Rebound" onclick='changeMiniTimer("B")'>
+								<input type="button" id="setMiniTimerB" name="setMiniTimerB" value="Off. Reb." onclick='setMiniTimer("B")'>
 							</td>
 							<td>
 								<input type="number" id="miniTimerBsec" name="miniTimerBsec" value="14" min="1" max="99" autocomplete="off"> seconds
@@ -215,7 +215,7 @@
 						</tr>
 						<tr>
 							<td>
-								<input type="button" id="setMiniTimerC" name="setMiniTimerC" value="Timeout" onclick='changeMiniTimer("C")'>
+								<input type="button" id="setMiniTimerC" name="setMiniTimerC" value="Timeout" onclick='setMiniTimer("C")'>
 							</td>
 							<td>
 								<input type="number" id="miniTimerCsec" name="miniTimerCsec" value="60" min="1" max="99" autocomplete="off"> seconds
@@ -227,6 +227,17 @@
 					<table>
 						<tr>
 							<td>Horn Sound</td>
+							<td class="righttext">Volume <input type="number" id="soundVolume" name="soundVolume" value="100" min="0" max="100" autocomplete="off">%</td>
+						</tr>
+						<tr rowspan="3">
+							<td colspan="2">
+								<input type="button" id="hornButton" name="hornButton" value="&#128264;" onclick="toggleHornSound()">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<input type="checkbox" id="autoTriggerHorn" name="autoTriggerHorn" oninput="setAutoTriggerHorn()" autocomplete="off" checked><label for="autoTriggerHorn">Automatically sound horn on timeup</label>
+							</td>
 						</tr>
 					</table>
 				</div>

@@ -55,6 +55,10 @@ input[type="number"] {
 	text-align:center;
 }
 
+.righttext {
+	text-align:right;
+}
+
 .pagecontain {
 	display:flex;
 	flex-direction:column;
@@ -116,7 +120,7 @@ input[type="number"] {
 	min-width:250px;
 	width:22vw;
 	min-height:360px;
-	height:33.75vw;
+	height:31.5vw;
 }
 
 .boardcol {
@@ -129,7 +133,7 @@ input[type="number"] {
 	min-width:640px;
 	width:56vw;
 	min-height:360px;
-	height:33.75vw;
+	height:31.5vw;
 }
 
 .setupcol {
@@ -254,14 +258,14 @@ input[type="number"] {
 
 .scoreBox {
 	font-weight:bold;
-	font-size:max(8vw,12px);
-	width:30%;
-	height:8vw;
+	font-size:max(7vw,12px);
+	width:25%;
+	height:7vw;
 	margin:0;
 	padding:0;
 	text-align:center;
 	align-items:center;
-	line-height:8vw;
+	line-height:7vw;
 	display:inline-block;
 }
 
@@ -280,9 +284,9 @@ input[type="number"] {
 	text-align:center;
 	display:flex;
 	align-items:center;
-	width:7.5%;
-	line-height:8vw;
-	height:8vw;
+	width:12.5%;
+	line-height:7vw;
+	height:7vw;
 }
 
 #sbMatchTitle {
@@ -375,8 +379,17 @@ input[type="number"] {
 	padding-bottom:1vh;
 }
 
-#sbPeriodText,#sbMiniText {
+#sbPeriodText {
 	background-color:#ffffff;
+	color:#000000;
+	font-size:max(1.5vw,12px);
+	line-height:max(1.5vw,12px);
+	text-align:center;
+	padding:0.75vh;
+}
+
+#sbMiniText {
+	background-color:#ff4040;
 	color:#000000;
 	font-size:max(1.5vw,12px);
 	line-height:max(1.5vw,12px);
@@ -391,9 +404,18 @@ input[type="number"] {
 	color:#ffffff;
 }
 
-#sbPeriodNum, #sbMiniNum {
+#sbPeriodNum {
 	background-color:#000000;
 	color:#ffffff;
+	font-size:max(7.25vh,5.5vw,12px);
+	line-height:max(6.75vh,4.125vw,12px);
+	text-align:center;
+	padding:1vh;
+}
+
+#sbMiniNum {
+	background-color:#000000;
+	color:#ff4040;
 	font-size:max(7.25vh,5.5vw,12px);
 	line-height:max(6.75vh,4.125vw,12px);
 	text-align:center;
@@ -431,4 +453,16 @@ input[type="number"] {
 	font-size:2.25em;
 	width:100%;
 	height:8vh;
+}
+
+#soundVolume {
+	text-align:right;
+}
+
+#hornButton {
+	background-color:#008000;
+	font-family:roboto, sans-serif;
+	font-size:3.5em;
+	width:21.5vw;
+	height:11vh;
 }

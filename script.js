@@ -5,9 +5,9 @@ var teamAscore = 0, teamBscore = 0;
 var teamAupperCounter = 0, teamBupperCounter = 0;
 var teamAlowerCounter = 0, teamBlowerCounter = 0;
 var isBasketball = true, ballPossession = 0; // 0 = none, 1 = Team A, 2 = Team B
-var isTimerEnabled = true, isShotClockEnabled = true;
-var isTimerRunning = false, isShotClockRunning = false;
-var timer = [0, 0, 0], shotClock = [0, 0], isTimeout = false;
+var isTimerEnabled = true, isMiniTimerEnabled = true, isHornAutoTrigger = true;
+var isTimerRunning = false, isMiniTimerRunning = false, isHornPlaying = false;
+var timer = [10, 0, 0], shotClock = [24, 9], isTimeout = false;
 var defaultTimer = [10, 0, 0], defaultShotClocks = [24, 14, 60];
 
 function setDefaults() {
@@ -71,7 +71,7 @@ function setTeamInfo(team) {
 
 function setScoreboardElements() {
 	// Scoreboard Background
-	document.getElementById("scoreboard").style.background = "linear-gradient(to right, " + teamAcolor + " 0 45%, " + teamBcolor + " 55% 100%)";
+	document.getElementById("scoreboard").style.background = "linear-gradient(to right, " + teamAcolor + " 0 46%, " + teamBcolor + " 54% 100%)";
 	
 	// Match Title
 	matchTitle = document.getElementById("matchTitle").value;
@@ -86,6 +86,50 @@ function setScoreboardElements() {
 	document.getElementById("teamBlowerctrl").innerHTML = "Timeouts Left";
 	document.getElementById("lowerLabelA").innerHTML = 
 	document.getElementById("lowerLabelB").innerHTML = "TIMEOUTS LEFT";
+}
+
+function setAutoTriggerHorn() {
+	isHornAutoTrigger = document.getElementById("autoTriggerHorn").checked;
+	console.log(isHornAutoTrigger);
+}
+
+function toggleTimerUsage() {
+	let isEnabled = document.getElementById("timerCheckbox").checked;
+	isTimerEnabled = isEnabled;
+	isTimerRunning = false;
+	document.getElementById("timerStatus").innerHTML = isEnabled? "TIMER STOPPED":"TIMER DISABLED";
+	document.getElementById("timerStatus").style.backgroundColor = isEnabled? "#ff0000":"#101010";
+	document.getElementById("timerMin").disabled = isEnabled? false:true;
+	document.getElementById("timerSec").disabled = isEnabled? false:true;
+	document.getElementById("timerDsec").disabled = isEnabled? false:true;
+	document.getElementById("setTimer").disabled = isEnabled? false:true;
+	document.getElementById("toggleTimerState").disabled = isEnabled? false:true;
+	document.getElementById("sbPeriodNum").style.visibility = isEnabled? "visible":"hidden";
+	document.getElementById("toggleAllTimerState").disabled = (isTimerEnabled && isMiniTimerEnabled)? false:true;
+}
+
+function toggleMiniTimerUsage() {
+	let isEnabled = document.getElementById("miniTimerCheckbox").checked;
+	isMiniTimerEnabled = isEnabled;
+	isMiniTimerRunning = false;
+	document.getElementById("miniTimerStatus").innerHTML = isEnabled? "TIMER STOPPED":"TIMER DISABLED";
+	document.getElementById("miniTimerStatus").style.backgroundColor = isEnabled? "#ff0000":"#101010";
+	document.getElementById("setMiniTimerA").disabled = isEnabled? false:true;
+	document.getElementById("setMiniTimerB").disabled = isEnabled? false:true;
+	document.getElementById("setMiniTimerC").disabled = isEnabled? false:true;
+	document.getElementById("miniTimerAsec").disabled = isEnabled? false:true;
+	document.getElementById("miniTimerBsec").disabled = isEnabled? false:true;
+	document.getElementById("miniTimerCsec").disabled = isEnabled? false:true;
+	document.getElementById("toggleMiniTimerState").disabled = isEnabled? false:true;
+	document.getElementById("sbMiniNum").style.visibility = isEnabled? "visible":"hidden";
+	document.getElementById("sbMiniText").style.visibility = isEnabled? "visible":"hidden";
+	document.getElementById("toggleAllTimerState").disabled = (isTimerEnabled && isMiniTimerEnabled)? false:true;
+}
+
+function toggleHornSound() {
+	isHornPlaying = !isHornPlaying;
+	document.getElementById("hornButton").value = isHornPlaying? "\u{1F50A}":"\u{1F508}";
+	document.getElementById("hornButton").style.backgroundColor = isHornPlaying? "#ff0000":"#008000";
 }
 
 function getTextColor(color) {
@@ -251,8 +295,34 @@ function changeGameMode(isNewModeBasketball) {
 	document.getElementById("scoreAfuncD").style.display = isBasketball? "inline-block":"none";
 	document.getElementById("scoreBfuncD").style.display = isBasketball? "inline-block":"none";
 	document.getElementById("possessionServiceLabel").innerHTML = isBasketball? "Ball Possession":"Ball Service";
+	document.getElementById("setMiniTimerA").value = isBasketball? "Shot Clock":"Serve Time";
+	document.getElementById("setMiniTimerB").value = isBasketball? "Off. Reb.":"Long Serve";
+	document.getElementById("sbMiniText").innerHTML = isBasketball? "SHOT CLOCK":"TO SERVE";
+	document.getElementById("timerCheckbox").checked = isBasketball? true:false;
+	document.getElementById("autoTriggerHorn").checked = isBasketball? true:false;
+	toggleTimerUsage();
+	toggleMiniTimerUsage();
+	changeTimerDefaults();
 	changeBallPossession(0);
+	setAutoTriggerHorn();
 	setScoreboardElements();
+}
+
+function changeTimerDefaults() {
+	if(isBasketball) {
+		defaultTimer = [10, 0, 0];
+		defaultShotClocks = [24, 14, 60];
+	}
+	else {
+		defaultTimer = [10, 0, 0];
+		defaultShotClocks = [8, 10, 60];
+	}
+	document.getElementById("timerMin").value = defaultTimer[0];
+	document.getElementById("timerSec").value = defaultTimer[1];
+	document.getElementById("timerDsec").value = defaultTimer[2];
+	document.getElementById("miniTimerAsec").value = defaultShotClocks[0];
+	document.getElementById("miniTimerBsec").value = defaultShotClocks[1];
+	document.getElementById("miniTimerCsec").value = defaultShotClocks[2];
 }
 
 function changePeriod(isInitialValue) {
