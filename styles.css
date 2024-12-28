@@ -192,8 +192,7 @@ input[type="number"] {
 	justify-content:center;
 }
 
-#gamePeriod {
-	width:40%;
+#gamePeriod, #soundOnTimeup {
 	padding:0.5vh;
 	border:none;
 	background-color:#202020;
@@ -391,7 +390,7 @@ input[type="number"] {
 }
 
 #sbMiniText {
-	background-color:#ff4040;
+	background-color:#ffffff;
 	color:#000000;
 	font-size:max(1.5vw,12px);
 	line-height:max(1.5vw,12px);
@@ -407,8 +406,8 @@ input[type="number"] {
 }
 
 #sbPeriodNum {
-	background-color:#000000;
-	color:#ffffff;
+	background-color:#ffffff;
+	color:#000000;
 	font-size:max(7.25vh,5.5vw,12px);
 	line-height:max(6.75vh,4.125vw,12px);
 	text-align:center;
@@ -416,8 +415,8 @@ input[type="number"] {
 }
 
 #sbMiniNum {
-	background-color:#000000;
-	color:#ff4040;
+	background-color:#ff0000;
+	color:#000000;
 	font-size:max(7.25vh,5.5vw,12px);
 	line-height:max(6.75vh,4.125vw,12px);
 	text-align:center;
@@ -463,10 +462,9 @@ input[type="checkbox"], input[type="radio"] {
 	text-align:left;
 }
 
-#hornButton {
-	background-color:#008000;
+#hornButton, #buzzerButton {
 	font-family:roboto, sans-serif;
-	font-size:2.75em;
-	width:21.5vw;
-	height:7.625vh;
+	font-size:1.25em;
+	width:10.5vw;
+	height:6.5vh;
 }

@@ -6,9 +6,10 @@ var teamAupperCounter = 0, teamBupperCounter = 0;
 var teamAlowerCounter = 0, teamBlowerCounter = 0;
 var isBasketball = true, ballPossession = 0; // 0 = none, 1 = Team A, 2 = Team B
 var isTimerEnabled = true, isMiniTimerEnabled = true, isHornAutoTrigger = true;
-var isTimerRunning = false, isMiniTimerRunning = false, isHornPlaying = false;
-var timer = [10, 0, 0], shotClock = [24, 9], isTimeout = false;
-var defaultTimer = [10, 0, 0], defaultShotClocks = [24, 14, 60];
+var isTimerRunning = false, isMiniTimerRunning = false, isHornPlaying = false, isBuzzerPlaying = false;
+var timer = [10, 0, 0], miniTimer = [24, 9], isTimeout = false;
+var timerThread, miniTimerThread;
+var defaultTimer = [10, 0, 0], defaultminiTimers = [24, 14, 60];
 
 function setDefaults() {
 	setTeamColors("A", teamAcolor);
@@ -108,6 +109,22 @@ function toggleTimerUsage() {
 	document.getElementById("toggleAllTimerState").disabled = (isTimerEnabled && isMiniTimerEnabled)? false:true;
 }
 
+function changeTimerState() {
+	isTimerRunning = (timer[0] == 0 && timer[1] == 0 && timer[2] == 0)? false:!isTimerRunning;
+	updateTimerElements();
+	isTimerRunning? startTimer():stopTimer();
+}
+
+function updateTimerElements() {
+	document.getElementById("toggleTimerState").value = isTimerRunning? "\u{275A}\u{275A}":"\u{2BC8}";
+	document.getElementById("toggleTimerState").style.backgroundColor = isTimerRunning? "#ff0000":"";
+	document.getElementById("toggleTimerState").style.color = isTimerRunning? "#ffffff":"";
+	document.getElementById("timerStatus").innerHTML = isTimerRunning? "TIMER RUNNING":"TIMER STOPPED";
+	document.getElementById("timerStatus").style.backgroundColor = isTimerRunning? "#008000":"#ff0000";
+	document.getElementById("sbPeriodNum").style.backgroundColor = isTimerRunning? "#000000":"#ffffff";
+	document.getElementById("sbPeriodNum").style.color = isTimerRunning? "#ffffff":"#000000";
+}
+
 function toggleMiniTimerUsage() {
 	let isEnabled = document.getElementById("miniTimerCheckbox").checked;
 	isMiniTimerEnabled = isEnabled;
@@ -128,8 +145,25 @@ function toggleMiniTimerUsage() {
 
 function toggleHornSound() {
 	isHornPlaying = !isHornPlaying;
-	document.getElementById("hornButton").value = isHornPlaying? "\u{1F50A}":"\u{1F508}";
-	document.getElementById("hornButton").style.backgroundColor = isHornPlaying? "#ff0000":"#008000";
+	let hornVolume = document.getElementById("hornVolume").value*0.01;
+	if(!(hornVolume >= 0) || !(hornVolume <= 1)) hornVolume = 1;
+	if(isHornPlaying) {
+		document.getElementById("sound_hornloop").volume = hornVolume;
+		document.getElementById("sound_hornloop").play();
+	}
+	else {
+		document.getElementById("sound_hornloop").pause();
+	}
+	document.getElementById("hornButton").value = isHornPlaying? "STOP HORN":"SOUND HORN";
+	document.getElementById("hornButton").style.backgroundColor = isHornPlaying? "#ff0000":"";
+	document.getElementById("hornButton").style.color = isHornPlaying? "#ffffff":"";
+}
+
+function toggleBuzzerSound() {
+	isBuzzerPlaying = !isBuzzerPlaying;
+	document.getElementById("buzzerButton").value = isBuzzerPlaying? "STOP BUZZER":"SOUND BUZZER";
+	document.getElementById("buzzerButton").style.backgroundColor = isBuzzerPlaying? "#ff0000":"";
+	document.getElementById("buzzerButton").style.color = isBuzzerPlaying? "#ffffff":"";
 }
 
 function getTextColor(color) {
@@ -252,6 +286,8 @@ function updateCounter(team, ctrType, ctrButton) {
 }
 
 function updateTimerDisplay() {
+	document.getElementById("sbPeriodNum").backgroundColor = isTimerRunning? "#000000":"#ffffff";
+	document.getElementById("sbPeriodNum").color = isTimerRunning? "#ffffff":"#000000";
 	document.getElementById("sbPeriodNum").innerHTML = timer[0] > 0?
 		timer[0]+":"+timer[1].toString().padStart(2,"0") // mm:ss
 		:
@@ -318,24 +354,24 @@ function changeGameMode(isNewModeBasketball) {
 function changeTimerDefaults() {
 	if(isBasketball) {
 		defaultTimer = [10, 0, 0];
-		defaultShotClocks = [24, 14, 60];
+		defaultminiTimers = [24, 14, 60];
 	}
 	else {
 		defaultTimer = [10, 0, 0];
-		defaultShotClocks = [8, 10, 60];
+		defaultminiTimers = [8, 10, 60];
 	}
 	document.getElementById("timerMin").value = defaultTimer[0];
 	document.getElementById("timerSec").value = defaultTimer[1];
 	document.getElementById("timerDsec").value = defaultTimer[2];
-	document.getElementById("miniTimerAsec").value = defaultShotClocks[0];
-	document.getElementById("miniTimerBsec").value = defaultShotClocks[1];
-	document.getElementById("miniTimerCsec").value = defaultShotClocks[2];
+	document.getElementById("miniTimerAsec").value = defaultminiTimers[0];
+	document.getElementById("miniTimerBsec").value = defaultminiTimers[1];
+	document.getElementById("miniTimerCsec").value = defaultminiTimers[2];
 }
 
 function changeTimer() {
-	let minutes = document.getElementById("timerMin").value;
-	let seconds = document.getElementById("timerSec").value;
-	let deciSeconds = document.getElementById("timerDsec").value;
+	let minutes = document.getElementById("timerMin").value == ""? 0:document.getElementById("timerMin").value;
+	let seconds = document.getElementById("timerSec").value == ""? 0:document.getElementById("timerSec").value;
+	let deciSeconds = document.getElementById("timerDsec").value == ""? 0:document.getElementById("timerDsec").value;
 	// input validity check
 	if(!(parseInt(minutes) >= 0) || !(parseInt(minutes) <= 99)) minutes = defaultTimer[0];
 	if(!(parseInt(seconds) >= 0) || !(parseInt(seconds) <= 59)) seconds = defaultTimer[1];
@@ -417,4 +453,34 @@ function changeBallPossession(teamNum) {
 		document.getElementById("team"+oppLetter+"poss").style.color = getTextColor(oppColor);
 		document.getElementById("team"+oppLetter+"poss").value = teamNum === 1? "\u{2BC8}":"\u{2BC7}";
 	}
+}
+
+function startTimer() {
+	timerThread = setInterval(function () {
+		if(timer[0] == 0 && timer[1] == 0 && timer[2] == 0) {
+			stopTimer();
+			document.getElementById("sbPeriodNum").style.backgroundColor = "#ff0000";
+			toggleHornSound();
+		}
+		else {
+			if(timer[2] > 0) timer[2]--;
+			else {
+				if(timer[1] > 0) {
+					timer[1]--;
+				}
+				else {
+					timer[0]--;
+					timer[1] = 59;
+				}
+				timer[2] = 9;
+			}
+		}
+		updateTimerDisplay();
+	}, 100);
+}
+
+function stopTimer() {
+	clearInterval(timerThread);
+	isTimerRunning = false;
+	updateTimerElements();
 }

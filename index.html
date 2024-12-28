@@ -7,7 +7,15 @@
 		<script src="script.js"></script>
 	</head>
 	<body onload="setDefaults()">
-		
+		<audio id="sound_hornloop" loop>
+			<source src="sounds/horn_looping.ogg" type="audio/ogg">
+		</audio>
+		<audio id="sound_hornend">
+			<source src="sounds/horn_ending.ogg" type="audio/ogg">
+		</audio>
+		<audio id="sound_warning" loop>
+			<source src="sounds/warning.ogg" type="audio/ogg">
+		</audio>
 		<div class="pagecontain">
 			<div class="row mainpanels">
 				<div class="column teamcol">
@@ -227,23 +235,35 @@
 				<div class="column setupcol">
 					<table>
 						<tr>
-							<td>Horn Sound</td>
-							<td class="righttext">Volume <input type="number" id="soundVolume" name="soundVolume" value="100" min="0" max="100" autocomplete="off">%</td>
+							<td>
+								<input type="button" id="hornButton" name="hornButton" value="SOUND HORN" onclick='toggleHornSound()'>
+							</td>
+							<td>
+								<input type="button" id="buzzerButton" name="buzzerButton" value="SOUND BUZZER" onclick='toggleBuzzerSound()'>								
+							</td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<input type="checkbox" id="autoTriggerHorn" name="autoTriggerHorn" oninput="setAutoTriggerHorn()" autocomplete="off" checked><label for="autoTriggerHorn">Automatically sound horn on timeup</label>
+							<td class="centertext">
+								Volume <input type="number" id="hornVolume" name="hornVolume" value="100" min="0" max="100" autocomplete="off">%
+							</td>
+							<td class="centertext">
+								Volume <input type="number" id="buzzerVolume" name="buzzerVolume" value="100" min="0" max="100" autocomplete="off">%
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="centertext" title="This sound will be used for both the Timer and Mini Timer.">
+								Sound to use when timer runs out  
+								<select id="soundOnTimeup" name="soundOnTimeup" oninput="setAutoTriggerHorn()" autocomplete="off">
+									<option value="None">None</option>
+									<option value="Horn">Horn</option>
+									<option value="Buzzer" selected="selected">Buzzer</option>
+								</select>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
 								<input type="checkbox" id="timeupWarning" name="timeupWarning" oninput="setTimeupWarning()" autocomplete="off" title="Enabling this option will play a short warning sound every second until either the timer or shot clock runs out."><label for="timeupWarning" title="Enabling this option will play a short warning sound every second until either the timer or shot clock runs out.">Timeup warning sounds at </label>
 								<input type="number" id="warningSec" name="warningSec" value="5" min="1" max="10" autocomplete="off"> seconds
-							</td>
-						</tr>
-						<tr rowspan="3">
-							<td colspan="2">
-								<input type="button" id="hornButton" name="hornButton" value="&#128264;" onclick="toggleHornSound()">
 							</td>
 						</tr>
 					</table>
