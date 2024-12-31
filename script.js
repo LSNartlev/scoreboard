@@ -107,6 +107,7 @@ function toggleTimerUsage() {
 	document.getElementById("toggleTimerState").disabled = isEnabled? false:true;
 	document.getElementById("sbPeriodNum").style.visibility = isEnabled? "visible":"hidden";
 	document.getElementById("toggleAllTimerState").disabled = (isTimerEnabled && isMiniTimerEnabled)? false:true;
+	if(!isTimerEnabled) stopTimer();
 }
 
 function changeTimerState() {
@@ -141,6 +142,54 @@ function toggleMiniTimerUsage() {
 	document.getElementById("sbMiniNum").style.visibility = isEnabled? "visible":"hidden";
 	document.getElementById("sbMiniText").style.visibility = isEnabled? "visible":"hidden";
 	document.getElementById("toggleAllTimerState").disabled = (isTimerEnabled && isMiniTimerEnabled)? false:true;
+	if(!isMiniTimerEnabled) stopTimer();
+}
+
+function changeMiniTimerState() {
+	isMiniTimerRunning = miniTimer[0] == 0? false:!isTimerRunning;
+	updateMiniTimerElements();
+	isMiniTimerRunning? startMiniTimer():stopMiniTimer();
+}
+
+function updateMiniTimerElements() {
+	document.getElementById("toggleMiniTimerState").value = isMiniTimerRunning? "\u{275A}\u{275A}":"\u{2BC8}";
+	document.getElementById("toggleMiniTimerState").style.backgroundColor = isMiniTimerRunning? "#ff0000":"";
+	document.getElementById("toggleMiniTimerState").style.color = isMiniTimerRunning? "#ffffff":"";
+	document.getElementById("miniTimerStatus").innerHTML = isMiniTimerRunning? "TIMER RUNNING":"TIMER STOPPED";
+	document.getElementById("miniTimerStatus").style.backgroundColor = isMiniTimerRunning? "#008000":"#ff0000";
+	if(isMiniTimerRunning) {
+		document.getElementById("sbMiniText").style.backgroundColor = isTimeout? "#6060ff":"#ffffff";
+		document.getElementById("sbMiniNum").style.backgroundColor = "#000000";
+		document.getElementById("sbMiniNum").style.color = isTimeout? "#6060ff":"#ff0000";
+	}
+	else {
+		document.getElementById("sbMiniText").style.backgroundColor = isTimeout? "#6060ff":"#ffffff";
+		document.getElementById("sbMiniNum").style.backgroundColor = isTimeout? "#6060ff":"#ff0000";
+		document.getElementById("sbMiniNum").style.color = isTimeout? "#6060ff":"#000000";
+	}
+}
+
+function setMiniTimer(timerType) {
+	let miniTimerA = document.getElementById("miniTimerAsec").value == ""? defaultminiTimers[0]:document.getElementById("miniTimerAsec").value;
+	let miniTimerB = document.getElementById("miniTimerBsec").value == ""? defaultminiTimers[1]:document.getElementById("miniTimerBsec").value;
+	let miniTimerC = document.getElementById("miniTimerCsec").value == ""? defaultminiTimers[2]:document.getElementById("miniTimerCsec").value;
+	switch(timerType) {
+		case "A":
+			miniTimer[0] = miniTimerA;
+			isTimeout = false;
+			break;
+		case "B":
+			miniTimer[0] = miniTimerB;
+			isTimeout = false;
+			break;
+		default:
+			miniTimer[0] = miniTimerC;
+			isTimeout = true;
+			break;
+	}
+	miniTimer[1] = 9;
+	document.getElementById("sbMiniText").innerHTML = isTimeout? "TIMEOUT":isBasketball? "SHOT CLOCK":"TO SERVE";
+	updateMiniTimerDisplay();
 }
 
 function toggleHornSound() {
@@ -292,6 +341,10 @@ function updateTimerDisplay() {
 		timer[0]+":"+timer[1].toString().padStart(2,"0") // mm:ss
 		:
 		timer[1]+"."+timer[2]; // s.d
+}
+
+function updateMiniTimerDisplay() {
+	document.getElementById("sbMiniNum").innerHTML = miniTimer[0]+"";
 }
 
 function refreshCounters() {
@@ -484,3 +537,39 @@ function stopTimer() {
 	isTimerRunning = false;
 	updateTimerElements();
 }
+
+function startMiniTimer() {
+	console.log("startMiniTimer start!");
+	miniTimerThread = setInterval( function () {
+		console.log("miniTimerThread setInterval active!");
+		if(miniTimer[0] == 0) {
+			stopMiniTimer();
+			if(isTimerEnabled && isTimerRunning) stopTimer();
+			toggleHornSound();
+		}
+		else {
+			if(miniTimer[1] > 0) miniTimer[1]--;
+			else {
+				miniTimer[0]--;
+				miniTimer[1] = 9;
+			}
+		}
+		updateMiniTimerDisplay();
+	}, 100);
+}
+
+function stopMiniTimer() {
+	clearInterval(miniTimerThread);
+	isMiniTimerRunning = false;
+	updateMiniTimerElements();
+}
+
+/**
+	TODO[kete]: Load setInterval() once the program is run.
+	- Both Timer and MiniTimer must run under this same setInterval thread.
+	- The only variable that will allow them to countdown is defined on their respective
+		boolean triggers (isTimerRunning and isMiniTimerRunning).
+	
+	- Remove the current implementation where the timers run on their separated threads,
+		as it has been tested that Mini Timer cannot run alongside Timer if Timer ran first.
+*/
