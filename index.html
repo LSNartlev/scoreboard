@@ -188,15 +188,18 @@
 					<div class="colminiitems">
 						Timer & Mini Timer
 					</div>
-					<div class="colminiitems">
+					<div class="colminiitems" title="Starts/Stops both the Timer and Mini Timer simultaneously.">
 						<input type="button" id="toggleAllTimerState" name="toggleAllTimerState" class="toggleAllTimerState" value="&#11208;" onclick="changeAllTimerState()">
 					</div>
 				</div>
 				<div class="column timercol">
 					<table>
 						<tr>
-							<td colspan="3">
+							<td colspan="2">
 								<input type="checkbox" id="miniTimerCheckbox" name="miniTimerCheckbox" oninput="toggleMiniTimerUsage()" autocomplete="off" checked><label for="miniTimerCheckbox">Enable Mini Timer</label>
+							</td>
+							<td>
+								<input type="checkbox" id="resetMiniTimerOnScore" name="resetMiniTimerOnScore" oninput="toggleShotClockAutoReset()" autocomplete="off" checked><label for="resetMiniTimerOnScore" id="resetMiniTimerOnScoreLabel" title="Automatically resets Shot Clock if Score +2/+3 button is pressed.">Reset on Score</label>
 							</td>
 						</tr>
 						<tr>

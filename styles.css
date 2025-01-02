@@ -416,7 +416,7 @@ input[type="number"] {
 
 #sbMiniNum {
 	background-color:#ff0000;
-	color:#000000;
+	color:#ffffff;
 	font-size:max(7.25vh,5.5vw,12px);
 	line-height:max(6.75vh,4.125vw,12px);
 	text-align:center;
@@ -430,6 +430,7 @@ input[type="number"] {
 input[type="checkbox"], input[type="radio"] {
 	width:max(1vw,12px);
 	height:max(1vw,12px);
+	margin-left:0;
 	cursor:pointer;
 }
 

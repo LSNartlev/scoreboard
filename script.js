@@ -7,8 +7,8 @@ var teamAlowerCounter = 0, teamBlowerCounter = 0;
 var isBasketball = true, ballPossession = 0; // 0 = none, 1 = Team A, 2 = Team B
 var isTimerEnabled = true, isMiniTimerEnabled = true, isHornAutoTrigger = true;
 var isTimerRunning = false, isMiniTimerRunning = false, isHornPlaying = false, isBuzzerPlaying = false;
-var timer = [10, 0, 0], miniTimer = [24, 9], isTimeout = false;
-var timerThread, miniTimerThread;
+var timer = [10, 0, 0], miniTimer = [24, 9], isTimeout = false, isShotClockInAutoReset = true;
+var timerThread, isTimerThreadActive;
 var defaultTimer = [10, 0, 0], defaultminiTimers = [24, 14, 60];
 
 function setDefaults() {
@@ -21,6 +21,7 @@ function setDefaults() {
 	changePeriod(true);
 	resetCounters("A");
 	resetCounters("B");
+	activateTimerThread();
 }
 
 function setMatchTitle(matchTitle) {
@@ -89,11 +90,6 @@ function setScoreboardElements() {
 	document.getElementById("lowerLabelB").innerHTML = "TIMEOUTS LEFT";
 }
 
-function setAutoTriggerHorn() {
-	isHornAutoTrigger = document.getElementById("autoTriggerHorn").checked;
-	console.log(isHornAutoTrigger);
-}
-
 function toggleTimerUsage() {
 	let isEnabled = document.getElementById("timerCheckbox").checked;
 	isTimerEnabled = isEnabled;
@@ -107,19 +103,19 @@ function toggleTimerUsage() {
 	document.getElementById("toggleTimerState").disabled = isEnabled? false:true;
 	document.getElementById("sbPeriodNum").style.visibility = isEnabled? "visible":"hidden";
 	document.getElementById("toggleAllTimerState").disabled = (isTimerEnabled && isMiniTimerEnabled)? false:true;
-	if(!isTimerEnabled) stopTimer();
 }
 
 function changeTimerState() {
-	isTimerRunning = (timer[0] == 0 && timer[1] == 0 && timer[2] == 0)? false:!isTimerRunning;
+	isTimerRunning = (timer[0] == 0 && timer[1] == 0 && timer[2] == 0)? changeTimer():!isTimerRunning;
 	updateTimerElements();
-	isTimerRunning? startTimer():stopTimer();
+	updateAllTimerButton();
 }
 
 function updateTimerElements() {
-	document.getElementById("toggleTimerState").value = isTimerRunning? "\u{275A}\u{275A}":"\u{2BC8}";
+	document.getElementById("toggleTimerState").value = isTimerRunning? "\u{275A}\u{275A}":
+		(timer[0] == 0 && timer[1] == 0 && timer[2] == 0)? "\u{27F3}":"\u{2BC8}";
 	document.getElementById("toggleTimerState").style.backgroundColor = isTimerRunning? "#ff0000":"";
-	document.getElementById("toggleTimerState").style.color = isTimerRunning? "#ffffff":"";
+	document.getElementById("toggleTimerState").style.color =	isTimerRunning? "#ffffff":"";
 	document.getElementById("timerStatus").innerHTML = isTimerRunning? "TIMER RUNNING":"TIMER STOPPED";
 	document.getElementById("timerStatus").style.backgroundColor = isTimerRunning? "#008000":"#ff0000";
 	document.getElementById("sbPeriodNum").style.backgroundColor = isTimerRunning? "#000000":"#ffffff";
@@ -139,34 +135,50 @@ function toggleMiniTimerUsage() {
 	document.getElementById("miniTimerBsec").disabled = isEnabled? false:true;
 	document.getElementById("miniTimerCsec").disabled = isEnabled? false:true;
 	document.getElementById("toggleMiniTimerState").disabled = isEnabled? false:true;
+	document.getElementById("resetMiniTimerOnScore").disabled = isEnabled? false:true;
 	document.getElementById("sbMiniNum").style.visibility = isEnabled? "visible":"hidden";
 	document.getElementById("sbMiniText").style.visibility = isEnabled? "visible":"hidden";
 	document.getElementById("toggleAllTimerState").disabled = (isTimerEnabled && isMiniTimerEnabled)? false:true;
-	if(!isMiniTimerEnabled) stopTimer();
 }
 
 function changeMiniTimerState() {
-	isMiniTimerRunning = miniTimer[0] == 0? false:!isTimerRunning;
+	isMiniTimerRunning = miniTimer[0] == 0? setMiniTimer("A"):!isMiniTimerRunning;
 	updateMiniTimerElements();
-	isMiniTimerRunning? startMiniTimer():stopMiniTimer();
+	updateAllTimerButton();
 }
 
 function updateMiniTimerElements() {
-	document.getElementById("toggleMiniTimerState").value = isMiniTimerRunning? "\u{275A}\u{275A}":"\u{2BC8}";
+	document.getElementById("toggleMiniTimerState").value = isMiniTimerRunning? "\u{275A}\u{275A}":
+		miniTimer[0] == 0? "\u{27F3}":"\u{2BC8}";
 	document.getElementById("toggleMiniTimerState").style.backgroundColor = isMiniTimerRunning? "#ff0000":"";
 	document.getElementById("toggleMiniTimerState").style.color = isMiniTimerRunning? "#ffffff":"";
 	document.getElementById("miniTimerStatus").innerHTML = isMiniTimerRunning? "TIMER RUNNING":"TIMER STOPPED";
 	document.getElementById("miniTimerStatus").style.backgroundColor = isMiniTimerRunning? "#008000":"#ff0000";
-	if(isMiniTimerRunning) {
-		document.getElementById("sbMiniText").style.backgroundColor = isTimeout? "#6060ff":"#ffffff";
-		document.getElementById("sbMiniNum").style.backgroundColor = "#000000";
-		document.getElementById("sbMiniNum").style.color = isTimeout? "#6060ff":"#ff0000";
+	document.getElementById("sbMiniNum").style.backgroundColor = isMiniTimerRunning? "#000000":"#ff0000";
+	document.getElementById("sbMiniNum").style.color = isMiniTimerRunning? "#ff0000":"#ffffff";
+}
+
+function changeAllTimerState() {
+	if(!isTimerRunning && !isMiniTimerRunning) {
+		isTimerRunning = true;
+		isMiniTimerRunning = true;
 	}
 	else {
-		document.getElementById("sbMiniText").style.backgroundColor = isTimeout? "#6060ff":"#ffffff";
-		document.getElementById("sbMiniNum").style.backgroundColor = isTimeout? "#6060ff":"#ff0000";
-		document.getElementById("sbMiniNum").style.color = isTimeout? "#6060ff":"#000000";
+		isTimerRunning = false;
+		isMiniTimerRunning = false;
 	}
+	updateTimerElements();
+	updateMiniTimerElements();
+	updateAllTimerButton();
+}
+
+function updateAllTimerButton() {
+	let isTimerTimeup = (timer[0] == 0 && timer[1] == 0 && timer[2] == 0);
+	let isMiniTimerTimeup = miniTimer[0] == 0;
+	document.getElementById("toggleAllTimerState").disabled = (isTimerTimeup || isMiniTimerTimeup)? true:false;
+	document.getElementById("toggleAllTimerState").value = (isTimerRunning || isMiniTimerRunning)? "\u{275A}\u{275A}":"\u{2BC8}";
+	document.getElementById("toggleAllTimerState").style.backgroundColor = (isTimerRunning || isMiniTimerRunning)? "#ff0000":"";
+	document.getElementById("toggleAllTimerState").style.color = (isTimerRunning || isMiniTimerRunning)? "#ffffff":"";
 }
 
 function setMiniTimer(timerType) {
@@ -190,6 +202,12 @@ function setMiniTimer(timerType) {
 	miniTimer[1] = 9;
 	document.getElementById("sbMiniText").innerHTML = isTimeout? "TIMEOUT":isBasketball? "SHOT CLOCK":"TO SERVE";
 	updateMiniTimerDisplay();
+	updateAllTimerButton();
+}
+
+function toggleShotClockAutoReset() {
+	let isEnabled = document.getElementById("resetMiniTimerOnScore").checked;
+	isShotClockInAutoReset = isEnabled;
 }
 
 function toggleHornSound() {
@@ -289,8 +307,16 @@ function updateScore(team, scoreButton) {
 		switch(scoreButton) {
 			case "A": update = -1; break;
 			case "B": update = 1; break;
-			case "C": update = 2; break;
-			case "D": update = 3; break;
+			case "C":
+				update = 2;
+				if(isShotClockInAutoReset) setMiniTimer("A");
+				team === "A"? changeBallPossession(2):changeBallPossession(1);
+				break;
+			case "D": 
+				update = 3;
+				if(isShotClockInAutoReset) setMiniTimer("A");
+				team === "A"? changeBallPossession(2):changeBallPossession(1);
+				break;
 		}
 	}
 	else {
@@ -335,8 +361,8 @@ function updateCounter(team, ctrType, ctrButton) {
 }
 
 function updateTimerDisplay() {
-	document.getElementById("sbPeriodNum").backgroundColor = isTimerRunning? "#000000":"#ffffff";
-	document.getElementById("sbPeriodNum").color = isTimerRunning? "#ffffff":"#000000";
+	document.getElementById("sbPeriodNum").style.backgroundColor = isTimerRunning? "#000000":"#ffffff";
+	document.getElementById("sbPeriodNum").style.color = isTimerRunning? "#ffffff":"#000000";
 	document.getElementById("sbPeriodNum").innerHTML = timer[0] > 0?
 		timer[0]+":"+timer[1].toString().padStart(2,"0") // mm:ss
 		:
@@ -344,6 +370,8 @@ function updateTimerDisplay() {
 }
 
 function updateMiniTimerDisplay() {
+	document.getElementById("sbMiniNum").style.backgroundColor = isMiniTimerRunning? "#000000":"#ff0000";
+	document.getElementById("sbMiniNum").style.color = isMiniTimerRunning? "#ff3030":"#ffffff";
 	document.getElementById("sbMiniNum").innerHTML = miniTimer[0]+"";
 }
 
@@ -395,12 +423,13 @@ function changeGameMode(isNewModeBasketball) {
 	document.getElementById("setMiniTimerB").value = isBasketball? "Off. Reb.":"Long Serve";
 	document.getElementById("sbMiniText").innerHTML = isBasketball? "SHOT CLOCK":"TO SERVE";
 	document.getElementById("timerCheckbox").checked = isBasketball? true:false;
-	document.getElementById("autoTriggerHorn").checked = isBasketball? true:false;
+	document.getElementById("resetMiniTimerOnScore").style.visibility = isBasketball? "visible":"hidden";
+	document.getElementById("resetMiniTimerOnScoreLabel").style.visibility = isBasketball? "visible":"hidden";
 	toggleTimerUsage();
 	toggleMiniTimerUsage();
 	changeTimerDefaults();
+	setMiniTimer("A");
 	changeBallPossession(0);
-	setAutoTriggerHorn();
 	setScoreboardElements();
 }
 
@@ -439,6 +468,7 @@ function changeTimer() {
 	timer[2] = deciSeconds;
 	document.getElementById("timerStatus").innerHTML = "TIMER SET";
 	updateTimerDisplay();
+	updateAllTimerButton();
 }
 
 function changePeriod(isInitialValue) {
@@ -451,8 +481,9 @@ function changePeriod(isInitialValue) {
 		case "3": periodLabel += gamePeriod === "HALF"? "OVERTIME":"3RD " + gamePeriod; break;
 		case "4": periodLabel += gamePeriod === "HALF"? "OVERTIME":"4TH " + gamePeriod; break;
 		case "5": periodLabel += gamePeriod != "SET"? "OVERTIME":"5TH " + gamePeriod; break;
-		default: periodLabel += "Time Remaining"; break;
+		default: periodNum = "0"; break;
 	}
+	document.getElementById("sbPeriodText").style.visibility = periodNum === "0"? "hidden":"visible";
 	document.getElementById("sbPeriodText").innerHTML = periodLabel;
 }
 
@@ -462,19 +493,11 @@ function changeCourt() {
 	[teamAscore, teamBscore] = [teamBscore, teamAscore];
 	[teamAupperCounter, teamBupperCounter] = [teamBupperCounter, teamAupperCounter];
 	[teamAlowerCounter, teamBlowerCounter] = [teamBlowerCounter, teamAlowerCounter];
-	[document.getElementById("sbTeamAposs").innerHTML, document.getElementById("sbTeamBposs").innerHTML] = [document.getElementById("sbTeamBposs").innerHTML, document.getElementById("sbTeamAposs").innerHTML];
-	[document.getElementById("teamAposs").style.backgroundColor, document.getElementById("teamBposs").style.backgroundColor] = [document.getElementById("teamBposs").style.backgroundColor, document.getElementById("teamAposs").style.backgroundColor];
-	[document.getElementById("teamAposs").style.color, document.getElementById("teamBposs").style.color] = [document.getElementById("teamBposs").style.color, document.getElementById("teamAposs").style.color];
-	[document.getElementById("teamAposs").value, document.getElementById("teamBposs").value] = [document.getElementById("teamBposs").value, document.getElementById("teamAposs").value];
-	if(ballPossession != 0) ballPossession === 1? ballPossession = 2:ballPossession = 1;
-	let possLetter = ballPossession === 1? "A":"B";
-	let possColor = ballPossession === 1? teamAcolor:teamBcolor;
-	document.getElementById("team"+possLetter+"poss").style.backgroundColor = getShadedColor(possColor, 0.7, true);
-	document.getElementById("team"+possLetter+"poss").style.color = getTextColor(getShadedColor(possColor, 0.7, true));
 	setTeamColors("A", teamAcolor);
 	setTeamInfo("A");
 	setTeamColors("B", teamBcolor);
 	setTeamInfo("B");
+	if(ballPossession != 0) ballPossession === 1? changeBallPossession(2):changeBallPossession(1);
 	setScoreboardElements();
 	refreshCounters();
 }
@@ -508,68 +531,65 @@ function changeBallPossession(teamNum) {
 	}
 }
 
-function startTimer() {
+function activateTimerThread() {
 	timerThread = setInterval(function () {
-		if(timer[0] == 0 && timer[1] == 0 && timer[2] == 0) {
-			stopTimer();
-			document.getElementById("sbPeriodNum").style.backgroundColor = "#ff0000";
-			toggleHornSound();
+		// deactivate the Timer Thread if no timers are running
+		if(!isTimerEnabled && !isMiniTimerEnabled) {
+			clearInterval(timerThread);
 		}
 		else {
-			if(timer[2] > 0) timer[2]--;
-			else {
-				if(timer[1] > 0) {
-					timer[1]--;
-				}
-				else {
-					timer[0]--;
-					timer[1] = 59;
-				}
+			countdownTimer();
+			countdownMiniTimer();
+		}
+	}, 100);
+}
+
+function countdownTimer() {
+	if(isTimerRunning) {
+		if(timer[2] > 0) timer[2]--;
+		else {
+			if(timer[1] > 0) {
+				timer[1]--;
+				timer[2] = 9;
+			}
+			else if(timer[0] > 0) {
+				timer[0]--;
+				timer[1] = 59;
 				timer[2] = 9;
 			}
 		}
 		updateTimerDisplay();
-	}, 100);
-}
-
-function stopTimer() {
-	clearInterval(timerThread);
-	isTimerRunning = false;
-	updateTimerElements();
-}
-
-function startMiniTimer() {
-	console.log("startMiniTimer start!");
-	miniTimerThread = setInterval( function () {
-		console.log("miniTimerThread setInterval active!");
-		if(miniTimer[0] == 0) {
-			stopMiniTimer();
-			if(isTimerEnabled && isTimerRunning) stopTimer();
+		if(timer[0] == 0 && timer[1] == 0 && timer[2] == 0) {
+			isTimerRunning = false;
+			updateTimerElements();
+			document.getElementById("sbPeriodNum").style.backgroundColor = "#ff0000";
+			if(isMiniTimerEnabled) {
+				isMiniTimerRunning = false;
+				updateMiniTimerElements();
+			}
+			updateAllTimerButton();
 			toggleHornSound();
 		}
-		else {
-			if(miniTimer[1] > 0) miniTimer[1]--;
-			else {
-				miniTimer[0]--;
-				miniTimer[1] = 9;
-			}
+	}
+}
+
+function countdownMiniTimer() {
+	if(isMiniTimerRunning) {
+		if(miniTimer[1] >= 0) miniTimer[1]--;
+		else if(miniTimer[0] > 0) {
+			miniTimer[0]--;
+			miniTimer[1] = 9;
 		}
 		updateMiniTimerDisplay();
-	}, 100);
+		if(miniTimer[0] == 0) {
+			isMiniTimerRunning = false;
+			updateMiniTimerElements();
+			if(isTimerEnabled) {
+				isTimerRunning = false;
+				updateTimerElements();
+			}
+			updateAllTimerButton();
+			toggleHornSound();
+		}
+	}
 }
-
-function stopMiniTimer() {
-	clearInterval(miniTimerThread);
-	isMiniTimerRunning = false;
-	updateMiniTimerElements();
-}
-
-/**
-	TODO[kete]: Load setInterval() once the program is run.
-	- Both Timer and MiniTimer must run under this same setInterval thread.
-	- The only variable that will allow them to countdown is defined on their respective
-		boolean triggers (isTimerRunning and isMiniTimerRunning).
-	
-	- Remove the current implementation where the timers run on their separated threads,
-		as it has been tested that Mini Timer cannot run alongside Timer if Timer ran first.
-*/
