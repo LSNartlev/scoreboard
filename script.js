@@ -7,7 +7,7 @@ var teamAlowerCounter = 0, teamBlowerCounter = 0;
 var isBasketball = true, ballPossession = 0; // 0 = none, 1 = Team A, 2 = Team B
 var isTimerEnabled = true, isMiniTimerEnabled = true, isHornAutoTrigger = true;
 var isTimerRunning = false, isMiniTimerRunning = false, isHornPlaying = false, isBuzzerPlaying = false;
-var timer = [10, 0, 0], miniTimer = [24, 9], isTimeout = false, isShotClockInAutoReset = true;
+var timer = [10, 0, 0], miniTimer = [24, 0], isTimeout = false, isShotClockInAutoReset = true;
 var timerThread, isTimerThreadActive;
 var defaultTimer = [10, 0, 0], defaultminiTimers = [24, 14, 60];
 
@@ -199,7 +199,7 @@ function setMiniTimer(timerType) {
 			isTimeout = true;
 			break;
 	}
-	miniTimer[1] = 9;
+	miniTimer[1] = 0;
 	document.getElementById("sbMiniText").innerHTML = isTimeout? "TIMEOUT":isBasketball? "SHOT CLOCK":"TO SERVE";
 	updateMiniTimerDisplay();
 	updateAllTimerButton();
@@ -215,11 +215,11 @@ function toggleHornSound() {
 	let hornVolume = document.getElementById("hornVolume").value*0.01;
 	if(!(hornVolume >= 0) || !(hornVolume <= 1)) hornVolume = 1;
 	if(isHornPlaying) {
-		document.getElementById("sound_hornloop").volume = hornVolume;
-		document.getElementById("sound_hornloop").play();
+		document.getElementById("sound_horn").volume = hornVolume;
+		document.getElementById("sound_horn").play();
 	}
 	else {
-		document.getElementById("sound_hornloop").pause();
+		document.getElementById("sound_horn").pause();
 	}
 	document.getElementById("hornButton").value = isHornPlaying? "STOP HORN":"SOUND HORN";
 	document.getElementById("hornButton").style.backgroundColor = isHornPlaying? "#ff0000":"";
@@ -309,12 +309,22 @@ function updateScore(team, scoreButton) {
 			case "B": update = 1; break;
 			case "C":
 				update = 2;
-				if(isShotClockInAutoReset) setMiniTimer("A");
+				if(isShotClockInAutoReset) {
+					isMiniTimerRunning = false;
+					updateMiniTimerElements();
+					updateAllTimerButton();
+					setMiniTimer("A");
+				}
 				team === "A"? changeBallPossession(2):changeBallPossession(1);
 				break;
 			case "D": 
 				update = 3;
-				if(isShotClockInAutoReset) setMiniTimer("A");
+				if(isShotClockInAutoReset) {
+					isMiniTimerRunning = false;
+					updateMiniTimerElements();
+					updateAllTimerButton();
+					setMiniTimer("A");
+				}
 				team === "A"? changeBallPossession(2):changeBallPossession(1);
 				break;
 		}
@@ -423,6 +433,7 @@ function changeGameMode(isNewModeBasketball) {
 	document.getElementById("setMiniTimerB").value = isBasketball? "Off. Reb.":"Long Serve";
 	document.getElementById("sbMiniText").innerHTML = isBasketball? "SHOT CLOCK":"TO SERVE";
 	document.getElementById("timerCheckbox").checked = isBasketball? true:false;
+	document.getElementById("miniTimerCheckbox").checked = isBasketball? true:false;
 	document.getElementById("resetMiniTimerOnScore").style.visibility = isBasketball? "visible":"hidden";
 	document.getElementById("resetMiniTimerOnScoreLabel").style.visibility = isBasketball? "visible":"hidden";
 	toggleTimerUsage();
@@ -532,16 +543,25 @@ function changeBallPossession(teamNum) {
 }
 
 function activateTimerThread() {
-	timerThread = setInterval(function () {
-		// deactivate the Timer Thread if no timers are running
-		if(!isTimerEnabled && !isMiniTimerEnabled) {
-			clearInterval(timerThread);
-		}
+	let timerRun, miniTimerRun, timerDelta, lastTimerDelta = 0, miniTimerDelta, lastMiniTimerDelta = 0;
+	
+	timerThread = () => {
+		if(!isTimerRunning) timerRun = performance.now();
 		else {
-			countdownTimer();
-			countdownMiniTimer();
+			timerDelta = (performance.now() - timerRun) % 100;
+			if(timerDelta <= lastTimerDelta) countdownTimer();
+			lastTimerDelta = timerDelta;
 		}
-	}, 100);
+		
+		if(!isMiniTimerRunning) miniTimerRun = performance.now();
+		else {
+			miniTimerDelta = (performance.now() - miniTimerRun) % 100;
+			if(miniTimerDelta <= lastMiniTimerDelta) countdownMiniTimer();
+			lastMiniTimerDelta = miniTimerDelta;
+		}
+		requestAnimationFrame(timerThread);
+	};
+	requestAnimationFrame(timerThread);
 }
 
 function countdownTimer() {
@@ -575,10 +595,10 @@ function countdownTimer() {
 
 function countdownMiniTimer() {
 	if(isMiniTimerRunning) {
-		if(miniTimer[1] >= 0) miniTimer[1]--;
+		if(miniTimer[1] < 9) miniTimer[1]++;
 		else if(miniTimer[0] > 0) {
 			miniTimer[0]--;
-			miniTimer[1] = 9;
+			miniTimer[1] = 0;
 		}
 		updateMiniTimerDisplay();
 		if(miniTimer[0] == 0) {

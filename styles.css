@@ -252,8 +252,8 @@ input[type="number"] {
 .sbteamcontent {
 	background-color:rgb(0, 0, 0, 0.55);
 	color:#ffffff;
-	margin:1.5vh;
-	padding:0.5vh;
+	margin:1.25vh;
+	padding:0;
 	justify-content:center;
 }
 
@@ -340,7 +340,7 @@ input[type="number"] {
 }
 
 .timerscontent {
-	margin:0.25vh;
+	margin:0;
 	padding:0.5vh;
 	width:55%;
 	height:min(7em,9vw);
@@ -377,7 +377,7 @@ input[type="number"] {
 }
 
 #sbPeriodTimer {
-	padding-bottom:1vh;
+	padding-bottom:0.75vh;
 }
 
 #sbPeriodText {
@@ -386,7 +386,7 @@ input[type="number"] {
 	font-size:max(1.5vw,12px);
 	line-height:max(1.5vw,12px);
 	text-align:center;
-	padding:0.75vh;
+	padding:0.5vh;
 }
 
 #sbMiniText {
@@ -395,7 +395,7 @@ input[type="number"] {
 	font-size:max(1.5vw,12px);
 	line-height:max(1.5vw,12px);
 	text-align:center;
-	padding:0.75vh;
+	padding:0.5vh;
 }
 
 .timerStatus {
