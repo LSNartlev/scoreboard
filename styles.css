@@ -118,8 +118,8 @@ input[type="number"] {
 	justify-content:center;
 	position:relative;
 	background-color:#303030;
-	min-width:250px;
-	width:22vw;
+	min-width:229px;
+	width:20vw;
 	min-height:360px;
 	height:31.5vw;
 }
@@ -140,7 +140,7 @@ input[type="number"] {
 
 .setupcol {
 	display:flex;
-	padding:1.5vh;
+	padding:1.25vh;
 	width:22vw;
 	min-height:140px;
 	height:20vh;
@@ -148,8 +148,8 @@ input[type="number"] {
 
 .timercol {
 	display:flex;
-	padding:1.5vh;
-	width:20.5vw;
+	padding:1.25vh;
+	width:20.875vw;
 	min-height:140px;
 	height:20vh;
 }
@@ -398,6 +398,10 @@ input[type="number"] {
 	padding:0.5vh;
 }
 
+#adjustTimer {
+	width:8.175vw;
+}
+
 .timerStatus {
 	text-align:center;
 	font-weight:bold;
@@ -448,7 +452,7 @@ input[type="checkbox"], input[type="radio"] {
 	font-size:1em;
 	vertical-align:middle;
 	width:5.75vw;
-	height:3.625vh;
+	height:3.6125vh;
 }
 
 .toggleAllTimerState {
@@ -463,9 +467,21 @@ input[type="checkbox"], input[type="radio"] {
 	text-align:left;
 }
 
-#hornButton, #buzzerButton {
+#hornButton {
 	font-family:roboto, sans-serif;
-	font-size:1.25em;
-	width:10.5vw;
-	height:6.5vh;
+	font-size:2em;
+	width:5.625vw;
+	height:7.375vh;
+}
+
+.sfxButton {
+	font-family:roboto, sans-serif;
+	font-size:2em;
+	width:2.875vw;
+	height:7.375vh;
+}
+
+.sfxSelect {
+	width:2.875vw;
+	height:3.6125vh;
 }

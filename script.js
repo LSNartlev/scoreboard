@@ -212,7 +212,7 @@ function toggleShotClockAutoReset() {
 
 function toggleHornSound() {
 	isHornPlaying = !isHornPlaying;
-	let hornVolume = document.getElementById("hornVolume").value*0.01;
+	let hornVolume = 1; //document.getElementById("hornVolume").value*0.01;
 	if(!(hornVolume >= 0) || !(hornVolume <= 1)) hornVolume = 1;
 	if(isHornPlaying) {
 		document.getElementById("sound_horn").volume = hornVolume;
@@ -221,7 +221,7 @@ function toggleHornSound() {
 	else {
 		document.getElementById("sound_horn").pause();
 	}
-	document.getElementById("hornButton").value = isHornPlaying? "STOP HORN":"SOUND HORN";
+	document.getElementById("hornButton").value = isHornPlaying? "\u{1F507}":"\u{1F50A}";
 	document.getElementById("hornButton").style.backgroundColor = isHornPlaying? "#ff0000":"";
 	document.getElementById("hornButton").style.color = isHornPlaying? "#ffffff":"";
 }
