@@ -443,7 +443,7 @@ input[type="checkbox"], input[type="radio"] {
 	font-size:225%;
 	line-height:225%;
 	vertical-align:middle;
-	width:5.75vw;
+	width:5.5vw;
 	height:12.5vh;
 }
 
@@ -477,11 +477,11 @@ input[type="checkbox"], input[type="radio"] {
 .sfxButton {
 	font-family:roboto, sans-serif;
 	font-size:2em;
-	width:2.875vw;
+	width:2.75vw;
 	height:7.375vh;
 }
 
 .sfxSelect {
-	width:2.875vw;
+	width:2.75vw;
 	height:3.6125vh;
 }

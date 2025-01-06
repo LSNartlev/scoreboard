@@ -11,6 +11,7 @@ var timer = [10, 0, 0], miniTimer = [24, 0], isTimeout = false, isShotClockInAut
 var timerThread, isTimerThreadActive;
 var defaultTimer = [10, 0, 0], defaultminiTimers = [24, 14, 60];
 
+
 function setDefaults() {
 	setTeamColors("A", teamAcolor);
 	setTeamInfo("A");
@@ -135,7 +136,6 @@ function toggleMiniTimerUsage() {
 	document.getElementById("miniTimerBsec").disabled = isEnabled? false:true;
 	document.getElementById("miniTimerCsec").disabled = isEnabled? false:true;
 	document.getElementById("toggleMiniTimerState").disabled = isEnabled? false:true;
-	document.getElementById("resetMiniTimerOnScore").disabled = isEnabled? false:true;
 	document.getElementById("sbMiniNum").style.visibility = isEnabled? "visible":"hidden";
 	document.getElementById("sbMiniText").style.visibility = isEnabled? "visible":"hidden";
 	document.getElementById("toggleAllTimerState").disabled = (isTimerEnabled && isMiniTimerEnabled)? false:true;
@@ -187,11 +187,19 @@ function setMiniTimer(timerType) {
 	let miniTimerC = document.getElementById("miniTimerCsec").value == ""? defaultminiTimers[2]:document.getElementById("miniTimerCsec").value;
 	switch(timerType) {
 		case "A":
-			miniTimer[0] = miniTimerA;
+			if(timer[0] == 0 && timer[1]+(timer[2]*0.1) <= miniTimerA) {
+				document.getElementById("miniTimerCheckbox").checked = false;
+				toggleMiniTimerUsage();
+			}
+			else miniTimer[0] = miniTimerA;
 			isTimeout = false;
 			break;
 		case "B":
-			miniTimer[0] = miniTimerB;
+			if(timer[0] == 0 && timer[1]+(timer[2]*0.1) <= miniTimerB) {
+				document.getElementById("miniTimerCheckbox").checked = false;
+				toggleMiniTimerUsage();
+			}
+			else miniTimer[0] = miniTimerB;
 			isTimeout = false;
 			break;
 		default:
@@ -212,7 +220,7 @@ function toggleShotClockAutoReset() {
 
 function toggleHornSound() {
 	isHornPlaying = !isHornPlaying;
-	let hornVolume = 1; //document.getElementById("hornVolume").value*0.01;
+	let hornVolume = document.getElementById("hornVolume").value*0.01;
 	if(!(hornVolume >= 0) || !(hornVolume <= 1)) hornVolume = 1;
 	if(isHornPlaying) {
 		document.getElementById("sound_horn").volume = hornVolume;
@@ -226,11 +234,10 @@ function toggleHornSound() {
 	document.getElementById("hornButton").style.color = isHornPlaying? "#ffffff":"";
 }
 
-function toggleBuzzerSound() {
-	isBuzzerPlaying = !isBuzzerPlaying;
-	document.getElementById("buzzerButton").value = isBuzzerPlaying? "STOP BUZZER":"SOUND BUZZER";
-	document.getElementById("buzzerButton").style.backgroundColor = isBuzzerPlaying? "#ff0000":"";
-	document.getElementById("buzzerButton").style.color = isBuzzerPlaying? "#ffffff":"";
+function loadCustomSound(sfxNumber) {
+	let audiopath = document.getElementById("selectSFX"+sfxNumber).files;
+	let audioName = audiopath[0].name;
+	console.log("SFX Number Loaded:" + sfxNumber + " / Location: " + audioName);
 }
 
 function getTextColor(color) {

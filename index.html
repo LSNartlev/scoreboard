@@ -241,11 +241,11 @@
 						<tr>
 							<td><input type="button" id="hornButton" name="hornButton" value="&#128266;" onclick='toggleHornSound()'></td>
 							<td>
-								<input type="button" class="sfxButton" id="sfxButton1" name="sfxButton1" value="1" onclick='playCustomSound(1)'>
-								<input type="button" class="sfxButton" id="sfxButton2" name="sfxButton2" value="2" onclick='playCustomSound(2)'>
-								<input type="button" class="sfxButton" id="sfxButton3" name="sfxButton3" value="3" onclick='playCustomSound(3)'>
-								<input type="button" class="sfxButton" id="sfxButton4" name="sfxButton4" value="4" onclick='playCustomSound(4)'>
-								<input type="button" class="sfxButton" id="sfxButton5" name="sfxButton5" value="5" onclick='playCustomSound(5)'>
+								<input type="button" class="sfxButton" id="sfxButton1" name="sfxButton1" value="1" onclick='playCustomSound(1)' disabled>
+								<input type="button" class="sfxButton" id="sfxButton2" name="sfxButton2" value="2" onclick='playCustomSound(2)' disabled>
+								<input type="button" class="sfxButton" id="sfxButton3" name="sfxButton3" value="3" onclick='playCustomSound(3)' disabled>
+								<input type="button" class="sfxButton" id="sfxButton4" name="sfxButton4" value="4" onclick='playCustomSound(4)' disabled>
+								<input type="button" class="sfxButton" id="sfxButton5" name="sfxButton5" value="5" onclick='playCustomSound(5)' disabled>
 							</td>
 						</tr>
 						<tr>
@@ -253,11 +253,16 @@
 								Vol. <input type="number" id="hornVolume" name="hornVolume" value="100" min="0" max="100" autocomplete="off">
 							</td>
 							<td>
-								<input type="button" class="sfxSelect" id="selectSFX1" name="selectSFX1" value="&#128193;" onclick='loadCustomSound(1)'>
-								<input type="button" class="sfxSelect" id="selectSFX2" name="selectSFX2" value="&#128193;" onclick='loadCustomSound(2)'>
-								<input type="button" class="sfxSelect" id="selectSFX3" name="selectSFX3" value="&#128193;" onclick='loadCustomSound(3)'>
-								<input type="button" class="sfxSelect" id="selectSFX4" name="selectSFX4" value="&#128193;" onclick='loadCustomSound(4)'>
-								<input type="button" class="sfxSelect" id="selectSFX5" name="selectSFX5" value="&#128193;" onclick='loadCustomSound(5)'>
+								<button class="sfxSelect" onclick="document.getElementById('selectSFX1').click()">&#128193;</button>
+								<input type="file" style="display:none" id="selectSFX1" name="selectSFX1" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(1)'>
+								<button class="sfxSelect" onclick="document.getElementById('selectSFX2').click()">&#128193;</button>
+								<input type="file" style="display:none" id="selectSFX2" name="selectSFX2" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(2)'>
+								<button class="sfxSelect" onclick="document.getElementById('selectSFX3').click()">&#128193;</button>
+								<input type="file" style="display:none" id="selectSFX3" name="selectSFX3" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(3)'>
+								<button class="sfxSelect" onclick="document.getElementById('selectSFX4').click()">&#128193;</button>
+								<input type="file" style="display:none" id="selectSFX4" name="selectSFX4" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(4)'>
+								<button class="sfxSelect" onclick="document.getElementById('selectSFX5').click()">&#128193;</button>
+								<input type="file" style="display:none" id="selectSFX5" name="selectSFX5" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(5)'>
 							</td>
 						</tr>
 						<tr>
