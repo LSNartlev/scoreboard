@@ -1,482 +1,482 @@
 body {
-	background-color:#080808;
-	color:#dadada;
-	font-family:roboto, sans-serif;
-	font-size:max(1vw,12px);
-	margin:0;
-	padding:0;
+  background-color:#080808;
+  color:#dadada;
+  font-family:roboto, sans-serif;
+  font-size:max(1vw,12px);
+  margin:0;
+  padding:0;
 }
 
 table {
-	border:none;
-	display:flex;
-	width:100%;
+  border:none;
+  display:flex;
+  width:100%;
 }
 
 form {
-	text-align:center;
-	width:100%;
+  text-align:center;
+  width:100%;
 }
 
 input[type="color"] {
-	padding:0;
-	border:none;
-	width:18%;
-	height:max(1.3vw,12px);
+  padding:0;
+  border:none;
+  width:18%;
+  height:max(1.3vw,12px);
 }
 
 input[type="button"] {
-	font-family:roboto, sans-serif;
-	min-font-size:12px;
-	border:none;
-	border-radius:5px;
-	cursor:pointer;
+  font-family:roboto, sans-serif;
+  min-font-size:12px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
 }
 
 input[type="button"]:hover {
-	background-image:linear-gradient(#ffffff30 0 0);
+  background-image:linear-gradient(#ffffff30 0 0);
 }
 
 input[type="button"]:active {
-	background-image: linear-gradient(#00000020 0 0);
+  background-image: linear-gradient(#00000020 0 0);
 }
 
 input[type="number"] {
-	width:3vw;
-	padding:0.5vh;
-	border:none;
-	background-color:#202020;
-	color:#ffffff;
-	text-align:center;
-	font-family:roboto, sans-serif;
-	font-size:max(1vw,12px);
+  width:3vw;
+  padding:0.5vh;
+  border:none;
+  background-color:#202020;
+  color:#ffffff;
+  text-align:center;
+  font-family:roboto, sans-serif;
+  font-size:max(1vw,12px);
 }
 
 .centertext {
-	text-align:center;
+  text-align:center;
 }
 
 .righttext {
-	text-align:right;
+  text-align:right;
 }
 
 .pagecontain {
-	display:flex;
-	flex-direction:column;
-	height:100vh;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
 }
 
 .row {
-	position:relative;
-	width:100%;
-	display:flex;
-	clear:both;
-	margin:0;
-	padding:0;
+  position:relative;
+  width:100%;
+  display:flex;
+  clear:both;
+  margin:0;
+  padding:0;
 }
 
 .sbrow {
-	position:relative;
-	width:100%;
-	display:flex;
-	clear:both;
-	justify-content:center;
-	margin:0;
-	padding:0;
+  position:relative;
+  width:100%;
+  display:flex;
+  clear:both;
+  justify-content:center;
+  margin:0;
+  padding:0;
 }
 
 .ctrrow {
-	position:relative;
-	width:100%;
-	height:17.5vw;
-	display:flex;
-	clear:both;
-	justify-content:center;
-	margin:0;
-	padding:0;
+  position:relative;
+  width:100%;
+  height:17.5vw;
+  display:flex;
+  clear:both;
+  justify-content:center;
+  margin:0;
+  padding:0;
 }
 
 .mainpanels {
-	height:calc(33.75vw+1.5vh);
+  height:calc(33.75vw+1.5vh);
 }
 
 .optionpanels {
-	display:flex;
-	background-color:#303030;
+  display:flex;
+  background-color:#303030;
 }
 
 .column {
-	position:relative;
-	display:flex;
-	float:left;
-	margin:0;
+  position:relative;
+  display:flex;
+  float:left;
+  margin:0;
 }
 
 .teamcol {
-	padding:1.5vh;
-	display:flex;
-	justify-content:center;
-	position:relative;
-	background-color:#303030;
-	min-width:229px;
-	width:20vw;
-	min-height:360px;
-	height:31.5vw;
+  padding:1.5vh;
+  display:flex;
+  justify-content:center;
+  position:relative;
+  background-color:#303030;
+  min-width:229px;
+  width:20vw;
+  min-height:360px;
+  height:31.5vw;
 }
 
 .boardcol {
-	user-select:none;
-	padding:1.5vh;
-	position:relative;
-	background-color:#101010;
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	min-width:640px;
-	width:56vw;
-	min-height:360px;
-	height:31.5vw;
+  user-select:none;
+  padding:1.5vh;
+  position:relative;
+  background-color:#101010;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:640px;
+  width:56vw;
+  min-height:360px;
+  height:31.5vw;
 }
 
 .setupcol {
-	display:flex;
-	padding:1.25vh;
-	width:22vw;
-	min-height:140px;
-	height:20vh;
+  display:flex;
+  padding:1.25vh;
+  width:22vw;
+  min-height:140px;
+  height:20vh;
 }
 
 .timercol {
-	display:flex;
-	padding:1.25vh;
-	width:20.875vw;
-	min-height:140px;
-	height:20vh;
+  display:flex;
+  padding:1.25vh;
+  width:20.875vw;
+  min-height:140px;
+  height:20vh;
 }
 
 .setupcolmini {
-	display:flex;
-	padding:none;
-	align-items:center;
-	justify-content:center;
-	flex-direction:column;
-	width:9.5vw;
-	min-height:150px;
-	height:20vh;
+  display:flex;
+  padding:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  width:9.5vw;
+  min-height:150px;
+  height:20vh;
 }
 
 .colminiitems {
-	width:100%;
-	padding:0;
-	text-align:center;
+  width:100%;
+  padding:0;
+  text-align:center;
 }
 
 .possButton {
-	margin-bottom:12px;
-	font-size:1.75em;
-	width:45%;
-	height:6vh;
-	cursor:pointer;
+  margin-bottom:12px;
+  font-size:1.75em;
+  width:45%;
+  height:6vh;
+  cursor:pointer;
 }
 
 #changeCourt {
-	font-family:roboto, sans-serif;
-	font-size:1.5em;
-	width:100%;
-	height:6.625vh;
+  font-family:roboto, sans-serif;
+  font-size:1.5em;
+  width:100%;
+  height:6.625vh;
 }
 
 .timerctrl {
-	display:flex;
-	align-items:center;
-	justify-content:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 #gamePeriod, #soundOnTimeup {
-	padding:0.5vh;
-	border:none;
-	background-color:#202020;
-	color:#ffffff;
-	font-family:roboto, sans-serif;
-	font-size:max(1vw,12px);
+  padding:0.5vh;
+  border:none;
+  background-color:#202020;
+  color:#ffffff;
+  font-family:roboto, sans-serif;
+  font-size:max(1vw,12px);
 }
 
 .textfield {
-	position:relative;
-	background-color:#202020;
-	padding:0.5vh;
-	border:none;
-	color:#ffffff;
-	font-family:roboto, sans-serif;
-	font-size:max(1vw,12px);
-	height:max(1.5vw,14px);
+  position:relative;
+  background-color:#202020;
+  padding:0.5vh;
+  border:none;
+  color:#ffffff;
+  font-family:roboto, sans-serif;
+  font-size:max(1vw,12px);
+  height:max(1.5vw,14px);
 }
 
 .teamtf {
-	width:78%;
+  width:78%;
 }
 
 #matchTitle {
-	width:95%;
+  width:95%;
 }
 
 /* Team Controls */
 .teambutton {
-	position:relative;
-	font-family:roboto, sans-serif;
-	font-size:2em;
-	text-align:center;
-	min-width:50px;
-	width:4.25vw;
-	min-height:50px;
-	height:4.25vw;
-	cursor:pointer;
+  position:relative;
+  font-family:roboto, sans-serif;
+  font-size:2em;
+  text-align:center;
+  min-width:50px;
+  width:4.25vw;
+  min-height:50px;
+  height:4.25vw;
+  cursor:pointer;
 }
 
 .resetcounter {
-	font-family:roboto, sans-serif;
-	font-size:1em;
+  font-family:roboto, sans-serif;
+  font-size:1em;
 }
 
 /* Scoreboard Containers [Z-Index 1] */
 .scoreboard {
-	width:100%;
-	height:100%;	
-	display:flex;
-	flex-direction:column;
-	align-items:center;
-	clear:both;
-	margin:0;
+  width:100%;
+  height:100%;  
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  clear:both;
+  margin:0;
 }
 
 .sbteamcontent {
-	background-color:rgb(0, 0, 0, 0.55);
-	color:#ffffff;
-	margin:1.25vh;
-	padding:0;
-	justify-content:center;
+  background-color:rgb(0, 0, 0, 0.55);
+  color:#ffffff;
+  margin:1.25vh;
+  padding:0;
+  justify-content:center;
 }
 
 .scoreBox {
-	font-weight:bold;
-	font-size:max(7vw,12px);
-	width:25%;
-	height:7vw;
-	margin:0;
-	padding:0;
-	text-align:center;
-	align-items:center;
-	line-height:7vw;
-	display:inline-block;
+  font-weight:bold;
+  font-size:max(7vw,12px);
+  width:25%;
+  height:7vw;
+  margin:0;
+  padding:0;
+  text-align:center;
+  align-items:center;
+  line-height:7vw;
+  display:inline-block;
 }
 
 #sbTeamAname, #sbTeamBname {
-	font-size:max(1.75vw,12px);
-	font-weight:bold;
-	align-items:center;
-	justify-content:center;
-	text-align:center;
-	text-overflow:ellipsis;
-	width:41.75%;
+  font-size:max(1.75vw,12px);
+  font-weight:bold;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  text-overflow:ellipsis;
+  width:41.75%;
 }
 
 #sbTeamAposs, #sbTeamBposs {
-	font-size:max(3.5vw,12px);
-	text-align:center;
-	display:flex;
-	align-items:center;
-	width:12.5%;
-	line-height:7vw;
-	height:7vw;
+  font-size:max(3.5vw,12px);
+  text-align:center;
+  display:flex;
+  align-items:center;
+  width:12.5%;
+  line-height:7vw;
+  height:7vw;
 }
 
 #sbMatchTitle {
-	background-color:#ffffff;
-	color:#000000;
-	margin-top:2vh;
-	padding-left:2vh;
-	padding-right:2vh;
+  background-color:#ffffff;
+  color:#000000;
+  margin-top:2vh;
+  padding-left:2vh;
+  padding-right:2vh;
 }
 
 #versus {
-	background-color:#000000;
-	color:#ffffff;
-	margin-top:1.5vh;
-	margin-bottom:1.5vh;
-	width:3vw;
+  background-color:#000000;
+  color:#ffffff;
+  margin-top:1.5vh;
+  margin-bottom:1.5vh;
+  width:3vw;
 }
 
 #sbVersusGap {
-	width:9%;
+  width:9%;
 }
 
 .sbothercontent {
-	font-family:roboto, sans-serif;
-	font-size:max(1.75vw,12px);
-	font-weight:bold;
-	align-items:center;
-	justify-content:center;
+  font-family:roboto, sans-serif;
+  font-size:max(1.75vw,12px);
+  font-weight:bold;
+  align-items:center;
+  justify-content:center;
 }
 
 #countersA, #countersB {
-	display:flex;
-	flex-direction:column;
-	width:18%;
-	text-align:center;
-	align-items:center;
-	justify-content:center;
+  display:flex;
+  flex-direction:column;
+  width:18%;
+  text-align:center;
+  align-items:center;
+  justify-content:center;
 }
 
 .counterscontent {
-	background-color:rgb(0, 0, 0, 0.55);
-	margin:0.5vh;
-	padding:0.5vh;
-	display:flex;
-	flex-direction:column;
-	align-items:center;
-	justify-content:center;
-	width:100%;
-	height:min(7em,9vw);
+  background-color:rgb(0, 0, 0, 0.55);
+  margin:0.5vh;
+  padding:0.5vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:min(7em,9vw);
 }
 
 .timerscontent {
-	margin:0;
-	padding:0.5vh;
-	width:55%;
-	height:min(7em,9vw);
+  margin:0;
+  padding:0.5vh;
+  width:55%;
+  height:min(7em,9vw);
 }
 
 .counterlabel {
-	color:#ffffff;
-	font-family:roboto, sans-serif;
-	font-size:max(1.25vw,12px);
-	line-height:max(1.25vw,12px);
-	font-weight:bold;
-	font-style:italic;
+  color:#ffffff;
+  font-family:roboto, sans-serif;
+  font-size:max(1.25vw,12px);
+  line-height:max(1.25vw,12px);
+  font-weight:bold;
+  font-style:italic;
 }
 
 .counternum {
-	color:#ffffff;
-	font-family:roboto, sans-serif;
-	font-size:max(7vh,5.25vw,12px);
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	-webkit-padding-before:2.5vh; /* needed for Chrome/Edge it seems */
-	padding-bottom:1vh;
-	line-height:max(6.5vh,4vw,12px);
-	font-weight:bold;
+  color:#ffffff;
+  font-family:roboto, sans-serif;
+  font-size:max(7vh,5.25vw,12px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  -webkit-padding-before:2.5vh; /* needed for Chrome/Edge it seems */
+  padding-bottom:1vh;
+  line-height:max(6.5vh,4vw,12px);
+  font-weight:bold;
 }
 
 #timers {
-	display:flex;
-	flex-direction:column;
-	align-items:center;
-	justify-content:center;
-	width:58%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:58%;
 }
 
 #sbPeriodTimer {
-	padding-bottom:0.75vh;
+  padding-bottom:0.75vh;
 }
 
 #sbPeriodText {
-	background-color:#ffffff;
-	color:#000000;
-	font-size:max(1.5vw,12px);
-	line-height:max(1.5vw,12px);
-	text-align:center;
-	padding:0.5vh;
+  background-color:#ffffff;
+  color:#000000;
+  font-size:max(1.5vw,12px);
+  line-height:max(1.5vw,12px);
+  text-align:center;
+  padding:0.5vh;
 }
 
 #sbMiniText {
-	background-color:#ffffff;
-	color:#000000;
-	font-size:max(1.5vw,12px);
-	line-height:max(1.5vw,12px);
-	text-align:center;
-	padding:0.5vh;
+  background-color:#ffffff;
+  color:#000000;
+  font-size:max(1.5vw,12px);
+  line-height:max(1.5vw,12px);
+  text-align:center;
+  padding:0.5vh;
 }
 
 #adjustTimer {
-	width:8.175vw;
+  width:8.175vw;
 }
 
 .timerStatus {
-	text-align:center;
-	font-weight:bold;
-	background-color:#ff0000;
-	color:#ffffff;
+  text-align:center;
+  font-weight:bold;
+  background-color:#ff0000;
+  color:#ffffff;
 }
 
 #sbPeriodNum {
-	background-color:#ffffff;
-	color:#000000;
-	font-size:max(7.25vh,5.5vw,12px);
-	line-height:max(6.75vh,4.125vw,12px);
-	text-align:center;
-	padding:1vh;
+  background-color:#ffffff;
+  color:#000000;
+  font-size:max(7.25vh,5.5vw,12px);
+  line-height:max(6.75vh,4.125vw,12px);
+  text-align:center;
+  padding:1vh;
 }
 
 #sbMiniNum {
-	background-color:#ff0000;
-	color:#ffffff;
-	font-size:max(7.25vh,5.5vw,12px);
-	line-height:max(6.75vh,4.125vw,12px);
-	text-align:center;
-	padding:1vh;
+  background-color:#ff0000;
+  color:#ffffff;
+  font-size:max(7.25vh,5.5vw,12px);
+  line-height:max(6.75vh,4.125vw,12px);
+  text-align:center;
+  padding:1vh;
 }
 
 #sbMiniTimer {
-	width:32%;
+  width:32%;
 }
 
 input[type="checkbox"], input[type="radio"] {
-	width:max(1vw,12px);
-	height:max(1vw,12px);
-	margin-left:0;
-	cursor:pointer;
+  width:max(1vw,12px);
+  height:max(1vw,12px);
+  margin-left:0;
+  cursor:pointer;
 }
 
 #setTimer, #toggleTimerState, #toggleMiniTimerState {
-	font-family:roboto, sans-serif;
-	font-size:225%;
-	line-height:225%;
-	vertical-align:middle;
-	width:5.5vw;
-	height:12.5vh;
+  font-family:roboto, sans-serif;
+  font-size:225%;
+  line-height:225%;
+  vertical-align:middle;
+  width:5.5vw;
+  height:12.5vh;
 }
 
 #setMiniTimerA, #setMiniTimerB, #setMiniTimerC {
-	font-family:roboto, sans-serif;
-	font-size:1em;
-	vertical-align:middle;
-	width:5.75vw;
-	height:3.6125vh;
+  font-family:roboto, sans-serif;
+  font-size:1em;
+  vertical-align:middle;
+  width:5.75vw;
+  height:3.6125vh;
 }
 
 .toggleAllTimerState {
-	font-family:roboto, sans-serif;
-	font-size:2.25em;
-	width:100%;
-	height:8vh;
+  font-family:roboto, sans-serif;
+  font-size:2.25em;
+  width:100%;
+  height:8vh;
 }
 
 #soundVolume {
-	width:3.25vw;
-	text-align:left;
+  width:3.25vw;
+  text-align:left;
 }
 
 #hornButton {
-	font-family:roboto, sans-serif;
-	font-size:2em;
-	width:5.625vw;
-	height:7.375vh;
+  font-family:roboto, sans-serif;
+  font-size:2em;
+  width:5.625vw;
+  height:7.375vh;
 }
 
 .sfxButton {
-	font-family:roboto, sans-serif;
-	font-size:2em;
-	width:2.75vw;
-	height:7.375vh;
+  font-family:roboto, sans-serif;
+  font-size:2em;
+  width:2.75vw;
+  height:7.375vh;
 }
