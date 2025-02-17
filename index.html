@@ -13,6 +13,36 @@
 		<audio id="sound_warning">
 			<source src="sounds/warning.ogg" type="audio/ogg">
 		</audio>
+		<audio id="sound_sfx1">
+			<source src="sounds/soundeffect1.mp3" type="audio/mpeg">
+			<source src="sounds/soundeffect1.ogg" type="audio/ogg">
+			<source src="sounds/soundeffect1.wav" type="audio/wav">
+			<source src="sounds/nothing.ogg" type="audio/ogg">
+		</audio>
+		<audio id="sound_sfx2">
+			<source src="sounds/soundeffect2.mp3" type="audio/mpeg">
+			<source src="sounds/soundeffect2.ogg" type="audio/ogg">
+			<source src="sounds/soundeffect2.wav" type="audio/wav">
+			<source src="sounds/nothing.ogg" type="audio/ogg">
+		</audio>
+		<audio id="sound_sfx3">
+			<source src="sounds/soundeffect3.mp3" type="audio/mpeg">
+			<source src="sounds/soundeffect3.ogg" type="audio/ogg">
+			<source src="sounds/soundeffect3.wav" type="audio/wav">
+			<source src="sounds/nothing.ogg" type="audio/ogg">
+		</audio>
+		<audio id="sound_sfx4">
+			<source src="sounds/soundeffect4.mp3" type="audio/mpeg">
+			<source src="sounds/soundeffect4.ogg" type="audio/ogg">
+			<source src="sounds/soundeffect4.wav" type="audio/wav">
+			<source src="sounds/nothing.ogg" type="audio/ogg">
+		</audio>
+		<audio id="sound_sfx5">
+			<source src="sounds/soundeffect5.mp3" type="audio/mpeg">
+			<source src="sounds/soundeffect5.ogg" type="audio/ogg">
+			<source src="sounds/soundeffect5.wav" type="audio/wav">
+			<source src="sounds/nothing.ogg" type="audio/ogg">
+		</audio>
 		<div class="pagecontain">
 			<div class="row mainpanels">
 				<div class="column teamcol">
@@ -240,33 +270,24 @@
 						</tr>
 						<tr>
 							<td><input type="button" id="hornButton" name="hornButton" value="&#128266;" onclick='toggleHornSound()'></td>
-							<td>
-								<input type="button" class="sfxButton" id="sfxButton1" name="sfxButton1" value="1" onclick='playCustomSound(1)' disabled>
-								<input type="button" class="sfxButton" id="sfxButton2" name="sfxButton2" value="2" onclick='playCustomSound(2)' disabled>
-								<input type="button" class="sfxButton" id="sfxButton3" name="sfxButton3" value="3" onclick='playCustomSound(3)' disabled>
-								<input type="button" class="sfxButton" id="sfxButton4" name="sfxButton4" value="4" onclick='playCustomSound(4)' disabled>
-								<input type="button" class="sfxButton" id="sfxButton5" name="sfxButton5" value="5" onclick='playCustomSound(5)' disabled>
-							</td>
+							<td><input type="button" class="sfxButton" id="sfxButton1" name="sfxButton1" value="1" onclick='playCustomSound(1)'></td>
+							<td><input type="button" class="sfxButton" id="sfxButton2" name="sfxButton2" value="2" onclick='playCustomSound(2)'></td>
+							<td><input type="button" class="sfxButton" id="sfxButton3" name="sfxButton3" value="3" onclick='playCustomSound(3)'></td>
+							<td><input type="button" class="sfxButton" id="sfxButton4" name="sfxButton4" value="4" onclick='playCustomSound(4)'></td>
+							<td><input type="button" class="sfxButton" id="sfxButton5" name="sfxButton5" value="5" onclick='playCustomSound(5)'></td>
 						</tr>
 						<tr>
 							<td class="centertext">
 								Vol. <input type="number" id="hornVolume" name="hornVolume" value="100" min="0" max="100" autocomplete="off">
 							</td>
-							<td>
-								<button class="sfxSelect" onclick="document.getElementById('selectSFX1').click()">&#128193;</button>
-								<input type="file" style="display:none" id="selectSFX1" name="selectSFX1" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(1)'>
-								<button class="sfxSelect" onclick="document.getElementById('selectSFX2').click()">&#128193;</button>
-								<input type="file" style="display:none" id="selectSFX2" name="selectSFX2" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(2)'>
-								<button class="sfxSelect" onclick="document.getElementById('selectSFX3').click()">&#128193;</button>
-								<input type="file" style="display:none" id="selectSFX3" name="selectSFX3" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(3)'>
-								<button class="sfxSelect" onclick="document.getElementById('selectSFX4').click()">&#128193;</button>
-								<input type="file" style="display:none" id="selectSFX4" name="selectSFX4" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(4)'>
-								<button class="sfxSelect" onclick="document.getElementById('selectSFX5').click()">&#128193;</button>
-								<input type="file" style="display:none" id="selectSFX5" name="selectSFX5" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(5)'>
-							</td>
+							<td class="centertext" id="sfx1available">&#9679;</td>
+							<td class="centertext" id="sfx2available">&#9679;</td>
+							<td class="centertext" id="sfx3available">&#9679;</td>
+							<td class="centertext" id="sfx4available">&#9679;</td>
+							<td class="centertext" id="sfx5available">&#9679;</td>
 						</tr>
 						<tr>
-							<td colspan="2">
+							<td colspan="6">
 								<input type="checkbox" id="timeupWarning" name="timeupWarning" oninput="setTimeupWarning()" autocomplete="off" title="Enabling this option will play a short warning sound every second until either the timer or shot clock runs out."><label for="timeupWarning" title="Enabling this option will play a short warning sound every second until either the timer or shot clock runs out.">Timeup warning sounds at </label>
 								<input type="number" id="warningSec" name="warningSec" value="5" min="1" max="99" autocomplete="off"> seconds
 							</td>

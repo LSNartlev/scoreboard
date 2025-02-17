@@ -23,6 +23,7 @@ function setDefaults() {
 	resetCounters("A");
 	resetCounters("B");
 	activateTimerThread();
+	loadSoundEffects();
 }
 
 function setMatchTitle(matchTitle) {
@@ -234,10 +235,24 @@ function toggleHornSound() {
 	document.getElementById("hornButton").style.color = isHornPlaying? "#ffffff":"";
 }
 
-function loadCustomSound(sfxNumber) {
-	let audiopath = document.getElementById("selectSFX"+sfxNumber).files;
-	let audioName = audiopath[0].name;
-	console.log("SFX Number Loaded:" + sfxNumber + " / Location: " + audioName);
+function loadSoundEffects() {
+	document.getElementById("sfxButton1").disabled = isSfxAvailable(1)? false:true;
+	document.getElementById("sfxButton2").disabled = isSfxAvailable(2)? false:true;
+	document.getElementById("sfxButton3").disabled = isSfxAvailable(3)? false:true;
+	document.getElementById("sfxButton4").disabled = isSfxAvailable(4)? false:true;
+	document.getElementById("sfxButton5").disabled = isSfxAvailable(5)? false:true;	
+}
+
+function isSfxAvailable(sfxNum) {
+	let audioSrc = document.getElementById("sound_sfx"+sfxNum).currentSrc;
+	if(audioSrc.includes("/sounds/nothing.ogg")) {
+		document.getElementById("sfx"+sfxNum+"available").style.color = "#404040";
+		return false;
+	}
+	else {
+		document.getElementById("sfx"+sfxNum+"available").style.color = "#40ff40";
+		return true;
+	}
 }
 
 function getTextColor(color) {
