@@ -7,7 +7,7 @@ var teamAlowerCounter = 0, teamBlowerCounter = 0;
 var isBasketball = true, ballPossession = 0; // 0 = none, 1 = Team A, 2 = Team B
 var isTimerEnabled = true, isMiniTimerEnabled = true, isHornAutoTrigger = true;
 var isTimerRunning = false, isMiniTimerRunning = false, isHornPlaying = false, isBuzzerPlaying = false;
-var timer = [10, 0, 0], miniTimer = [24, 0], isTimeout = false, isShotClockInAutoReset = true;
+var timer = [10, 0, 0], miniTimer = [24, 0], isTimeout = false, isShotClockInAutoReset = true, isHotkeyMode = false;
 var timerThread, isTimerThreadActive;
 var defaultTimer = [10, 0, 0], defaultminiTimers = [24, 14, 60];
 
@@ -23,6 +23,7 @@ function setDefaults() {
 	resetCounters("A");
 	resetCounters("B");
 	activateTimerThread();
+	setHotkeyFunctions();
 }
 
 function setMatchTitle(matchTitle) {
@@ -74,7 +75,7 @@ function setTeamInfo(team) {
 
 function setScoreboardElements() {
 	// Scoreboard Background
-	document.getElementById("scoreboard").style.background = "linear-gradient(to right, " + teamAcolor + " 0 46%, " + teamBcolor + " 54% 100%)";
+	document.getElementById("scoreboard").style.background = "linear-gradient(to right, " + teamAcolor + " 0 50%, " + teamBcolor + " 50% 100%)";
 	
 	// Match Title
 	matchTitle = document.getElementById("matchTitle").value;
@@ -123,22 +124,27 @@ function updateTimerElements() {
 	document.getElementById("sbPeriodNum").style.color = isTimerRunning? "#ffffff":"#000000";
 }
 
-function toggleMiniTimerUsage() {
-	let isEnabled = document.getElementById("miniTimerCheckbox").checked;
-	isMiniTimerEnabled = isEnabled;
+function toggleMiniTimerUsage(isByClick) {
+	if(isByClick) {
+		let isEnabled = document.getElementById("miniTimerCheckbox").checked;
+		isMiniTimerEnabled = isEnabled;
+	}
+	else document.getElementById("miniTimerCheckbox").checked = isMiniTimerEnabled;
 	isMiniTimerRunning = false;
-	document.getElementById("miniTimerStatus").innerHTML = isEnabled? "TIMER STOPPED":"TIMER DISABLED";
-	document.getElementById("miniTimerStatus").style.backgroundColor = isEnabled? "#ff0000":"#101010";
-	document.getElementById("setMiniTimerA").disabled = isEnabled? false:true;
-	document.getElementById("setMiniTimerB").disabled = isEnabled? false:true;
-	document.getElementById("setMiniTimerC").disabled = isEnabled? false:true;
-	document.getElementById("miniTimerAsec").disabled = isEnabled? false:true;
-	document.getElementById("miniTimerBsec").disabled = isEnabled? false:true;
-	document.getElementById("miniTimerCsec").disabled = isEnabled? false:true;
-	document.getElementById("toggleMiniTimerState").disabled = isEnabled? false:true;
-	document.getElementById("sbMiniNum").style.visibility = isEnabled? "visible":"hidden";
-	document.getElementById("sbMiniText").style.visibility = isEnabled? "visible":"hidden";
+	document.getElementById("miniTimerStatus").innerHTML = isMiniTimerEnabled? "TIMER STOPPED":"TIMER DISABLED";
+	document.getElementById("miniTimerStatus").style.backgroundColor = isMiniTimerEnabled? "#ff0000":"#101010";
+	document.getElementById("setMiniTimerA").disabled = isMiniTimerEnabled? false:true;
+	document.getElementById("setMiniTimerB").disabled = isMiniTimerEnabled? false:true;
+	document.getElementById("setMiniTimerC").disabled = isMiniTimerEnabled? false:true;
+	document.getElementById("miniTimerAsec").disabled = isMiniTimerEnabled? false:true;
+	document.getElementById("miniTimerBsec").disabled = isMiniTimerEnabled? false:true;
+	document.getElementById("miniTimerCsec").disabled = isMiniTimerEnabled? false:true;
+	document.getElementById("toggleMiniTimerState").disabled = isMiniTimerEnabled? false:true;
+	document.getElementById("sbMiniNum").style.visibility = isMiniTimerEnabled? "visible":"hidden";
+	document.getElementById("sbMiniText").style.visibility = isMiniTimerEnabled? "visible":"hidden";
+	console.log("Status before update: " + document.getElementById("toggleAllTimerState").disabled);
 	document.getElementById("toggleAllTimerState").disabled = (isTimerEnabled && isMiniTimerEnabled)? false:true;
+	console.log("Status at end of function update: " + document.getElementById("toggleAllTimerState").disabled);
 }
 
 function changeMiniTimerState() {
@@ -185,19 +191,24 @@ function setMiniTimer(timerType) {
 	let miniTimerA = document.getElementById("miniTimerAsec").value == ""? defaultminiTimers[0]:document.getElementById("miniTimerAsec").value;
 	let miniTimerB = document.getElementById("miniTimerBsec").value == ""? defaultminiTimers[1]:document.getElementById("miniTimerBsec").value;
 	let miniTimerC = document.getElementById("miniTimerCsec").value == ""? defaultminiTimers[2]:document.getElementById("miniTimerCsec").value;
+	console.log("All timer state before resetting mini timer: " + document.getElementById("toggleAllTimerState").disabled);
 	switch(timerType) {
 		case "A":
 			if(timer[0] == 0 && timer[1]+(timer[2]*0.1) <= miniTimerA) {
-				document.getElementById("miniTimerCheckbox").checked = false;
-				toggleMiniTimerUsage();
+				isMiniTimerEnabled = false;
+				toggleMiniTimerUsage(false);
+				console.log("All timer state before disabling via setMiniTimer(): " + document.getElementById("toggleAllTimerState").disabled);
+				document.getElementById("toggleAllTimerState").disabled = true;
+				console.log("All timer state after disabling via setMiniTimer(): " + document.getElementById("toggleAllTimerState").disabled);
 			}
 			else miniTimer[0] = miniTimerA;
 			isTimeout = false;
 			break;
 		case "B":
 			if(timer[0] == 0 && timer[1]+(timer[2]*0.1) <= miniTimerB) {
-				document.getElementById("miniTimerCheckbox").checked = false;
-				toggleMiniTimerUsage();
+				isMiniTimerEnabled = false;
+				toggleMiniTimerUsage(false);
+				document.getElementById("toggleAllTimerState").disabled = true;
 			}
 			else miniTimer[0] = miniTimerB;
 			isTimeout = false;
@@ -619,4 +630,49 @@ function countdownMiniTimer() {
 			toggleHornSound();
 		}
 	}
+}
+
+/**
+ * Hotkey Section
+ * The code here on out needs optimization. Added due to urgency.
+ */
+function toggleHotkeyActivation() {
+	isHotkeyMode = document.getElementById("hotkeyActivation").checked;
+	checkbox.onmousedown = function(event) { event.preventDefault(); }
+}
+
+function setHotkeyFunctions() {
+	window.addEventListener('keydown', function(event) {
+			// TEAM A HOTKEYS
+			if(event.key == "a" && isHotkeyMode) document.getElementById("teamAposs").click();
+			if(event.key == "w" && isHotkeyMode) document.getElementById("lowerAminus1").click();
+			if(event.key == "s" && isHotkeyMode) document.getElementById("lowerAplus1").click();
+			if(event.key == "e" && isHotkeyMode) document.getElementById("upperAminus1").click();
+			if(event.key == "d" && isHotkeyMode) document.getElementById("upperAplus1").click();
+			if(event.key == "r" && isHotkeyMode) isBasketball? document.getElementById("scoreAfuncA").click():document.getElementById("scoreAfuncB").click();
+			if(event.key == "f" && isHotkeyMode) isBasketball? document.getElementById("scoreAfuncB").click():document.getElementById("scoreAfuncC").click();
+			
+			// TEAM B HOTKEYS
+			if(event.key == ";" && isHotkeyMode) document.getElementById("teamBposs").click();
+			if(event.key == "o" && isHotkeyMode) document.getElementById("lowerBminus1").click();
+			if(event.key == "l" && isHotkeyMode) document.getElementById("lowerBplus1").click();
+			if(event.key == "i" && isHotkeyMode) document.getElementById("upperBminus1").click();
+			if(event.key == "k" && isHotkeyMode) document.getElementById("upperBplus1").click();
+			if(event.key == "u" && isHotkeyMode) isBasketball? document.getElementById("scoreBfuncA").click():document.getElementById("scoreBfuncB").click();
+			if(event.key == "j" && isHotkeyMode) isBasketball? document.getElementById("scoreBfuncB").click():document.getElementById("scoreBfuncC").click();
+			
+			// TIMER HOTKEYS
+			if(event.key == " ") {
+				if(isHotkeyMode)
+					document.getElementById("toggleTimerState").click();
+				event.preventDefault();
+			}
+			if(event.key == "b" && isHotkeyMode) document.getElementById("toggleMiniTimerState").click();
+			if(event.key == "v" && isHotkeyMode) document.getElementById("setMiniTimerB").click();
+			if(event.key == "n" && isHotkeyMode) document.getElementById("setMiniTimerA").click();
+			
+			// SFX HOTKEYS
+			if(event.key == "Backspace" && isHotkeyMode) document.getElementById("hornButton").click();
+		}
+	);
 }

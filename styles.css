@@ -474,6 +474,13 @@ input[type="checkbox"], input[type="radio"] {
 	height:7.375vh;
 }
 
+#scoreboardVersion {
+	padding-top:1.5vh;
+	color:#808080;
+	text-align:right;
+	font-size:0.75em;
+}
+
 .sfxButton {
 	font-family:roboto, sans-serif;
 	font-size:2em;

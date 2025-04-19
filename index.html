@@ -193,7 +193,7 @@
 					<table>
 						<tr>
 							<td colspan="2">
-								<input type="checkbox" id="miniTimerCheckbox" name="miniTimerCheckbox" oninput="toggleMiniTimerUsage()" autocomplete="off" checked><label for="miniTimerCheckbox">Enable Mini Timer</label>
+								<input type="checkbox" id="miniTimerCheckbox" name="miniTimerCheckbox" oninput="toggleMiniTimerUsage(true)" autocomplete="off" checked><label for="miniTimerCheckbox">Enable Mini Timer</label>
 							</td>
 							<td>
 								<input type="checkbox" id="resetMiniTimerOnScore" name="resetMiniTimerOnScore" oninput="toggleShotClockAutoReset()" autocomplete="off" checked><label for="resetMiniTimerOnScore" id="resetMiniTimerOnScoreLabel" title="Automatically stops and resets Shot Clock if Score +2/+3 button is pressed.">Reset on Score</label>
@@ -252,23 +252,13 @@
 							<td class="centertext">
 								Vol. <input type="number" id="hornVolume" name="hornVolume" value="100" min="0" max="100" autocomplete="off">
 							</td>
-							<td>
-								<button class="sfxSelect" onclick="document.getElementById('selectSFX1').click()">&#128193;</button>
-								<input type="file" style="display:none" id="selectSFX1" name="selectSFX1" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(1)'>
-								<button class="sfxSelect" onclick="document.getElementById('selectSFX2').click()">&#128193;</button>
-								<input type="file" style="display:none" id="selectSFX2" name="selectSFX2" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(2)'>
-								<button class="sfxSelect" onclick="document.getElementById('selectSFX3').click()">&#128193;</button>
-								<input type="file" style="display:none" id="selectSFX3" name="selectSFX3" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(3)'>
-								<button class="sfxSelect" onclick="document.getElementById('selectSFX4').click()">&#128193;</button>
-								<input type="file" style="display:none" id="selectSFX4" name="selectSFX4" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(4)'>
-								<button class="sfxSelect" onclick="document.getElementById('selectSFX5').click()">&#128193;</button>
-								<input type="file" style="display:none" id="selectSFX5" name="selectSFX5" accept="audio/mpeg, audio/ogg, audio/wav" onclick='loadCustomSound(5)'>
+							<td class="centertext">
+								<input type="checkbox" id="hotkeyActivation" name="hotkeyActivation" oninput="toggleHotkeyActivation()" autocomplete="off" title="Allow the use of keyboard keys to operate the scoreboard. See picture guide for details."><label for="hotkeyActivation" title="Allow the use of keyboard keys to operate the scoreboard. See picture guide for details.">Hotkey Operation Mode</label>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<input type="checkbox" id="timeupWarning" name="timeupWarning" oninput="setTimeupWarning()" autocomplete="off" title="Enabling this option will play a short warning sound every second until either the timer or shot clock runs out."><label for="timeupWarning" title="Enabling this option will play a short warning sound every second until either the timer or shot clock runs out.">Timeup warning sounds at </label>
-								<input type="number" id="warningSec" name="warningSec" value="5" min="1" max="99" autocomplete="off"> seconds
+							<td colspan="2" id="scoreboardVersion">
+								LSN Scoreboard - version 1.1-20250419
 							</td>
 						</tr>
 					</table>
