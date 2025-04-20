@@ -245,10 +245,14 @@ function toggleHornSound() {
 	document.getElementById("hornButton").style.color = isHornPlaying? "#ffffff":"";
 }
 
-function loadCustomSound(sfxNumber) {
-	let audiopath = document.getElementById("selectSFX"+sfxNumber).files;
-	let audioName = audiopath[0].name;
-	console.log("SFX Number Loaded:" + sfxNumber + " / Location: " + audioName);
+function playCustomSound(sfxNumber) {
+	if(!document.getElementById("sound_sfx"+sfxNumber).paused && document.getElementById("sound_sfx"+sfxNumber).currentTime > 0) {
+		document.getElementById("sound_sfx"+sfxNumber).pause();
+		document.getElementById("sound_sfx"+sfxNumber).currentTime = 0;
+	}
+	else {
+		document.getElementById("sound_sfx"+sfxNumber).play();
+	}
 }
 
 function getTextColor(color) {
@@ -673,6 +677,11 @@ function setHotkeyFunctions() {
 			
 			// SFX HOTKEYS
 			if(event.key == "Backspace" && isHotkeyMode) document.getElementById("hornButton").click();
+			if(event.key == "1" && isHotkeyMode) document.getElementById("sfxButton1").click();
+			if(event.key == "2" && isHotkeyMode) document.getElementById("sfxButton2").click();
+			if(event.key == "3" && isHotkeyMode) document.getElementById("sfxButton3").click();
+			if(event.key == "4" && isHotkeyMode) document.getElementById("sfxButton4").click();
+			if(event.key == "5" && isHotkeyMode) document.getElementById("sfxButton5").click();
 		}
 	);
 }
