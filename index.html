@@ -251,7 +251,7 @@
 							<td colspan="5" class="centertext">Custom Sound Effects</td>
 						</tr>
 						<tr>
-							<td><input type="button" id="hornButton" name="hornButton" value="&#128266;" onclick='toggleHornSound()'></td>
+							<td><input type="button" id="hornButton" name="hornButton" value="&#128264;" onmousedown="setHornPlaying(true)" onmouseup="setHornPlaying(false)"></td>
 							<td>
 								<input type="button" class="sfxButton" id="sfxButton1" name="sfxButton1" value="&#128192;" onclick='playCustomSound(1)'>
 								<input type="button" class="sfxButton" id="sfxButton2" name="sfxButton2" value="&#128165;" onclick='playCustomSound(2)'>
@@ -265,12 +265,12 @@
 								Vol. <input type="number" id="hornVolume" name="hornVolume" value="100" min="0" max="100" autocomplete="off">
 							</td>
 							<td class="centertext">
-								<input type="checkbox" id="hotkeyActivation" name="hotkeyActivation" oninput="toggleHotkeyActivation()" autocomplete="off" title="Allow the use of keyboard keys to operate the scoreboard. See picture guide for details."><label for="hotkeyActivation" title="Allow the use of keyboard keys to operate the scoreboard. See picture guide for details.">Hotkey Operation Mode</label>
+								<input type="checkbox" id="hotkeyActivation" name="hotkeyActivation" oninput="toggleHotkeyActivation()" autocomplete="off" title="Allow the use of keyboard keys to operate the scoreboard. See picture guide for details."><label for="hotkeyActivation" title="Allow the use of keyboard keys to operate the scoreboard. See picture guide for details.">Use keyboard keys to operate</label>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2" id="scoreboardVersion">
-								LSN Scoreboard - version 1.0.1
+								LSN Scoreboard - version 1.0.2
 							</td>
 						</tr>
 					</table>

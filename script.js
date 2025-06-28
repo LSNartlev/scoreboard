@@ -229,8 +229,8 @@ function toggleShotClockAutoReset() {
 	isShotClockInAutoReset = isEnabled;
 }
 
-function toggleHornSound() {
-	isHornPlaying = !isHornPlaying;
+function setHornPlaying(state) {
+	isHornPlaying = state;
 	let hornVolume = document.getElementById("hornVolume").value*0.01;
 	if(!(hornVolume >= 0) || !(hornVolume <= 1)) hornVolume = 1;
 	if(isHornPlaying) {
@@ -240,7 +240,7 @@ function toggleHornSound() {
 	else {
 		document.getElementById("sound_horn").pause();
 	}
-	document.getElementById("hornButton").value = isHornPlaying? "\u{1F507}":"\u{1F50A}";
+	document.getElementById("hornButton").value = isHornPlaying? "\u{1F50A}":"\u{1F508}";
 	document.getElementById("hornButton").style.backgroundColor = isHornPlaying? "#ff0000":"";
 	document.getElementById("hornButton").style.color = isHornPlaying? "#ffffff":"";
 }
@@ -404,7 +404,9 @@ function updateTimerDisplay() {
 function updateMiniTimerDisplay() {
 	document.getElementById("sbMiniNum").style.backgroundColor = isMiniTimerRunning? "#000000":"#ff0000";
 	document.getElementById("sbMiniNum").style.color = isMiniTimerRunning? "#ff3030":"#ffffff";
-	document.getElementById("sbMiniNum").innerHTML = miniTimer[0]+"";
+	if(miniTimer[0] <= 4)
+        document.getElementById("sbMiniNum").innerHTML = miniTimer[0]+"."+(miniTimer[1]);
+    else document.getElementById("sbMiniNum").innerHTML = miniTimer[0]+"";
 }
 
 function refreshCounters() {
@@ -568,16 +570,16 @@ function activateTimerThread() {
 	let timerRun, miniTimerRun, timerDelta, lastTimerDelta = 0, miniTimerDelta, lastMiniTimerDelta = 0;
 	
 	timerThread = () => {
-		if(!isTimerRunning) timerRun = performance.now();
+		if(!isTimerRunning) timerRun = Date.now();
 		else {
-			timerDelta = (performance.now() - timerRun) % 100;
+			timerDelta = (Date.now() - timerRun) % 100;
 			if(timerDelta <= lastTimerDelta) countdownTimer();
 			lastTimerDelta = timerDelta;
 		}
 		
-		if(!isMiniTimerRunning) miniTimerRun = performance.now();
+		if(!isMiniTimerRunning) miniTimerRun = Date.now();
 		else {
-			miniTimerDelta = (performance.now() - miniTimerRun) % 100;
+			miniTimerDelta = (Date.now() - miniTimerRun) % 100;
 			if(miniTimerDelta <= lastMiniTimerDelta) countdownMiniTimer();
 			lastMiniTimerDelta = miniTimerDelta;
 		}
@@ -610,20 +612,20 @@ function countdownTimer() {
 				updateMiniTimerElements();
 			}
 			updateAllTimerButton();
-			toggleHornSound();
+			setHornPlaying(true);
 		}
 	}
 }
 
 function countdownMiniTimer() {
 	if(isMiniTimerRunning) {
-		if(miniTimer[1] < 9) miniTimer[1]++;
+		if(miniTimer[1] > 0) miniTimer[1]--;
 		else if(miniTimer[0] > 0) {
 			miniTimer[0]--;
-			miniTimer[1] = 0;
+			miniTimer[1] = 9;
 		}
 		updateMiniTimerDisplay();
-		if(miniTimer[0] == 0) {
+		if(miniTimer[0] == 0 && miniTimer[1] == 0) {
 			isMiniTimerRunning = false;
 			updateMiniTimerElements();
 			if(isTimerEnabled) {
@@ -631,15 +633,11 @@ function countdownMiniTimer() {
 				updateTimerElements();
 			}
 			updateAllTimerButton();
-			toggleHornSound();
+			setHornPlaying(true);
 		}
 	}
 }
 
-/**
- * Hotkey Section
- * The code here on out needs optimization. Added due to urgency.
- */
 function toggleHotkeyActivation() {
 	isHotkeyMode = document.getElementById("hotkeyActivation").checked;
 	checkbox.onmousedown = function(event) { event.preventDefault(); }
@@ -647,41 +645,47 @@ function toggleHotkeyActivation() {
 
 function setHotkeyFunctions() {
 	window.addEventListener('keydown', function(event) {
+            if(isHotkeyMode) {
 			// TEAM A HOTKEYS
-			if(event.key == "a" && isHotkeyMode) document.getElementById("teamAposs").click();
-			if(event.key == "w" && isHotkeyMode) document.getElementById("lowerAminus1").click();
-			if(event.key == "s" && isHotkeyMode) document.getElementById("lowerAplus1").click();
-			if(event.key == "e" && isHotkeyMode) document.getElementById("upperAminus1").click();
-			if(event.key == "d" && isHotkeyMode) document.getElementById("upperAplus1").click();
-			if(event.key == "r" && isHotkeyMode) isBasketball? document.getElementById("scoreAfuncA").click():document.getElementById("scoreAfuncB").click();
-			if(event.key == "f" && isHotkeyMode) isBasketball? document.getElementById("scoreAfuncB").click():document.getElementById("scoreAfuncC").click();
+                if(event.key == "a") document.getElementById("teamAposs").click();
+                if(event.key == "w") document.getElementById("lowerAminus1").click();
+                if(event.key == "s") document.getElementById("lowerAplus1").click();
+                if(event.key == "e") document.getElementById("upperAminus1").click();
+                if(event.key == "d") document.getElementById("upperAplus1").click();
+                if(event.key == "r") isBasketball? document.getElementById("scoreAfuncA").click():document.getElementById("scoreAfuncB").click();
+                if(event.key == "f") isBasketball? document.getElementById("scoreAfuncB").click():document.getElementById("scoreAfuncC").click();
 			
-			// TEAM B HOTKEYS
-			if(event.key == ";" && isHotkeyMode) document.getElementById("teamBposs").click();
-			if(event.key == "o" && isHotkeyMode) document.getElementById("lowerBminus1").click();
-			if(event.key == "l" && isHotkeyMode) document.getElementById("lowerBplus1").click();
-			if(event.key == "i" && isHotkeyMode) document.getElementById("upperBminus1").click();
-			if(event.key == "k" && isHotkeyMode) document.getElementById("upperBplus1").click();
-			if(event.key == "u" && isHotkeyMode) isBasketball? document.getElementById("scoreBfuncA").click():document.getElementById("scoreBfuncB").click();
-			if(event.key == "j" && isHotkeyMode) isBasketball? document.getElementById("scoreBfuncB").click():document.getElementById("scoreBfuncC").click();
+                // TEAM B HOTKEYS
+                if(event.key == ";") document.getElementById("teamBposs").click();
+                if(event.key == "o") document.getElementById("lowerBminus1").click();
+                if(event.key == "l") document.getElementById("lowerBplus1").click();
+                if(event.key == "i") document.getElementById("upperBminus1").click();
+                if(event.key == "k") document.getElementById("upperBplus1").click();
+                if(event.key == "u") isBasketball? document.getElementById("scoreBfuncA").click():document. getElementById("scoreBfuncB").click();
+                if(event.key == "j") isBasketball? document.getElementById("scoreBfuncB").click():document.getElementById("scoreBfuncC").click();
 			
-			// TIMER HOTKEYS
-			if(event.key == " ") {
-				if(isHotkeyMode)
+                // TIMER HOTKEYS
+                if(event.key == " ") {
 					document.getElementById("toggleTimerState").click();
-				event.preventDefault();
-			}
-			if(event.key == "b" && isHotkeyMode) document.getElementById("toggleMiniTimerState").click();
-			if(event.key == "v" && isHotkeyMode) document.getElementById("setMiniTimerB").click();
-			if(event.key == "n" && isHotkeyMode) document.getElementById("setMiniTimerA").click();
+                    event.preventDefault();
+                }
+                if(event.key == "b") document.getElementById("toggleMiniTimerState").click();
+                if(event.key == "v") document.getElementById("setMiniTimerB").click();
+                if(event.key == "n") document.getElementById("setMiniTimerA").click();
 			
-			// SFX HOTKEYS
-			if(event.key == "Backspace" && isHotkeyMode) document.getElementById("hornButton").click();
-			if(event.key == "1" && isHotkeyMode) document.getElementById("sfxButton1").click();
-			if(event.key == "2" && isHotkeyMode) document.getElementById("sfxButton2").click();
-			if(event.key == "3" && isHotkeyMode) document.getElementById("sfxButton3").click();
-			if(event.key == "4" && isHotkeyMode) document.getElementById("sfxButton4").click();
-			if(event.key == "5" && isHotkeyMode) document.getElementById("sfxButton5").click();
+                // SFX HOTKEYS
+                if(event.key == "Backspace") document.getElementById("hornButton").onmousedown();
+                if(event.key == "1") document.getElementById("sfxButton1").click();
+                if(event.key == "2") document.getElementById("sfxButton2").click();
+                if(event.key == "3") document.getElementById("sfxButton3").click();
+                if(event.key == "4") document.getElementById("sfxButton4").click();
+                if(event.key == "5") document.getElementById("sfxButton5").click();
+            }
 		}
 	);
+    window.addEventListener('keyup', function(event) {
+            if(event.key == "Backspace" && isHotkeyMode)
+                document.getElementById("hornButton").onmouseup();
+        }
+    );
 }
