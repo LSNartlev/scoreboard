@@ -1,300 +1,281 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Web-based Scoreboard</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
-  </head>
-  <body onload="setDefaults()">
-    <audio id="sound_horn" loop>
-      <source src="sounds/horn.ogg" type="audio/ogg">
-    </audio>
-    <audio id="sound_warning">
-      <source src="sounds/warning.ogg" type="audio/ogg">
-    </audio>
-    <audio id="sound_sfx1">
-      <source src="sounds/soundeffect1.mp3" type="audio/mpeg">
-      <source src="sounds/soundeffect1.ogg" type="audio/ogg">
-      <source src="sounds/soundeffect1.wav" type="audio/wav">
-      <source src="sounds/nothing.ogg" type="audio/ogg">
-    </audio>
-    <audio id="sound_sfx2">
-      <source src="sounds/soundeffect2.mp3" type="audio/mpeg">
-      <source src="sounds/soundeffect2.ogg" type="audio/ogg">
-      <source src="sounds/soundeffect2.wav" type="audio/wav">
-      <source src="sounds/nothing.ogg" type="audio/ogg">
-    </audio>
-    <audio id="sound_sfx3">
-      <source src="sounds/soundeffect3.mp3" type="audio/mpeg">
-      <source src="sounds/soundeffect3.ogg" type="audio/ogg">
-      <source src="sounds/soundeffect3.wav" type="audio/wav">
-      <source src="sounds/nothing.ogg" type="audio/ogg">
-    </audio>
-    <audio id="sound_sfx4">
-      <source src="sounds/soundeffect4.mp3" type="audio/mpeg">
-      <source src="sounds/soundeffect4.ogg" type="audio/ogg">
-      <source src="sounds/soundeffect4.wav" type="audio/wav">
-      <source src="sounds/nothing.ogg" type="audio/ogg">
-    </audio>
-    <audio id="sound_sfx5">
-      <source src="sounds/soundeffect5.mp3" type="audio/mpeg">
-      <source src="sounds/soundeffect5.ogg" type="audio/ogg">
-      <source src="sounds/soundeffect5.wav" type="audio/wav">
-      <source src="sounds/nothing.ogg" type="audio/ogg">
-    </audio>
-    <div class="pagecontain">
-      <div class="row mainpanels">
-        <div class="column teamcol">
-          <form>
-            <label for="teamAname">Name & Jersey Color</label><br>
-            <input type="text" id="teamAname" name="teamAname" class="textfield teamtf" oninput='changeTeamName("A")' maxlength="30">
-            <input type="color" id="teamAcolor" name="teamAcolor" oninput='changeTeamColor("A")'><br><br><br>
-            <label for="teamAscorectrl">Score</label><br>
-            <input type="button" id="scoreAfuncA" name="scoreAfuncA" value="&#8722;1" class="teambutton" onclick='updateScore("A", "A")'>
-            <input type="button" id="scoreAfuncB" name="scoreAfuncB" value="+1" class="teambutton" onclick='updateScore("A", "B")'>
-            <input type="button" id="scoreAfuncC" name="scoreAfuncC" value="+2" class="teambutton" onclick='updateScore("A", "C")'>
-            <input type="button" id="scoreAfuncD" name="scoreAfuncD" value="+3" class="teambutton" onclick='updateScore("A", "D")'><br><br>
-            <label for="teamAupperctrl" id="teamAupperctrl"></label><br>
-            <input type="button" id="upperAzero" name="upperAzero" value="&#61;0" class="teambutton" onclick='updateCounter("A", "T", 0)'>
-            <input type="button" id="upperAminus1" name="upperAminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("A", "T", -1)'>
-            <input type="button" id="upperAplus1" name="upperAplus1" value="+1" class="teambutton" onclick='updateCounter("A", "T", 1)'><br><br>
-            <label for="teamAlowerctrl" id="teamAlowerctrl"></label><br>
-            <input type="button" id="lowerAzero" name="lowerAzero" value="&#61;0" class="teambutton" onclick='updateCounter("A", "F", 0)'>
-            <input type="button" id="lowerAminus1" name="lowerAminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("A", "F", -1)'>
-            <input type="button" id="lowerAplus1" name="lowerAplus1" value="+1" class="teambutton" onclick='updateCounter("A", "F", 1)'><br><br><br>
-            <input type="button" id="resetApoints" name="resetAcounters" value="Reset Counters" class="resetcounter" onclick='resetCounters("A")'>
-          </form>
-        </div>
-        <div class="column boardcol">
-          <div class="scoreboard" id="scoreboard">
-            <div class="sbrow">
-              <div class="column sbothercontent" id="sbMatchTitle"></div>
-            </div>
-            <div class="sbrow">
-              <div class="column sbteamcontent" id="sbTeamAname"></div>
-              <div class="column sbothercontent" id="versus">vs.</div>
-              <div class="column sbteamcontent" id="sbTeamBname"></div>
-            </div>
-            <div class="sbrow">
-              <div class="column sbothercontent" id="sbTeamAposs"></div>
-              <div class="column sbteamcontent scoreBox" id="sbTeamAscore"></div>
-              <div class="column sbothercontent" id="sbVersusGap"></div>
-              <div class="column sbteamcontent scoreBox" id="sbTeamBscore"></div>
-              <div class="column sbothercontent" id="sbTeamBposs"></div>
-            </div>
-            <div class="ctrrow">
-              <div class="column" id="countersA">
-                <div class="counterscontent">
-                  <span class="counternum" id="upperCounterA"></span>
-                  <span class="counterlabel" id="upperLabelA">TIMEOUTS LEFT</span><br>
-                </div>
-                <div class="counterscontent">
-                  <span class="counternum" id="lowerCounterA"></span>
-                  <span class="counterlabel" id="lowerLabelA">TEAM FOULS</span><br>
-                </div>
-              </div>
-              <div class="column" id="timers">
-                <div class="timerscontent" id="sbPeriodTimer">
-                  <div class="counterlabel" id="sbPeriodText"></div>
-                  <div class="counternum" id="sbPeriodNum">10:00</div>
-                </div>
-                <div class="timerscontent" id="sbMiniTimer">
-                  <div class="counternum" id="sbMiniNum">24</div>
-                  <div class="counterlabel" id="sbMiniText">SHOT CLOCK</div>
-                </div>
-              </div>
-              <div class="column" id="countersB">
-                <div class="counterscontent">
-                  <span class="counternum" id="upperCounterB"></span>
-                  <span class="counterlabel" id="upperLabelB">TIMEOUTS LEFT</span><br>
-                </div>
-                <div class="counterscontent">
-                  <span class="counternum" id="lowerCounterB"></span>
-                  <span class="counterlabel" id="lowerLabelB">TEAM FOULS</span><br>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column teamcol">
-          <form>
-            <label for="teamBname">Name & Jersey Color</label><br>
-            <input type="text" id="teamBname" name="teamBname" class="textfield teamtf" oninput='changeTeamName("B")' maxlength="30">
-            <input type="color" id="teamBcolor" name="teamBcolor" oninput='changeTeamColor("B")'><br><br><br>
-            <label for="teamBscorectrl">Score</label><br>
-            <input type="button" id="scoreBfuncA" name="scoreBfuncA" value="&#8722;1" class="teambutton" onclick='updateScore("B", "A")'>
-            <input type="button" id="scoreBfuncB" name="scoreBfuncB" value="+1" class="teambutton" onclick='updateScore("B", "B")'>
-            <input type="button" id="scoreBfuncC" name="scoreBfuncC" value="+2" class="teambutton" onclick='updateScore("B", "C")'>
-            <input type="button" id="scoreBfuncD" name="scoreBfuncD" value="+3" class="teambutton" onclick='updateScore("B", "D")'><br><br>
-            <label for="teamBupperctrl" id="teamBupperctrl"></label><br>
-            <input type="button" id="upperBzero" name="upperBzero" value="&#61;0" class="teambutton" onclick='updateCounter("B", "T", 0)'>
-            <input type="button" id="upperBminus1" name="upperBminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("B", "T", -1)'>
-            <input type="button" id="upperBplus1" name="upperBplus1" value="+1" class="teambutton" onclick='updateCounter("B", "T", 1)'><br><br>
-            <label for="teamBlowerctrl" id="teamBlowerctrl"></label><br>
-            <input type="button" id="lowerBzero" name="lowerBzero" value="&#61;0" class="teambutton" onclick='updateCounter("B", "F", 0)'>
-            <input type="button" id="lowerBminus1" name="lowerBminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("B", "F", -1)'>
-            <input type="button" id="lowerBplus1" name="lowerBplus1" value="+1" class="teambutton" onclick='updateCounter("B", "F", 1)'><br><br><br>
-            <input type="button" id="resetBcounters" name="resetBcounters" value="Reset Counters" class="resetcounter" onclick='resetCounters("B")'>
-          </form>
-        </div>
-      </div>
-      <div class="row optionpanels">
-        <div class="column setupcol">
-          <table>
-            <tr>
-              <td>Game Mode</td>
-              <td>
-                <label><input type="radio" id="bbMode" name="gameMode" value="Basketball" checked="true" oninput="changeGameMode(true)" autocomplete="off">&#127936;Basketball</input></label>
-                <label><input type="radio" id="vbMode" name="gameMode" value="Volleyball" oninput="changeGameMode(false)" autocomplete="off">&#127952;Volleyball</input></label>
-              </td>
-            </tr>
-            <tr>
-              <td><label for="matchTitle">Match Title</label></td>
-              <td><input type="text" id="matchTitle" name="matchTitle" class="textfield teamtf" oninput='changeMatchTitle()' maxlength="60"></td>
-            </tr>
-            <tr>
-              <td><label for="gamePeriod">Period</label></td>
-              <td>
-                <input type="number" id="periodNum" name="periodNum" value="1" min="0" max="5" oninput="changePeriod(false)" autocomplete="off">
-                <select id="gamePeriod" name="gamePeriod" oninput="changePeriod(false)" autocomplete="off">
-                  <option id="bbDefault" value="QUARTER" selected="selected">Quarter</option>
-                  <option value="HALF">Half</option>
-                  <option id="vbDefault" value="SET">Set</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>
-                <input type="button" id="changeCourt" name="changeCourt" value="CHANGE COURT" onclick="changeCourt()">
-              </td>
-            </tr>
-          </table>
-        </div>
-        <div class="column timercol">
-          <table>
-            <tr>
-              <td colspan="3">
-              <input type="checkbox" id="timerCheckbox" name="timerCheckbox" oninput="toggleTimerUsage()" autocomplete="off" checked><label for="timerCheckbox">Enable Timer</label>
-              </td>
-            </tr>
-            <tr>
-              <td class="centertext" id="adjustTimer">Adjust Timer</td>
-              <td colspan="2"><div class="timerStatus" id="timerStatus">TIMER STOPPED</div></td>
-            </tr>
-            <tr>
-              <td>
-                <input type="number" id="timerMin" name="timerMin" value="10" min="0" max="99" autocomplete="off"> minutes
-              </td>
-              <td rowspan="0">
-                <input type="button" id="setTimer" name="setTimer" value="SET" onclick="changeTimer()">
-                <input type="button" id="toggleTimerState" name="toggleTimerState" value="&#11208;" onclick="changeTimerState()">
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="number" id="timerSec" name="timerSec" value="0" min="0" max="59" autocomplete="off"> seconds
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="number" id="timerDsec" name="timerDsec" value="0" min="0" max="9" autocomplete="off"> &#215; 0.1sec
-              </td>
-            </tr>
-          </table>
-        </div>
-        <div class="column setupcolmini">
-          <div class="colminiitems" id="possessionServiceLabel">
-            Ball Possession
-          </div>
-          <div class="colminiitems">
-            <input type="button" id="teamAposs" name="teamAposs" class="possButton" value="&#11207;" onclick='changeBallPossession(1)'>
-            <input type="button" id="teamBposs" name="teamBposs" class="possButton" value="&#11208;" onclick='changeBallPossession(2)'>
-          </div>
-          <div class="colminiitems">
-            Timer & Mini Timer
-          </div>
-          <div class="colminiitems" title="Starts/Stops both the Timer and Mini Timer simultaneously.">
-            <input type="button" id="toggleAllTimerState" name="toggleAllTimerState" class="toggleAllTimerState" value="&#11208;" onclick="changeAllTimerState()">
-          </div>
-        </div>
-        <div class="column timercol">
-          <table>
-            <tr>
-              <td colspan="2">
-                <input type="checkbox" id="miniTimerCheckbox" name="miniTimerCheckbox" oninput="toggleMiniTimerUsage()" autocomplete="off" checked><label for="miniTimerCheckbox">Enable Mini Timer</label>
-              </td>
-              <td>
-                <input type="checkbox" id="resetMiniTimerOnScore" name="resetMiniTimerOnScore" oninput="toggleShotClockAutoReset()" autocomplete="off" checked><label for="resetMiniTimerOnScore" id="resetMiniTimerOnScoreLabel" title="Automatically stops and resets Shot Clock if Score +2/+3 button is pressed.">Reset on Score</label>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2"><div class="timerStatus" id="miniTimerStatus">TIMER STOPPED</div></td>
-              <td class="centertext">Mini Timers</td>
-            </tr>
-            <tr>
-              <td rowspan="0">
-                <input type="button" id="toggleMiniTimerState" name="toggleMiniTimerState" value="&#11208;" onclick="changeMiniTimerState()">
-              </td>
-              <td>
-                <input type="button" id="setMiniTimerA" name="setMiniTimerA" value="Shot Clock" onclick='setMiniTimer("A")'>
-              </td>
-              <td>
-                <input type="number" id="miniTimerAsec" name="miniTimerAsec" value="24" min="1" max="99" autocomplete="off"> seconds
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="button" id="setMiniTimerB" name="setMiniTimerB" value="Off. Reb." onclick='setMiniTimer("B")'>
-              </td>
-              <td>
-                <input type="number" id="miniTimerBsec" name="miniTimerBsec" value="14" min="1" max="99" autocomplete="off"> seconds
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="button" id="setMiniTimerC" name="setMiniTimerC" value="Timeout" onclick='setMiniTimer("C")'>
-              </td>
-              <td>
-                <input type="number" id="miniTimerCsec" name="miniTimerCsec" value="60" min="1" max="99" autocomplete="off"> seconds
-              </td>
-            </tr>
-          </table>
-        </div>
-        <div class="column setupcol">
-          <table>
-            <tr>
-              <td class="centertext">Horn Sound</td>
-              <td colspan="5" class="centertext">Custom Sound Effects</td>
-            </tr>
-            <tr>
-              <td><input type="button" id="hornButton" name="hornButton" value="&#128266;" onclick='toggleHornSound()'></td>
-              <td><input type="button" class="sfxButton" id="sfxButton1" name="sfxButton1" value="1" onclick='playCustomSound(1)'></td>
-              <td><input type="button" class="sfxButton" id="sfxButton2" name="sfxButton2" value="2" onclick='playCustomSound(2)'></td>
-              <td><input type="button" class="sfxButton" id="sfxButton3" name="sfxButton3" value="3" onclick='playCustomSound(3)'></td>
-              <td><input type="button" class="sfxButton" id="sfxButton4" name="sfxButton4" value="4" onclick='playCustomSound(4)'></td>
-              <td><input type="button" class="sfxButton" id="sfxButton5" name="sfxButton5" value="5" onclick='playCustomSound(5)'></td>
-            </tr>
-            <tr>
-              <td class="centertext">
-                Vol. <input type="number" id="hornVolume" name="hornVolume" value="100" min="0" max="100" autocomplete="off">
-              </td>
-              <td class="centertext" id="sfx1available">&#9679;</td>
-              <td class="centertext" id="sfx2available">&#9679;</td>
-              <td class="centertext" id="sfx3available">&#9679;</td>
-              <td class="centertext" id="sfx4available">&#9679;</td>
-              <td class="centertext" id="sfx5available">&#9679;</td>
-            </tr>
-            <tr>
-              <td colspan="6">
-                <input type="checkbox" id="timeupWarning" name="timeupWarning" oninput="setTimeupWarning()" autocomplete="off" title="Enabling this option will play a short warning sound every second until either the timer or shot clock runs out."><label for="timeupWarning" title="Enabling this option will play a short warning sound every second until either the timer or shot clock runs out.">Timeup warning sounds at </label>
-                <input type="number" id="warningSec" name="warningSec" value="5" min="1" max="99" autocomplete="off"> seconds
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </body>
+	<head>
+		<meta charset="utf-8">
+		<title>Web-based Scoreboard</title>
+		<link rel="stylesheet" href="styles.css">
+		<script src="script.js"></script>
+	</head>
+	<body onload="setDefaults()">
+		<audio id="sound_horn" loop>
+			<source src="sounds/horn.ogg" type="audio/ogg">
+		</audio>
+		<audio id="sound_sfx1">
+			<source src="sounds/1.ogg" type="audio/ogg">
+		</audio>
+		<audio id="sound_sfx2">
+			<source src="sounds/2.ogg" type="audio/ogg">
+		</audio>
+		<audio id="sound_sfx3">
+			<source src="sounds/3.ogg" type="audio/ogg">
+		</audio>
+		<audio id="sound_sfx4">
+			<source src="sounds/4.ogg" type="audio/ogg">
+		</audio>
+		<audio id="sound_sfx5">
+			<source src="sounds/5.ogg" type="audio/ogg">
+		</audio>
+		<div class="pagecontain">
+			<div class="row mainpanels">
+				<div class="column teamcol">
+					<form>
+						<label for="teamAname">Name & Jersey Color</label><br>
+						<input type="text" id="teamAname" name="teamAname" class="textfield teamtf" oninput='changeTeamName("A")' maxlength="30">
+						<input type="color" id="teamAcolor" name="teamAcolor" oninput='changeTeamColor("A")'><br><br><br>
+						<label for="teamAscorectrl">Score</label><br>
+						<input type="button" id="scoreAfuncA" name="scoreAfuncA" value="&#8722;1" class="teambutton" onclick='updateScore("A", "A")'>
+						<input type="button" id="scoreAfuncB" name="scoreAfuncB" value="+1" class="teambutton" onclick='updateScore("A", "B")'>
+						<input type="button" id="scoreAfuncC" name="scoreAfuncC" value="+2" class="teambutton" onclick='updateScore("A", "C")'>
+						<input type="button" id="scoreAfuncD" name="scoreAfuncD" value="+3" class="teambutton" onclick='updateScore("A", "D")'><br><br>
+						<label for="teamAupperctrl" id="teamAupperctrl"></label><br>
+						<input type="button" id="upperAzero" name="upperAzero" value="&#61;0" class="teambutton" onclick='updateCounter("A", "T", 0)'>
+						<input type="button" id="upperAminus1" name="upperAminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("A", "T", -1)'>
+						<input type="button" id="upperAplus1" name="upperAplus1" value="+1" class="teambutton" onclick='updateCounter("A", "T", 1)'><br><br>
+						<label for="teamAlowerctrl" id="teamAlowerctrl"></label><br>
+						<input type="button" id="lowerAzero" name="lowerAzero" value="&#61;0" class="teambutton" onclick='updateCounter("A", "F", 0)'>
+						<input type="button" id="lowerAminus1" name="lowerAminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("A", "F", -1)'>
+						<input type="button" id="lowerAplus1" name="lowerAplus1" value="+1" class="teambutton" onclick='updateCounter("A", "F", 1)'><br><br><br>
+						<input type="button" id="resetApoints" name="resetAcounters" value="Reset Counters" class="resetcounter" onclick='resetCounters("A")'>
+					</form>
+				</div>
+				<div class="column boardcol">
+					<div class="scoreboard" id="scoreboard">
+						<div class="sbrow">
+							<div class="column sbothercontent" id="sbMatchTitle"></div>
+						</div>
+						<div class="sbrow">
+							<div class="column sbteamcontent" id="sbTeamAname"></div>
+							<div class="column sbothercontent" id="versus">vs.</div>
+							<div class="column sbteamcontent" id="sbTeamBname"></div>
+						</div>
+						<div class="sbrow">
+							<div class="column sbothercontent" id="sbTeamAposs"></div>
+							<div class="column sbteamcontent scoreBox" id="sbTeamAscore"></div>
+							<div class="column sbothercontent" id="sbVersusGap"></div>
+							<div class="column sbteamcontent scoreBox" id="sbTeamBscore"></div>
+							<div class="column sbothercontent" id="sbTeamBposs"></div>
+						</div>
+						<div class="ctrrow">
+							<div class="column" id="countersA">
+								<div class="counterscontent">
+									<span class="counternum" id="upperCounterA"></span>
+									<span class="counterlabel" id="upperLabelA">TIMEOUTS LEFT</span><br>
+								</div>
+								<div class="counterscontent">
+									<span class="counternum" id="lowerCounterA"></span>
+									<span class="counterlabel" id="lowerLabelA">TEAM FOULS</span><br>
+								</div>
+							</div>
+							<div class="column" id="timers">
+								<div class="timerscontent" id="sbPeriodTimer">
+									<div class="counterlabel" id="sbPeriodText"></div>
+									<div class="counternum" id="sbPeriodNum">10:00</div>
+								</div>
+								<div class="timerscontent" id="sbMiniTimer">
+									<div class="counternum" id="sbMiniNum">24</div>
+									<div class="counterlabel" id="sbMiniText">SHOT CLOCK</div>
+								</div>
+							</div>
+							<div class="column" id="countersB">
+								<div class="counterscontent">
+									<span class="counternum" id="upperCounterB"></span>
+									<span class="counterlabel" id="upperLabelB">TIMEOUTS LEFT</span><br>
+								</div>
+								<div class="counterscontent">
+									<span class="counternum" id="lowerCounterB"></span>
+									<span class="counterlabel" id="lowerLabelB">TEAM FOULS</span><br>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="column teamcol">
+					<form>
+						<label for="teamBname">Name & Jersey Color</label><br>
+						<input type="text" id="teamBname" name="teamBname" class="textfield teamtf" oninput='changeTeamName("B")' maxlength="30">
+						<input type="color" id="teamBcolor" name="teamBcolor" oninput='changeTeamColor("B")'><br><br><br>
+						<label for="teamBscorectrl">Score</label><br>
+						<input type="button" id="scoreBfuncA" name="scoreBfuncA" value="&#8722;1" class="teambutton" onclick='updateScore("B", "A")'>
+						<input type="button" id="scoreBfuncB" name="scoreBfuncB" value="+1" class="teambutton" onclick='updateScore("B", "B")'>
+						<input type="button" id="scoreBfuncC" name="scoreBfuncC" value="+2" class="teambutton" onclick='updateScore("B", "C")'>
+						<input type="button" id="scoreBfuncD" name="scoreBfuncD" value="+3" class="teambutton" onclick='updateScore("B", "D")'><br><br>
+						<label for="teamBupperctrl" id="teamBupperctrl"></label><br>
+						<input type="button" id="upperBzero" name="upperBzero" value="&#61;0" class="teambutton" onclick='updateCounter("B", "T", 0)'>
+						<input type="button" id="upperBminus1" name="upperBminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("B", "T", -1)'>
+						<input type="button" id="upperBplus1" name="upperBplus1" value="+1" class="teambutton" onclick='updateCounter("B", "T", 1)'><br><br>
+						<label for="teamBlowerctrl" id="teamBlowerctrl"></label><br>
+						<input type="button" id="lowerBzero" name="lowerBzero" value="&#61;0" class="teambutton" onclick='updateCounter("B", "F", 0)'>
+						<input type="button" id="lowerBminus1" name="lowerBminus1" value="&#8722;1" class="teambutton" onclick='updateCounter("B", "F", -1)'>
+						<input type="button" id="lowerBplus1" name="lowerBplus1" value="+1" class="teambutton" onclick='updateCounter("B", "F", 1)'><br><br><br>
+						<input type="button" id="resetBcounters" name="resetBcounters" value="Reset Counters" class="resetcounter" onclick='resetCounters("B")'>
+					</form>
+				</div>
+			</div>
+			<div class="row optionpanels">
+				<div class="column setupcol">
+					<table>
+						<tr>
+							<td>Game Mode</td>
+							<td>
+								<label><input type="radio" id="bbMode" name="gameMode" value="Basketball" checked="true" oninput="changeGameMode(true)" autocomplete="off">&#127936;Basketball</input></label>
+								<label><input type="radio" id="vbMode" name="gameMode" value="Volleyball" oninput="changeGameMode(false)" autocomplete="off">&#127952;Volleyball</input></label>
+							</td>
+						</tr>
+						<tr>
+							<td><label for="matchTitle">Match Title</label></td>
+							<td><input type="text" id="matchTitle" name="matchTitle" class="textfield teamtf" oninput='changeMatchTitle()' maxlength="60"></td>
+						</tr>
+						<tr>
+							<td><label for="gamePeriod">Period</label></td>
+							<td>
+								<input type="number" id="periodNum" name="periodNum" value="1" min="0" max="5" oninput="changePeriod(false)" autocomplete="off">
+								<select id="gamePeriod" name="gamePeriod" oninput="changePeriod(false)" autocomplete="off">
+									<option id="bbDefault" value="QUARTER" selected="selected">Quarter</option>
+									<option value="HALF">Half</option>
+									<option id="vbDefault" value="SET">Set</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<input type="button" id="changeCourt" name="changeCourt" value="CHANGE COURT" onclick="changeCourt()">
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="column timercol">
+					<table>
+						<tr>
+							<td colspan="3">
+							<input type="checkbox" id="timerCheckbox" name="timerCheckbox" oninput="toggleTimerUsage()" autocomplete="off" checked><label for="timerCheckbox">Enable Timer</label>
+							</td>
+						</tr>
+						<tr>
+							<td class="centertext" id="adjustTimer">Adjust Timer</td>
+							<td colspan="2"><div class="timerStatus" id="timerStatus">TIMER STOPPED</div></td>
+						</tr>
+						<tr>
+							<td>
+								<input type="number" id="timerMin" name="timerMin" value="10" min="0" max="99" autocomplete="off"> minutes
+							</td>
+							<td rowspan="0">
+								<input type="button" id="setTimer" name="setTimer" value="SET" onclick="changeTimer()">
+								<input type="button" id="toggleTimerState" name="toggleTimerState" value="&#11208;" onclick="changeTimerState()">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="number" id="timerSec" name="timerSec" value="0" min="0" max="59" autocomplete="off"> seconds
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="number" id="timerDsec" name="timerDsec" value="0" min="0" max="9" autocomplete="off"> &#215; 0.1sec
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="column setupcolmini">
+					<div class="colminiitems" id="possessionServiceLabel">
+						Ball Possession
+					</div>
+					<div class="colminiitems">
+						<input type="button" id="teamAposs" name="teamAposs" class="possButton" value="&#11207;" onclick='changeBallPossession(1)'>
+						<input type="button" id="teamBposs" name="teamBposs" class="possButton" value="&#11208;" onclick='changeBallPossession(2)'>
+					</div>
+					<div class="colminiitems">
+						Timer & Mini Timer
+					</div>
+					<div class="colminiitems" title="Starts/Stops both the Timer and Mini Timer simultaneously.">
+						<input type="button" id="toggleAllTimerState" name="toggleAllTimerState" class="toggleAllTimerState" value="&#11208;" onclick="changeAllTimerState()">
+					</div>
+				</div>
+				<div class="column timercol">
+					<table>
+						<tr>
+							<td colspan="2">
+								<input type="checkbox" id="miniTimerCheckbox" name="miniTimerCheckbox" oninput="toggleMiniTimerUsage(true)" autocomplete="off" checked><label for="miniTimerCheckbox">Enable Mini Timer</label>
+							</td>
+							<td>
+								<input type="checkbox" id="resetMiniTimerOnScore" name="resetMiniTimerOnScore" oninput="toggleShotClockAutoReset()" autocomplete="off" checked><label for="resetMiniTimerOnScore" id="resetMiniTimerOnScoreLabel" title="Automatically stops and resets Shot Clock if Score +2/+3 button is pressed.">Reset on Score</label>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><div class="timerStatus" id="miniTimerStatus">TIMER STOPPED</div></td>
+							<td class="centertext">Mini Timers</td>
+						</tr>
+						<tr>
+							<td rowspan="0">
+								<input type="button" id="toggleMiniTimerState" name="toggleMiniTimerState" value="&#11208;" onclick="changeMiniTimerState()">
+							</td>
+							<td>
+								<input type="button" id="setMiniTimerA" name="setMiniTimerA" value="Shot Clock" onclick='setMiniTimer("A")'>
+							</td>
+							<td>
+								<input type="number" id="miniTimerAsec" name="miniTimerAsec" value="24" min="1" max="99" autocomplete="off"> seconds
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="button" id="setMiniTimerB" name="setMiniTimerB" value="Off. Reb." onclick='setMiniTimer("B")'>
+							</td>
+							<td>
+								<input type="number" id="miniTimerBsec" name="miniTimerBsec" value="14" min="1" max="99" autocomplete="off"> seconds
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="button" id="setMiniTimerC" name="setMiniTimerC" value="Timeout" onclick='setMiniTimer("C")'>
+							</td>
+							<td>
+								<input type="number" id="miniTimerCsec" name="miniTimerCsec" value="60" min="1" max="99" autocomplete="off"> seconds
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="column setupcol">
+					<table>
+						<tr>
+							<td class="centertext">Horn Sound</td>
+							<td colspan="5" class="centertext">Custom Sound Effects</td>
+						</tr>
+						<tr>
+							<td><input type="button" id="hornButton" name="hornButton" value="&#128266;" onclick='toggleHornSound()'></td>
+							<td>
+								<input type="button" class="sfxButton" id="sfxButton1" name="sfxButton1" value="&#128192;" onclick='playCustomSound(1)'>
+								<input type="button" class="sfxButton" id="sfxButton2" name="sfxButton2" value="&#128165;" onclick='playCustomSound(2)'>
+								<input type="button" class="sfxButton" id="sfxButton3" name="sfxButton3" value="&#11088;" onclick='playCustomSound(3)'>
+								<input type="button" class="sfxButton" id="sfxButton4" name="sfxButton4" value="&#127929;" onclick='playCustomSound(4)'>
+								<input type="button" class="sfxButton" id="sfxButton5" name="sfxButton5" value="&#127926;" onclick='playCustomSound(5)'>
+							</td>
+						</tr>
+						<tr>
+							<td class="centertext">
+								Vol. <input type="number" id="hornVolume" name="hornVolume" value="100" min="0" max="100" autocomplete="off">
+							</td>
+							<td class="centertext">
+								<input type="checkbox" id="hotkeyActivation" name="hotkeyActivation" oninput="toggleHotkeyActivation()" autocomplete="off" title="Allow the use of keyboard keys to operate the scoreboard. See picture guide for details."><label for="hotkeyActivation" title="Allow the use of keyboard keys to operate the scoreboard. See picture guide for details.">Hotkey Operation Mode</label>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" id="scoreboardVersion">
+								LSN Scoreboard - version 1.0.1
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
